@@ -4,9 +4,7 @@ import '../services/data_loader.dart';
 import 'home_screen.dart';
 import 'reference_screen.dart';
 
-/// Main navigation shell with persistent bottom nav bar.
-/// Provides the Scaffold, AppBar, and BottomNavigationBar.
-/// Contains Home and Reference tabs.
+/// Main navigation shell — Spotify-style dark nav with transparent app bar.
 class MainShell extends StatefulWidget {
   final ClinicalData data;
 
@@ -19,20 +17,24 @@ class MainShell extends StatefulWidget {
 class _MainShellState extends State<MainShell> {
   int _currentIndex = 0;
 
-  static const _titles = ['DoseGPT', 'Reference'];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.surface,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: AppTheme.surface,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
-          _titles[_currentIndex],
-          style: AppTheme.screenTitle,
-        ),
-        centerTitle: false,
+        title: const Text('DoseGPT'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search_outlined),
+            onPressed: () {
+              // TODO: search functionality
+            },
+            tooltip: 'Search',
+          ),
+        ],
       ),
       body: IndexedStack(
         index: _currentIndex,

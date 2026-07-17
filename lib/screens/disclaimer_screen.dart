@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/app_theme.dart';
 import '../services/preferences_service.dart';
 
-/// First-launch disclaimer — shown exactly once on the very first app open.
-/// A single "I Understand / Continue" button dismisses it and writes a
-/// local flag so it never appears again.
+/// First-launch disclaimer — Spotify dark style.
 class DisclaimerScreen extends StatefulWidget {
   final Widget Function() onDismissed;
 
@@ -46,7 +44,7 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: AppTheme.primary.withValues(alpha: 0.1),
+                  color: AppTheme.primary.withValues(alpha: 0.15),
                   borderRadius: BorderRadius.circular(AppTheme.radiusLg),
                 ),
                 child: const Icon(
@@ -79,7 +77,7 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
 
               const Spacer(flex: 2),
 
-              // Continue button — uses theme ElevatedButton style
+              // Continue button
               SizedBox(
                 width: double.infinity,
                 height: AppTheme.minTapHeight,
@@ -91,7 +89,7 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
                           height: 24,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: AppTheme.surface,
+                            color: AppTheme.ink,
                           ),
                         )
                       : const Text('I Understand / Continue'),

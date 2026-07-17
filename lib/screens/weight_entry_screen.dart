@@ -7,9 +7,7 @@ import '../models/drug.dart';
 import '../services/data_loader.dart';
 import '../services/dose_calculator.dart';
 
-/// Age + Weight entry screen.
-/// Collects age (years + months), weight (kg), selects a drug,
-/// and optionally a concentration, then calculates the dose.
+/// Age + Weight entry screen — Spotify dark style.
 class WeightEntryScreen extends StatefulWidget {
   final ClinicalData data;
   final String illnessId;
@@ -44,11 +42,9 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
   @override
   void initState() {
     super.initState();
-    // Load available drugs for this illness
     _availableDrugs = widget.data.getDrugsForIllness(widget.illnessId);
     if (_availableDrugs.isNotEmpty) {
       _selectedDrugId = _availableDrugs.first.id;
-      // Check if the first drug passes age gates
       _updateDrugOptions();
     }
   }
@@ -59,21 +55,17 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
     super.dispose();
   }
 
-  /// Get total age in months.
   int get _totalMonths => _years * 12 + _months;
 
-  /// Get weight in kg (null if empty or invalid).
   double? get _weightKg {
     final text = _weightController.text.trim();
     if (text.isEmpty) return null;
     return double.tryParse(text);
   }
 
-  /// Filter drugs based on age, and update selected drug if needed.
   void _updateDrugOptions() {
     final totalMonths = _totalMonths;
 
-    // Check neonatal gate first
     if (totalMonths > 0 && DoseCalculator.isNeonate(totalMonths)) {
       setState(() {
         _isNeonate = true;
@@ -90,14 +82,10 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
       _neonatalMessage = null;
     });
 
-    // Filter drugs by valid_age_range
     final filtered = widget.data.getDrugsForIllness(widget.illnessId).where((drug) {
-      // For neonate drugs, we already handled above
-      // Check age range if age has been entered
       if (totalMonths > 0) {
         return DoseCalculator.isAgeInRange(drug, totalMonths);
       }
-      // If no age entered yet, show all drugs (will filter on submit)
       return true;
     }).toList();
 
@@ -141,7 +129,6 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
 
     final totalMonths = _totalMonths;
 
-    // Neonatal gate (shouldn't reach here, but double-check)
     if (totalMonths > 0 && DoseCalculator.isNeonate(totalMonths)) {
       setState(() {
         _isNeonate = true;
@@ -161,7 +148,6 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
     final drug = widget.data.getDrug(_selectedDrugId!);
     if (drug == null) return;
 
-    // Age gate for the selected drug
     if (totalMonths > 0 && !DoseCalculator.isAgeInRange(drug, totalMonths)) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -173,7 +159,6 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
 
     setState(() => _isCalculating = true);
 
-    // Calculate
     final result = DoseCalculator.calculate(
       drug: drug,
       weightKg: weight,
@@ -183,7 +168,6 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
 
     setState(() => _isCalculating = false);
 
-    // Navigate to result screen
     if (mounted) {
       Navigator.of(context).pushNamed(
         '/result',
@@ -208,7 +192,8 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
     return Scaffold(
       backgroundColor: AppTheme.surface,
       appBar: AppBar(
-        title: Text(illness?.nameEn ?? 'Dose Calculation'),
+        title: Text(illness?.nameEn ?? 'Calculate Dose'),
+        backgroundColor: AppTheme.surface,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(AppTheme.spacingMd),
@@ -217,196 +202,252 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // -- Neonatal gate message --
+              // -- Neonatal gate --
               if (_isNeonate == true && _neonatalMessage != null)
                 Padding(
                   padding: const EdgeInsets.only(bottom: AppTheme.spacingMd),
                   child: OutOfRangeView(message: _neonatalMessage!),
                 ),
 
-              // -- Age input: Years + Months --
-              const Text('Patient Age', style: AppTheme.cardLabel),
-              const SizedBox(height: AppTheme.spacingSm),
-              Row(
-                children: [
-                  // Years
-                  Expanded(
-                    child: _AgeStepper(
-                      label: 'Years',
-                      value: _years,
-                      min: 0,
-                      max: 18,
-                      onChanged: (v) {
-                        setState(() => _years = v);
-                        _onAgeChanged();
-                      },
+              // -- Age section --
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(AppTheme.spacingMd),
+                decoration: BoxDecoration(
+                  color: AppTheme.surfaceCard,
+                  borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Patient Age', style: AppTheme.cardLabel),
+                    const SizedBox(height: AppTheme.spacingMd),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: _AgeStepper(
+                            label: 'Years',
+                            value: _years,
+                            min: 0,
+                            max: 18,
+                            onChanged: (v) {
+                              setState(() => _years = v);
+                              _onAgeChanged();
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: AppTheme.spacingMd),
+                        Expanded(
+                          child: _AgeStepper(
+                            label: 'Months',
+                            value: _months,
+                            min: 0,
+                            max: 11,
+                            onChanged: (v) {
+                              setState(() => _months = v);
+                              _onAgeChanged();
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                  const SizedBox(width: AppTheme.spacingMd),
-                  // Months
-                  Expanded(
-                    child: _AgeStepper(
-                      label: 'Months',
-                      value: _months,
-                      min: 0,
-                      max: 11,
-                      onChanged: (v) {
-                        setState(() => _months = v);
-                        _onAgeChanged();
-                      },
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
 
-              const SizedBox(height: AppTheme.spacingLg),
+              const SizedBox(height: AppTheme.spacingMd),
 
-              // -- Weight input --
-              const Text('Weight (kg)', style: AppTheme.cardLabel),
-              const SizedBox(height: AppTheme.spacingSm),
-              TextFormField(
-                controller: _weightController,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                decoration: const InputDecoration(
-                  hintText: 'e.g. 12.5',
-                  suffixText: 'kg',
+              // -- Weight section --
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(AppTheme.spacingMd),
+                decoration: BoxDecoration(
+                  color: AppTheme.surfaceCard,
+                  borderRadius: BorderRadius.circular(AppTheme.radiusMd),
                 ),
-                validator: _validateWeight,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Weight (kg)', style: AppTheme.cardLabel),
+                    const SizedBox(height: AppTheme.spacingSm),
+                    TextFormField(
+                      controller: _weightController,
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: AppTheme.ink,
+                      ),
+                      decoration: const InputDecoration(
+                        hintText: 'e.g. 12.5',
+                        suffixText: 'kg',
+                      ),
+                      validator: _validateWeight,
+                    ),
+                  ],
+                ),
               ),
 
-              const SizedBox(height: AppTheme.spacingLg),
+              const SizedBox(height: AppTheme.spacingMd),
 
-              // -- Drug selection (filtered by age) --
-              const Text('Select Drug', style: AppTheme.cardLabel),
-              const SizedBox(height: AppTheme.spacingSm),
-
-              if (_availableDrugs.isEmpty && _isNeonate != true)
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: AppTheme.spacingMd),
-                  child: Text(
-                    'No suitable drugs available for this age.',
-                    style: AppTheme.formulaSource,
-                  ),
+              // -- Drug selection --
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(AppTheme.spacingMd),
+                decoration: BoxDecoration(
+                  color: AppTheme.surfaceCard,
+                  borderRadius: BorderRadius.circular(AppTheme.radiusMd),
                 ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Select Drug', style: AppTheme.cardLabel),
+                    const SizedBox(height: AppTheme.spacingSm),
 
-              ..._availableDrugs.map((drug) {
-                final isSelected = drug.id == _selectedDrugId;
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: AppTheme.spacingSm),
-                  child: GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        _selectedDrugId = drug.id;
-                        _selectedConcentrationIndex = 0;
-                      });
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(AppTheme.spacingMd),
-                      decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppTheme.primary.withValues(alpha: 0.08)
-                            : AppTheme.surfaceCard,
-                        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-                        border: Border.all(
-                          color: isSelected
-                              ? AppTheme.primary
-                              : AppTheme.borderHairline,
-                          width: isSelected ? 2 : 1,
+                    if (_availableDrugs.isEmpty && _isNeonate != true)
+                      const Padding(
+                        padding: EdgeInsets.symmetric(vertical: AppTheme.spacingMd),
+                        child: Text(
+                          'No suitable drugs available for this age.',
+                          style: AppTheme.formulaSource,
                         ),
                       ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+
+                    ..._availableDrugs.map((drug) {
+                      final isSelected = drug.id == _selectedDrugId;
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: AppTheme.spacingSm),
+                        child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              _selectedDrugId = drug.id;
+                              _selectedConcentrationIndex = 0;
+                            });
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(AppTheme.spacingMd),
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? AppTheme.primary.withValues(alpha: 0.15)
+                                  : AppTheme.surfaceElevated,
+                              borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                              border: Border.all(
+                                color: isSelected
+                                    ? AppTheme.primary
+                                    : AppTheme.borderHairline,
+                                width: isSelected ? 2 : 1,
+                              ),
+                            ),
+                            child: Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      drug.drugNameEn,
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: AppTheme.ink,
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            drug.drugNameEn,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                              color: isSelected
+                                                  ? AppTheme.primary
+                                                  : AppTheme.ink,
+                                            ),
+                                          ),
+                                          if (drug.isRecommended)
+                                            const Padding(
+                                              padding: EdgeInsets.only(left: 8),
+                                              child: _RecommendedBadge(),
+                                            ),
+                                        ],
                                       ),
-                                    ),
-                                    if (drug.isRecommended)
-                                      const Padding(
-                                        padding: EdgeInsets.only(left: 8),
-                                        child: _RecommendedBadge(),
-                                      ),
-                                  ],
-                                ),
-                                if (drug.notes != null && drug.notes!.contains('VERIFY'))
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4),
-                                    child: Text(
-                                      drug.notes!,
-                                      style: AppTheme.formulaSource,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
+                                      if (drug.notes != null && drug.notes!.contains('VERIFY'))
+                                        Padding(
+                                          padding: const EdgeInsets.only(top: 4),
+                                          child: Text(
+                                            drug.notes!,
+                                            style: AppTheme.formulaSource,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                    ],
                                   ),
+                                ),
+                                Icon(
+                                  isSelected
+                                      ? Icons.radio_button_checked
+                                      : Icons.radio_button_unchecked,
+                                  color: isSelected
+                                      ? AppTheme.primary
+                                      : AppTheme.inkSubtle,
+                                ),
                               ],
                             ),
                           ),
-                          Icon(
-                            isSelected
-                                ? Icons.radio_button_checked
-                                : Icons.radio_button_unchecked,
-                            color: isSelected
-                                ? AppTheme.primary
-                                : AppTheme.inkMuted,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }),
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+              ),
 
               // -- Concentration selection --
               if (_selectedDrug != null &&
                   _selectedDrug!.concentrations != null &&
                   _selectedDrug!.concentrations!.length > 1) ...[
                 const SizedBox(height: AppTheme.spacingMd),
-                const Text('Concentration', style: AppTheme.cardLabel),
-                const SizedBox(height: AppTheme.spacingSm),
-                Wrap(
-                  spacing: AppTheme.spacingSm,
-                  runSpacing: AppTheme.spacingSm,
-                  children: List.generate(
-                    _selectedDrug!.concentrations!.length,
-                    (index) {
-                      final conc = _selectedDrug!.concentrations![index];
-                      final isSelected = index == _selectedConcentrationIndex;
-                      return ChoiceChip(
-                        label: Text(conc.labelEn),
-                        selected: isSelected,
-                        onSelected: (selected) {
-                          if (selected) {
-                            setState(() => _selectedConcentrationIndex = index);
-                          }
-                        },
-                        selectedColor: AppTheme.primary.withValues(alpha: 0.15),
-                        backgroundColor: AppTheme.surfaceCard,
-                        labelStyle: TextStyle(
-                          color: isSelected ? AppTheme.primary : AppTheme.ink,
-                          fontWeight:
-                              isSelected ? FontWeight.w600 : FontWeight.w400,
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(AppTheme.spacingMd),
+                  decoration: BoxDecoration(
+                    color: AppTheme.surfaceCard,
+                    borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Concentration', style: AppTheme.cardLabel),
+                      const SizedBox(height: AppTheme.spacingSm),
+                      Wrap(
+                        spacing: AppTheme.spacingSm,
+                        runSpacing: AppTheme.spacingSm,
+                        children: List.generate(
+                          _selectedDrug!.concentrations!.length,
+                          (index) {
+                            final conc = _selectedDrug!.concentrations![index];
+                            final isSelected = index == _selectedConcentrationIndex;
+                            return ChoiceChip(
+                              label: Text(conc.labelEn),
+                              selected: isSelected,
+                              onSelected: (selected) {
+                                if (selected) {
+                                  setState(() => _selectedConcentrationIndex = index);
+                                }
+                              },
+                              selectedColor: AppTheme.primary.withValues(alpha: 0.25),
+                              backgroundColor: AppTheme.surfaceElevated,
+                              labelStyle: TextStyle(
+                                color: isSelected ? AppTheme.primary : AppTheme.inkMuted,
+                                fontWeight:
+                                    isSelected ? FontWeight.w600 : FontWeight.w400,
+                              ),
+                              side: BorderSide(
+                                color: isSelected ? AppTheme.primary : AppTheme.borderHairline,
+                              ),
+                            );
+                          },
                         ),
-                        side: BorderSide(
-                          color: isSelected ? AppTheme.primary : AppTheme.borderHairline,
-                        ),
-                      );
-                    },
+                      ),
+                    ],
                   ),
                 ),
               ],
 
               const SizedBox(height: AppTheme.spacingLg),
 
-              // Calculate button — only show when NOT in neonatal block
+              // Calculate button
               if (_isNeonate != true)
                 PrimaryButton(
                   label: 'Calculate Dose',
@@ -423,7 +464,7 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
   }
 }
 
-/// A stepper widget for age input (years or months).
+/// Spotify-style age stepper.
 class _AgeStepper extends StatelessWidget {
   final String label;
   final int value;
@@ -444,8 +485,8 @@ class _AgeStepper extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppTheme.spacingSm),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceCard,
-        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+        color: AppTheme.surfaceElevated,
+        borderRadius: BorderRadius.circular(AppTheme.radiusSm),
       ),
       child: Column(
         children: [
@@ -461,9 +502,14 @@ class _AgeStepper extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     color: value > min
-                        ? AppTheme.primary.withValues(alpha: 0.1)
-                        : AppTheme.borderHairline,
+                        ? AppTheme.primary.withValues(alpha: 0.2)
+                        : AppTheme.surfaceElevated,
                     borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                    border: Border.all(
+                      color: value > min
+                          ? AppTheme.primary.withValues(alpha: 0.3)
+                          : AppTheme.borderHairline,
+                    ),
                   ),
                   child: const Icon(Icons.remove, size: 20, color: AppTheme.ink),
                 ),
@@ -487,9 +533,14 @@ class _AgeStepper extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     color: value < max
-                        ? AppTheme.primary.withValues(alpha: 0.1)
-                        : AppTheme.borderHairline,
+                        ? AppTheme.primary.withValues(alpha: 0.2)
+                        : AppTheme.surfaceElevated,
                     borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                    border: Border.all(
+                      color: value < max
+                          ? AppTheme.primary.withValues(alpha: 0.3)
+                          : AppTheme.borderHairline,
+                    ),
                   ),
                   child: const Icon(Icons.add, size: 20, color: AppTheme.ink),
                 ),
@@ -510,7 +561,7 @@ class _RecommendedBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: AppTheme.accentGold.withValues(alpha: 0.15),
+        color: AppTheme.primary.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(4),
       ),
       child: const Text(
@@ -518,7 +569,7 @@ class _RecommendedBadge extends StatelessWidget {
         style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w600,
-          color: AppTheme.accentGold,
+          color: AppTheme.primary,
         ),
       ),
     );

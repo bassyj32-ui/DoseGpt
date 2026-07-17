@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/app_theme.dart';
 
-/// Reference screen — stubbed as "Coming soon" for MVP1.
+/// Reference screen — dark Spotify style.
 class ReferenceScreen extends StatelessWidget {
   const ReferenceScreen({super.key});
 
@@ -17,7 +17,7 @@ class ReferenceScreen extends StatelessWidget {
               width: 64,
               height: 64,
               decoration: BoxDecoration(
-                color: AppTheme.primary.withValues(alpha: 0.1),
+                color: AppTheme.primary.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(AppTheme.radiusLg),
               ),
               child: const Icon(
@@ -38,7 +38,7 @@ class ReferenceScreen extends StatelessWidget {
             const SizedBox(height: AppTheme.spacingSm),
             const Text(
               'Full reference content, protocol citations, and clinical guidelines will be available here in a future update.',
-              style: AppTheme.body,
+              style: AppTheme.bodyMuted,
               textAlign: TextAlign.center,
             ),
           ],

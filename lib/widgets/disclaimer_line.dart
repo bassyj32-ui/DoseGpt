@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'app_theme.dart';
 
 /// Small, muted disclaimer line shown on every Result screen.
-/// "Assistive tool only — verify diagnosis and contraindications."
 class DisclaimerLine extends StatelessWidget {
   const DisclaimerLine({super.key});
 
@@ -10,12 +8,16 @@ class DisclaimerLine extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: AppTheme.spacingMd,
-        vertical: AppTheme.spacingSm,
+        horizontal: 16.0,
+        vertical: 8.0,
       ),
       child: Text(
         'Assistive tool only — verify diagnosis and contraindications.',
-        style: AppTheme.formulaSource,
+        style: TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w400,
+          color: Colors.white.withValues(alpha: 0.5),
+        ),
         textAlign: TextAlign.center,
       ),
     );

@@ -5,8 +5,7 @@ import '../widgets/disclaimer_line.dart';
 import '../models/drug.dart';
 import '../services/dose_calculator.dart';
 
-/// Result screen — displays the calculated dose in a clear,
-/// prescription-style format, with optional calculation details.
+/// Result screen — Spotify dark style with hero dose display.
 class ResultScreen extends StatelessWidget {
   final Drug drug;
   final DoseResult result;
@@ -23,7 +22,6 @@ class ResultScreen extends StatelessWidget {
     this.illnessName = '',
   });
 
-  /// Extracts a simple arg map from the navigator arguments.
   static ResultScreen? fromArguments(Map<String, dynamic> args) {
     final drug = args['drug'] as Drug?;
     final result = args['result'] as DoseResult?;
@@ -48,6 +46,7 @@ class ResultScreen extends StatelessWidget {
       backgroundColor: AppTheme.surface,
       appBar: AppBar(
         title: Text(illnessName.isNotEmpty ? illnessName : 'Dose'),
+        backgroundColor: AppTheme.surface,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(AppTheme.spacingMd),
@@ -62,16 +61,23 @@ class ResultScreen extends StatelessWidget {
     return Column(
       children: [
         const SizedBox(height: AppTheme.spacingXl),
-        const Icon(
-          Icons.warning_amber_rounded,
-          color: AppTheme.urgent,
-          size: 64,
+        Container(
+          width: 80,
+          height: 80,
+          decoration: BoxDecoration(
+            color: AppTheme.urgent.withValues(alpha: 0.15),
+            borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+          ),
+          child: const Icon(
+            Icons.warning_amber_rounded,
+            color: AppTheme.urgent,
+            size: 48,
+          ),
         ),
         const SizedBox(height: AppTheme.spacingMd),
-        // Show drug name so user knows what was attempted
         Text(
           drug.drugNameEn,
-          style: AppTheme.formulaSource.copyWith(fontSize: 15),
+          style: AppTheme.bodyMuted,
         ),
         const SizedBox(height: AppTheme.spacingSm),
         Text(
@@ -81,7 +87,6 @@ class ResultScreen extends StatelessWidget {
           style: AppTheme.body,
           textAlign: TextAlign.center,
         ),
-        // Show referral trigger if present
         if (drug.referralTriggerText != null) ...[
           const SizedBox(height: AppTheme.spacingMd),
           _WarningBanner(
@@ -113,48 +118,52 @@ class ResultScreen extends StatelessWidget {
         // Drug name
         Text(
           drug.drugNameEn,
-          style: AppTheme.formulaSource.copyWith(fontSize: 15),
+          style: AppTheme.bodyMuted,
         ),
         const SizedBox(height: AppTheme.spacingSm),
 
-        // Patient info line
+        // Patient info
         Text(
           '${weightKg.toStringAsFixed(1)} kg · ${ageMonths ~/ 12}y ${ageMonths % 12}m',
           style: AppTheme.formulaSource,
         ),
-        const SizedBox(height: AppTheme.spacingSm),
+        const SizedBox(height: AppTheme.spacingMd),
 
-        // Hero prescription line
+        // Hero result card
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(AppTheme.spacingMd),
+          padding: const EdgeInsets.all(AppTheme.spacingLg),
           decoration: BoxDecoration(
             color: AppTheme.surfaceCard,
             borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+            border: Border.all(color: AppTheme.borderHairline),
           ),
-          child: Text(
-            result.prescription ?? '',
-            style: AppTheme.doseResult.copyWith(fontSize: 20),
+          child: Column(
+            children: [
+              Text(
+                result.prescription ?? '',
+                style: AppTheme.doseResult,
+                textAlign: TextAlign.center,
+              ),
+              if (result.calculatedMl != null) ...[
+                const SizedBox(height: AppTheme.spacingSm),
+                _DoseVisual(
+                  calculatedMl: result.calculatedMl!,
+                  maxSafeMl: _maxSafeMl,
+                ),
+              ],
+            ],
           ),
         ),
 
         const SizedBox(height: AppTheme.spacingMd),
 
-        // Dose visual (syringe-like indicator bar)
-        if (result.calculatedMl != null) ...[
-          _DoseVisual(
-            calculatedMl: result.calculatedMl!,
-            maxSafeMl: _maxSafeMl,
-          ),
-          const SizedBox(height: AppTheme.spacingMd),
-        ],
-
-        // Safety warning — red for critical, gold for informational
+        // Safety warning
         if (result.safetyWarning != null)
           _WarningBanner(
             icon: hasCriticalWarning ? Icons.warning : Icons.info_outline,
             message: result.safetyWarning!,
-            color: hasCriticalWarning ? AppTheme.urgent : AppTheme.accentGold,
+            color: hasCriticalWarning ? AppTheme.urgent : AppTheme.warning,
           ),
 
         if (result.safetyWarning != null)
@@ -165,12 +174,12 @@ class ResultScreen extends StatelessWidget {
           _WarningBanner(
             icon: Icons.access_time,
             message: result.durationWarning!,
-            color: AppTheme.accentGold,
+            color: AppTheme.warning,
           ),
           const SizedBox(height: AppTheme.spacingSm),
         ],
 
-        // "Show calculation" toggle
+        // Calculation toggle
         _CalculationToggle(result: result, drug: drug),
 
         const SizedBox(height: AppTheme.spacingMd),
@@ -191,7 +200,7 @@ class ResultScreen extends StatelessWidget {
 
         const SizedBox(height: AppTheme.spacingMd),
 
-        // Per-result disclaimer
+        // Disclaimer
         const DisclaimerLine(),
       ],
     );
@@ -203,7 +212,7 @@ class ResultScreen extends StatelessWidget {
   }
 }
 
-/// A visual indicator showing the dose amount (simplified bar).
+/// Dose volume bar indicator.
 class _DoseVisual extends StatelessWidget {
   final double calculatedMl;
   final double? maxSafeMl;
@@ -219,47 +228,40 @@ class _DoseVisual extends StatelessWidget {
       fillPercent = (calculatedMl / 20).clamp(0.0, 1.0);
     }
 
-    return Container(
-      padding: const EdgeInsets.all(AppTheme.spacingMd),
-      decoration: BoxDecoration(
-        color: AppTheme.surfaceCard,
-        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Dose volume: ${calculatedMl.toStringAsFixed(1)} ml',
-            style: AppTheme.cardLabel,
-          ),
-          const SizedBox(height: AppTheme.spacingSm),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(AppTheme.radiusPill),
-            child: Container(
-              height: 16,
-              width: double.infinity,
-              color: AppTheme.borderHairline,
-              child: FractionallySizedBox(
-                alignment: Alignment.centerLeft,
-                widthFactor: fillPercent,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: fillPercent > 0.9
-                        ? AppTheme.urgent
-                        : AppTheme.primary,
-                    borderRadius: BorderRadius.circular(AppTheme.radiusPill),
-                  ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Dose volume: ${calculatedMl.toStringAsFixed(1)} ml',
+          style: AppTheme.cardLabel,
+        ),
+        const SizedBox(height: AppTheme.spacingSm),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(AppTheme.radiusPill),
+          child: Container(
+            height: 16,
+            width: double.infinity,
+            color: AppTheme.surfaceElevated,
+            child: FractionallySizedBox(
+              alignment: Alignment.centerLeft,
+              widthFactor: fillPercent,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: fillPercent > 0.9
+                      ? AppTheme.urgent
+                      : AppTheme.primary,
+                  borderRadius: BorderRadius.circular(AppTheme.radiusPill),
                 ),
               ),
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
 
-/// Collapsible "Show calculation" section.
+/// Collapsible calculation details.
 class _CalculationToggle extends StatefulWidget {
   final DoseResult result;
   final Drug drug;
@@ -287,6 +289,7 @@ class _CalculationToggleState extends State<_CalculationToggle> {
             decoration: BoxDecoration(
               color: AppTheme.surfaceCard,
               borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+              border: Border.all(color: AppTheme.borderHairline),
             ),
             child: Row(
               children: [
@@ -323,7 +326,7 @@ class _CalculationToggleState extends State<_CalculationToggle> {
   }
 }
 
-/// A warning/info banner widget.
+/// Warning/info banner widget.
 class _WarningBanner extends StatelessWidget {
   final IconData icon;
   final String message;
@@ -341,9 +344,9 @@ class _WarningBanner extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(AppTheme.spacingSm),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.08),
+        color: color.withValues(alpha: 0.1),
         borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-        border: Border.all(color: color.withValues(alpha: 0.2)),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

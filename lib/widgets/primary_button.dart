@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 
-/// Reusable primary action button — full-width, pill-shaped, green.
+/// Reusable primary action button — Spotify green pill button.
 class PrimaryButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
@@ -27,7 +27,7 @@ class PrimaryButton extends StatelessWidget {
                 height: 24,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  color: AppTheme.surface,
+                  color: Color(0xFFFFFFFF),
                 ),
               )
             : Text(label),

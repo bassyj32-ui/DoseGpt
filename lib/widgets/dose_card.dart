@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 
-/// A reusable illness card component.
-/// Pill-shaped, surface-card background, soft shadow, icon left-aligned + name + chevron.
+/// Spotify-style image card for the 2-column condition grid.
+/// Shows a real medical image (or gradient fallback) with condition name overlay.
 class DoseCard extends StatelessWidget {
   final String label;
-  final bool urgentAccent;
-  final bool isRecommended;
+  final String imagePath;
+  final List<Color> fallbackGradient;
   final VoidCallback? onTap;
 
   const DoseCard({
     super.key,
     required this.label,
-    this.urgentAccent = false,
-    this.isRecommended = false,
+    required this.imagePath,
+    required this.fallbackGradient,
     this.onTap,
   });
 
@@ -22,91 +22,95 @@ class DoseCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: AppTheme.minTapHeight,
         decoration: BoxDecoration(
-          color: AppTheme.surfaceCard,
-          borderRadius: BorderRadius.circular(AppTheme.radiusPill),
+          borderRadius: BorderRadius.circular(AppTheme.radiusCard),
           boxShadow: AppTheme.cardShadow,
         ),
-        child: Row(
-          children: [
-            // Urgent accent line (far left)
-            if (urgentAccent)
-              Container(
-                width: 4,
-                height: AppTheme.minTapHeight,
-                decoration: const BoxDecoration(
-                  color: AppTheme.urgent,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(24.0),
-                    bottomLeft: Radius.circular(24.0),
-                  ),
-                ),
-              )
-            else
-              const SizedBox(width: 4),
+        clipBehavior: Clip.antiAlias,
+        child: AspectRatio(
+          aspectRatio: 1.0,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              // Image or gradient fallback
+              _buildCardImage(),
 
-            // Icon area (placeholder)
-            Container(
-              width: 40,
-              height: 40,
-              margin: const EdgeInsets.only(left: AppTheme.spacingSm),
-              decoration: BoxDecoration(
-                color: AppTheme.primary.withValues(alpha: 0.1),
-                borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-              ),
-              child: const Icon(
-                Icons.medical_services_outlined,
-                color: AppTheme.primary,
-                size: 22,
-              ),
-            ),
-
-            const SizedBox(width: AppTheme.spacingMd),
-
-            // Label
-            Expanded(
-              child: Text(
-                label,
-                style: AppTheme.cardLabel,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-
-            // Recommended tag
-            if (isRecommended)
-              Container(
-                margin: const EdgeInsets.only(right: AppTheme.spacingXs),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppTheme.spacingXs,
-                  vertical: 2,
-                ),
-                decoration: BoxDecoration(
-                  color: AppTheme.accentGold.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: const Text(
-                  'Recommended',
-                  style: TextStyle(
-                    fontSize: 11,
-                    fontWeight: FontWeight.w600,
-                    color: AppTheme.accentGold,
+              // Dark gradient overlay at bottom for text
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                height: 56,
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.transparent,
+                        Color(0xB0000000),
+                      ],
+                    ),
                   ),
                 ),
               ),
 
-            // Chevron
-            const Padding(
-              padding: EdgeInsets.only(right: AppTheme.spacingMd),
-              child: Icon(
-                Icons.chevron_right,
-                color: AppTheme.inkMuted,
-                size: 22,
+              // Condition name at bottom
+              Positioned(
+                left: AppTheme.spacingSm,
+                right: AppTheme.spacingSm,
+                bottom: AppTheme.spacingSm,
+                child: Text(
+                  label,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    height: 1.2,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+    );
+  }
+
+  Widget _buildCardImage() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Image.asset(
+          imagePath,
+          fit: BoxFit.cover,
+          width: constraints.maxWidth,
+          height: constraints.maxHeight,
+          errorBuilder: (context, error, stackTrace) {
+            // Fallback gradient if image fails to load
+            return Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: fallbackGradient,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  label.isNotEmpty ? label[0].toUpperCase() : '',
+                  style: TextStyle(
+                    fontSize: constraints.maxWidth * 0.35,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white.withValues(alpha: 0.3),
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 }

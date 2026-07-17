@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 
-/// Displays the universal out-of-range / referral message
-/// in a centered card with a caution icon.
+/// Displays the universal out-of-range / referral message.
 class OutOfRangeView extends StatelessWidget {
   final String message;
 
