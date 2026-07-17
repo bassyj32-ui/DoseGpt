@@ -96,7 +96,7 @@ class WeightBand {
 
   factory WeightBand.fromJson(Map<String, dynamic> json) {
     return WeightBand(
-      minKg: (json['min_kg'] as num).toDouble(),
+      minKg: (json['min_kg'] as num?)?.toDouble() ?? 0,
       maxKg: (json['max_kg'] as num?)?.toDouble() ?? double.infinity,
       doseDisplayEn: json['dose_display_en'] as String? ?? '',
     );
@@ -116,7 +116,7 @@ class AgeBand {
 
   factory AgeBand.fromJson(Map<String, dynamic> json) {
     return AgeBand(
-      minMonths: (json['min_months'] as num).toDouble(),
+      minMonths: (json['min_months'] as num?)?.toDouble() ?? 0,
       maxMonths: (json['max_months'] as num?)?.toDouble() ?? double.infinity,
       doseDisplayEn: json['dose_display_en'] as String? ?? '',
     );
@@ -137,7 +137,7 @@ class DoseScheduleEntry {
   factory DoseScheduleEntry.fromJson(Map<String, dynamic> json) {
     return DoseScheduleEntry(
       day: json['day'],
-      dosePerKgMg: (json['dose_per_kg_mg'] as num).toDouble(),
+      dosePerKgMg: (json['dose_per_kg_mg'] as num?)?.toDouble() ?? 0,
       maxDoseMg: (json['max_dose_mg'] as num?)?.toDouble(),
     );
   }
