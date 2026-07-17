@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
 
-/// Spotify-style image card for the 2-column condition grid.
-/// Shows a real medical image (or gradient fallback) with condition name overlay.
+/// Spotify-style card for the condition grid.
+/// Features bigger radius, rich gradient overlays, bold text.
 class DoseCard extends StatelessWidget {
   final String label;
   final String imagePath;
@@ -35,38 +35,45 @@ class DoseCard extends StatelessWidget {
               // Image or gradient fallback
               _buildCardImage(),
 
-              // Dark gradient overlay at bottom for text
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 0,
-                height: 56,
+              // Multi-layer gradient overlay for depth (like Spotify)
+              Positioned.fill(
                 child: Container(
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
                         Colors.transparent,
-                        Color(0xB0000000),
+                        Colors.transparent,
+                        Colors.black.withValues(alpha: 0.05),
+                        Colors.black.withValues(alpha: 0.4),
+                        Colors.black.withValues(alpha: 0.75),
                       ],
+                      stops: const [0.0, 0.4, 0.6, 0.8, 1.0],
                     ),
                   ),
                 ),
               ),
 
-              // Condition name at bottom
+              // Condition name
               Positioned(
-                left: AppTheme.spacingSm,
-                right: AppTheme.spacingSm,
-                bottom: AppTheme.spacingSm,
+                left: AppTheme.spacingMd,
+                right: AppTheme.spacingMd,
+                bottom: AppTheme.spacingMd,
                 child: Text(
                   label,
                   style: const TextStyle(
-                    fontSize: 14,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    height: 1.2,
+                    height: 1.15,
+                    shadows: [
+                      Shadow(
+                        color: Colors.black54,
+                        blurRadius: 8,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
                   ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -101,9 +108,9 @@ class DoseCard extends StatelessWidget {
                 child: Text(
                   label.isNotEmpty ? label[0].toUpperCase() : '',
                   style: TextStyle(
-                    fontSize: constraints.maxWidth * 0.35,
+                    fontSize: constraints.maxWidth * 0.3,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white.withValues(alpha: 0.3),
+                    color: Colors.white.withValues(alpha: 0.25),
                   ),
                 ),
               ),

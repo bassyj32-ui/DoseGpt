@@ -14,6 +14,7 @@ class AppTheme {
   static const Color surfaceCard = Color(0xFF1A1A1A);
   static const Color surfaceElevated = Color(0xFF282828);
   static const Color surfaceInput = Color(0xFF2A2A2A);
+  static const Color surfaceNav = Color(0xE6121212); // Slightly transparent nav
 
   // -- Text --
   static const Color ink = Color(0xFFFFFFFF);
@@ -43,76 +44,73 @@ class AppTheme {
   static const double spacingMd = 16.0;
   static const double spacingLg = 24.0;
   static const double spacingXl = 32.0;
+  static const double spacingXxl = 48.0;
 
   // -- Corner radius --
-  static const double radiusCard = 8.0; // Spotify card radius
-  static const double radiusSm = 6.0;
-  static const double radiusMd = 12.0;
-  static const double radiusLg = 16.0;
+  static const double radiusCard = 12.0; // Spotify card radius (was 8)
+  static const double radiusSm = 8.0;
+  static const double radiusMd = 14.0;
+  static const double radiusLg = 18.0;
   static const double radiusPill = 24.0;
 
   // -- Tap target --
   static const double minTapHeight = 56.0;
   static const double minTapWidth = 48.0;
 
-  // -- Card size for grid --
-  static const double gridCardWidth = 165.0;
-  static const double gridCardHeight = 165.0;
-
   // -- Shadow --
   static const List<BoxShadow> cardShadow = [
     BoxShadow(
-      color: Color(0x1A000000),
-      blurRadius: 12,
-      offset: Offset(0, 4),
+      color: Color(0x26000000),
+      blurRadius: 16,
+      offset: Offset(0, 6),
     ),
   ];
 
-  // -- Text styles --
+  // -- Text styles (bigger sizes for Spotify feel) --
   static const TextStyle screenTitle = TextStyle(
-    fontSize: 22,
+    fontSize: 26,
     fontWeight: FontWeight.bold,
     color: ink,
-    height: 1.3,
+    height: 1.2,
   );
 
   static const TextStyle sectionTitle = TextStyle(
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: FontWeight.bold,
     color: ink,
-    height: 1.3,
+    height: 1.2,
   );
 
   static const TextStyle cardLabel = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.w600,
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
     color: ink,
-    height: 1.3,
+    height: 1.2,
   );
 
   static const TextStyle body = TextStyle(
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: FontWeight.w400,
     color: ink,
     height: 1.5,
   );
 
   static const TextStyle bodyMuted = TextStyle(
-    fontSize: 14,
+    fontSize: 15,
     fontWeight: FontWeight.w400,
     color: inkMuted,
     height: 1.4,
   );
 
   static const TextStyle formulaSource = TextStyle(
-    fontSize: 13,
+    fontSize: 14,
     fontWeight: FontWeight.w400,
     color: inkMuted,
     height: 1.4,
   );
 
   static const TextStyle doseResult = TextStyle(
-    fontSize: 42,
+    fontSize: 44,
     fontWeight: FontWeight.bold,
     color: ink,
     height: 1.1,
@@ -138,7 +136,7 @@ class AppTheme {
         elevation: 0,
         centerTitle: false,
         titleTextStyle: TextStyle(
-          fontSize: 22,
+          fontSize: 26,
           fontWeight: FontWeight.bold,
           color: ink,
         ),
@@ -150,11 +148,11 @@ class AppTheme {
         type: BottomNavigationBarType.fixed,
         elevation: 0,
         selectedLabelStyle: TextStyle(
-          fontSize: 12,
+          fontSize: 13,
           fontWeight: FontWeight.w600,
         ),
         unselectedLabelStyle: TextStyle(
-          fontSize: 12,
+          fontSize: 13,
           fontWeight: FontWeight.w400,
         ),
       ),

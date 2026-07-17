@@ -274,12 +274,22 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
                       controller: _weightController,
                       keyboardType: const TextInputType.numberWithOptions(decimal: true),
                       style: const TextStyle(
-                        fontSize: 18,
+                        fontSize: 20,
                         color: AppTheme.ink,
+                        fontWeight: FontWeight.w600,
                       ),
                       decoration: const InputDecoration(
                         hintText: 'e.g. 12.5',
+                        hintStyle: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w400,
+                        ),
                         suffixText: 'kg',
+                        suffixStyle: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.inkMuted,
+                        ),
                       ),
                       validator: _validateWeight,
                     ),
@@ -348,7 +358,7 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
                                           Text(
                                             drug.drugNameEn,
                                             style: TextStyle(
-                                              fontSize: 16,
+                                              fontSize: 17,
                                               fontWeight: FontWeight.w600,
                                               color: isSelected
                                                   ? AppTheme.primary
