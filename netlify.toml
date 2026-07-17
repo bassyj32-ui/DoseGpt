@@ -1,9 +1,6 @@
 [build]
   publish = "build/web"
 
-[build.environment]
-  FLUTTER_VERSION = "3.32.2"
-
 [[headers]]
   for = "/*"
   [headers.values]

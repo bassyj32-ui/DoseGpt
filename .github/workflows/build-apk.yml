@@ -64,12 +64,9 @@ jobs:
         run: flutter build web
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v3.0
-        with:
-          publish-dir: build/web
-          production-branch: master
-          deploy-message: "Deploy from GitHub Actions"
+        run: |
+          npm install -g netlify-cli
+          netlify deploy --dir=build/web --prod --message="Deploy from GitHub Actions"
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        timeout-minutes: 2
