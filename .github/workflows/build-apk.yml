@@ -63,8 +63,13 @@ jobs:
       - name: Build Web
         run: flutter build web
 
-      - name: Upload Web Build
-        uses: actions/upload-artifact@v4
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v3.0
         with:
-          name: dosegpt-web-build
-          path: build/web
+          publish-dir: build/web
+          production-branch: master
+          deploy-message: "Deploy from GitHub Actions"
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 2
