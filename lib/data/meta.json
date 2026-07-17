@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0",
+  "dataset_version": "0.3-draft",
+  "dataset_status": "UNVERIFIED — DO NOT USE FOR REAL PATIENT CARE UNTIL CLINICALLY SIGNED OFF",
+  "dataset_last_updated": "2026-07-16",
+  "reviewed_by": [],
+  "notes": "Compiled from WHO/IMCI, Ethiopia National Malaria Guideline references, and standard pediatric sources as a starting structure for DoseGPT. Every entry in drugs.json with 'VERIFY' in its source_detail or notes field requires direct clinical review before this dataset is considered production-ready. This file itself should be updated with reviewer name(s) and date only once that review is complete."
+}

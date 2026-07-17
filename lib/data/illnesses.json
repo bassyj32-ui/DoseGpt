@@ -1,0 +1,94 @@
+{
+  "illnesses": [
+    {
+      "id": "malaria",
+      "name_en": "Malaria",
+      "name_am": "",
+      "icon": "icon_mosquito",
+      "display_order": 1,
+      "urgent_accent": true,
+      "drug_ids": ["al_malaria", "chloroquine_malaria", "primaquine_malaria"]
+    },
+    {
+      "id": "pneumonia",
+      "name_en": "Pneumonia",
+      "name_am": "",
+      "icon": "icon_lungs",
+      "display_order": 2,
+      "urgent_accent": true,
+      "drug_ids": ["amoxicillin_pneumonia", "azithromycin_pneumonia", "augmentin_pneumonia"]
+    },
+    {
+      "id": "diarrhea",
+      "name_en": "Diarrhea",
+      "name_am": "",
+      "icon": "icon_droplet",
+      "display_order": 3,
+      "urgent_accent": false,
+      "drug_ids": ["zinc_diarrhea", "ors_diarrhea"]
+    },
+    {
+      "id": "fever",
+      "name_en": "Fever / Pain",
+      "name_am": "",
+      "icon": "icon_thermometer",
+      "display_order": 4,
+      "urgent_accent": false,
+      "drug_ids": ["paracetamol_fever", "ibuprofen_fever"]
+    },
+    {
+      "id": "uti",
+      "name_en": "UTI",
+      "name_am": "",
+      "icon": "icon_kidney",
+      "display_order": 5,
+      "urgent_accent": false,
+      "drug_ids": ["cotrimoxazole_uti", "amoxicillin_uti"]
+    },
+    {
+      "id": "tonsillitis",
+      "name_en": "Tonsillitis",
+      "name_am": "",
+      "icon": "icon_throat",
+      "display_order": 6,
+      "urgent_accent": false,
+      "drug_ids": ["penicillin_v_tonsillitis", "amoxicillin_tonsillitis", "azithromycin_tonsillitis"]
+    },
+    {
+      "id": "otitis_media",
+      "name_en": "Ear Infection",
+      "name_am": "",
+      "icon": "icon_ear",
+      "display_order": 7,
+      "urgent_accent": false,
+      "drug_ids": ["amoxicillin_otitis", "azithromycin_otitis", "augmentin_otitis"]
+    },
+    {
+      "id": "asthma",
+      "name_en": "Asthma / Wheeze",
+      "name_am": "",
+      "icon": "icon_inhaler",
+      "display_order": 8,
+      "urgent_accent": false,
+      "drug_ids": ["salbutamol_asthma", "prednisolone_asthma"]
+    },
+    {
+      "id": "impetigo",
+      "name_en": "Skin Infection",
+      "name_am": "",
+      "icon": "icon_skin",
+      "display_order": 9,
+      "urgent_accent": false,
+      "drug_ids": ["cloxacillin_impetigo"]
+    },
+    {
+      "id": "worms",
+      "name_en": "Intestinal Worms",
+      "name_am": "",
+      "icon": "icon_worm",
+      "display_order": 10,
+      "urgent_accent": false,
+      "drug_ids": ["albendazole_worms", "mebendazole_worms"]
+    }
+  ]
+}
