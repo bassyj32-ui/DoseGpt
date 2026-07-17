@@ -21,7 +21,7 @@ class Concentration {
 
   factory Concentration.fromJson(Map<String, dynamic> json) {
     return Concentration(
-      labelEn: json['label_en'] as String,
+      labelEn: json['label_en'] as String? ?? '',
       strengthMg: (json['strength_mg'] as num?)?.toDouble(),
       volumeMl: (json['volume_ml'] as num?)?.toDouble(),
       roundToMl: (json['round_to_ml'] as num?)?.toDouble() ?? 0.5,
@@ -50,7 +50,7 @@ class PracticalBand {
     return PracticalBand(
       minKg: (json['min_kg'] as num).toDouble(),
       maxKg: (json['max_kg'] as num?)?.toDouble() ?? double.infinity,
-      doseDisplayEn: json['dose_display_en'] as String,
+      doseDisplayEn: json['dose_display_en'] as String? ?? '',
     );
   }
 }
@@ -98,7 +98,7 @@ class WeightBand {
     return WeightBand(
       minKg: (json['min_kg'] as num).toDouble(),
       maxKg: (json['max_kg'] as num?)?.toDouble() ?? double.infinity,
-      doseDisplayEn: json['dose_display_en'] as String,
+      doseDisplayEn: json['dose_display_en'] as String? ?? '',
     );
   }
 }
@@ -118,7 +118,7 @@ class AgeBand {
     return AgeBand(
       minMonths: (json['min_months'] as num).toDouble(),
       maxMonths: (json['max_months'] as num?)?.toDouble() ?? double.infinity,
-      doseDisplayEn: json['dose_display_en'] as String,
+      doseDisplayEn: json['dose_display_en'] as String? ?? '',
     );
   }
 }
@@ -208,20 +208,20 @@ class Drug {
 
   factory Drug.fromJson(Map<String, dynamic> json) {
     return Drug(
-      id: json['id'] as String,
-      illnessId: json['illness_id'] as String,
-      drugNameEn: json['drug_name_en'] as String,
+      id: json['id'] as String? ?? '',
+      illnessId: json['illness_id'] as String? ?? '',
+      drugNameEn: json['drug_name_en'] as String? ?? '',
       drugNameAm: json['drug_name_am'] as String? ?? '',
       drugSynonyms: List<String>.from(json['drug_synonyms'] as List? ?? []),
       isRecommended: json['is_recommended'] as bool,
       combinationDrug: json['combination_drug'] as bool? ?? false,
-      dosingShape: json['dosing_shape'] as String,
+      dosingShape: json['dosing_shape'] as String? ?? '',
       notes: json['notes'] as String?,
       dosePerKgMg: (json['dose_per_kg_mg'] as num?)?.toDouble(),
       doseSchedule: (json['dose_schedule'] as List?)
           ?.map((e) => DoseScheduleEntry.fromJson(e as Map<String, dynamic>))
           .toList(),
-      frequencyEn: json['frequency_en'] as String,
+      frequencyEn: json['frequency_en'] as String? ?? '',
       durationDays: json['duration_days'] as int?,
       durationWarning: json['duration_warning'] as String?,
       durationNote: json['duration_note'] as String?,
@@ -247,10 +247,10 @@ class Drug {
           (json['penicillin_allergy_alternative'] as List?)
               ?.map((e) => e as String)
               .toList(),
-      sourceName: json['source_name'] as String,
+      sourceName: json['source_name'] as String? ?? '',
       sourceDetail: json['source_detail'] as String?,
       lastVerified: json['last_verified'] as String?,
-      verifiedBy: json['verified_by'] as String,
+      verifiedBy: json['verified_by'] as String? ?? '',
     );
   }
 }

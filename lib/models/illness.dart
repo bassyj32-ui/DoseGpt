@@ -19,13 +19,13 @@ class Illness {
 
   factory Illness.fromJson(Map<String, dynamic> json) {
     return Illness(
-      id: json['id'] as String,
-      nameEn: json['name_en'] as String,
+      id: json['id'] as String? ?? '',
+      nameEn: json['name_en'] as String? ?? '',
       nameAm: json['name_am'] as String? ?? '',
-      icon: json['icon'] as String,
+      icon: json['icon'] as String? ?? '',
       displayOrder: json['display_order'] as int,
       urgentAccent: json['urgent_accent'] as bool,
-      drugIds: List<String>.from(json['drug_ids'] as List),
+      drugIds: List<String>.from(json['drug_ids'] as List? ?? []),
     );
   }
 }
