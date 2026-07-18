@@ -5,179 +5,123 @@ import '../models/illness.dart';
 import '../services/data_loader.dart';
 import 'weight_entry_screen.dart';
 
-/// Home screen — Spotify-inspired layout with section headers,
-/// breathing space between cards, and a clean dark aesthetic.
+/// Home screen — Spotify-inspired layout with horizontal scrolling
+/// card rows, time-based greeting, and a clean dark aesthetic.
 class HomeScreen extends StatelessWidget {
   final ClinicalData data;
 
   const HomeScreen({super.key, required this.data});
+
+  String _greeting() {
+    final hour = DateTime.now().hour;
+    if (hour < 12) return 'Good morning';
+    if (hour < 17) return 'Good afternoon';
+    return 'Good evening';
+  }
 
   @override
   Widget build(BuildContext context) {
     final illnesses = List<Illness>.from(data.illnesses)
       ..sort((a, b) => a.displayOrder.compareTo(b.displayOrder));
 
-    return Stack(
-      children: [
-        // Baby photo background
-        Positioned.fill(
-          child: Image.asset(
-            'assets/images/background/baby_photo.jpg',
-            fit: BoxFit.cover,
-            opacity: const AlwaysStoppedAnimation(0.12),
+    final mid = (illnesses.length / 2).ceil();
+    final topRow = illnesses.take(mid).toList();
+    final bottomRow = illnesses.skip(mid).toList();
+
+    return CustomScrollView(
+      slivers: [
+        // -- Greeting header --
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _greeting(),
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                    color: AppTheme.inkMuted,
+                    letterSpacing: 0.2,
+                  ),
+                ),
+                const SizedBox(height: 1),
+                const Text(
+                  'Common Conditions',
+                  style: TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.ink,
+                    height: 1.15,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
 
-        // Dark overlay for readability
-        Positioned.fill(
-          child: Container(
-            color: AppTheme.surface.withValues(alpha: 0.88),
+        // -- First row --
+        _buildRow(topRow, data),
+
+        // -- Second row header --
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(16, 28, 16, 8),
+            child: Text(
+              'More Conditions',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.ink.withValues(alpha: 0.9),
+                height: 1.15,
+              ),
+            ),
           ),
         ),
 
-        // Content
-        CustomScrollView(
-          slivers: [
-            // -- Greeting section --
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  AppTheme.spacingMd,
-                  AppTheme.spacingSm,
-                  AppTheme.spacingMd,
-                  AppTheme.spacingSm,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Good morning',
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w400,
-                        color: AppTheme.inkMuted,
-                      ),
-                    ),
-                    SizedBox(height: 2),
-                    Text(
-                      'Common Conditions',
-                      style: AppTheme.sectionTitle,
-                    ),
-                  ],
-                ),
-              ),
-            ),
+        // -- Second row --
+        _buildRow(bottomRow, data),
 
-            // -- Top conditions: 2-column grid --
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: AppTheme.spacingMd),
-              sliver: SliverGrid(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: AppTheme.spacingMd,
-                  crossAxisSpacing: AppTheme.spacingMd,
-                  childAspectRatio: 1.0,
-                ),
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final illness = illnesses[index];
-                    return DoseCard(
-                      label: illness.nameEn,
-                      imagePath: 'assets/images/conditions/${illness.id}.jpg',
-                      fallbackGradient: AppTheme.conditionGradients[illness.id] ??
-                          [AppTheme.surfaceCard, AppTheme.surfaceCard],
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => WeightEntryScreen(
-                              data: data,
-                              illnessId: illness.id,
-                            ),
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  childCount: illnesses.length,
-                ),
-              ),
-            ),
-
-            // -- Quick stats / info banner --
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  AppTheme.spacingMd,
-                  AppTheme.spacingLg,
-                  AppTheme.spacingMd,
-                  0,
-                ),
-                child: Container(
-                  padding: const EdgeInsets.all(AppTheme.spacingMd),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        AppTheme.primary.withValues(alpha: 0.15),
-                        AppTheme.primary.withValues(alpha: 0.05),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-                    border: Border.all(
-                      color: AppTheme.primary.withValues(alpha: 0.15),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 44,
-                        height: 44,
-                        decoration: BoxDecoration(
-                          color: AppTheme.primary.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-                        ),
-                        child: const Icon(
-                          Icons.medical_information_outlined,
-                          color: AppTheme.primary,
-                          size: 24,
-                        ),
-                      ),
-                      const SizedBox(width: AppTheme.spacingMd),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Pediatric Dosing Guide',
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
-                                color: AppTheme.ink,
-                              ),
-                            ),
-                            const SizedBox(height: 2),
-                            Text(
-                              '${illnesses.length} conditions · Tap any card to calculate a dose',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: AppTheme.inkMuted,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-
-            // Bottom padding for nav bar
-            const SliverToBoxAdapter(
-              child: SizedBox(height: AppTheme.spacingLg),
-            ),
-          ],
+        // Bottom padding for nav bar
+        const SliverToBoxAdapter(
+          child: SizedBox(height: 24),
         ),
       ],
+    );
+  }
+
+  Widget _buildRow(List<Illness> illnesses, ClinicalData data) {
+    return SliverToBoxAdapter(
+      child: SizedBox(
+        height: 150,
+        child: ListView.separated(
+          scrollDirection: Axis.horizontal,
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          itemCount: illnesses.length,
+          separatorBuilder: (_, __) => const SizedBox(width: 12),
+          itemBuilder: (context, index) {
+            final illness = illnesses[index];
+            return DoseCard(
+              label: illness.nameEn,
+              size: 150,
+              imagePath: 'assets/images/conditions/${illness.id}.jpg',
+              fallbackGradient: AppTheme.conditionGradients[illness.id] ??
+                  [AppTheme.surfaceCard, AppTheme.surfaceCard],
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => WeightEntryScreen(
+                      data: data,
+                      illnessId: illness.id,
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 }

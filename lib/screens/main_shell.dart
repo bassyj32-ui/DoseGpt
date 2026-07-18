@@ -21,18 +21,29 @@ class _MainShellState extends State<MainShell> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.surface,
-      extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text('DoseGPT'),
+        title: const Row(
+          children: [
+            Icon(Icons.medical_services_outlined, size: 22, color: AppTheme.primary),
+            SizedBox(width: 8),
+            Text(
+              'DoseGPT',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppTheme.ink,
+                letterSpacing: -0.3,
+              ),
+            ),
+          ],
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.search_outlined),
-            onPressed: () {
-              // TODO: search functionality
-            },
+            onPressed: () {},
             tooltip: 'Search',
           ),
         ],
@@ -62,11 +73,11 @@ class _MainShellState extends State<MainShell> {
           type: BottomNavigationBarType.fixed,
           elevation: 0,
           selectedLabelStyle: const TextStyle(
-            fontSize: 13,
+            fontSize: 12,
             fontWeight: FontWeight.w600,
           ),
           unselectedLabelStyle: const TextStyle(
-            fontSize: 13,
+            fontSize: 12,
             fontWeight: FontWeight.w400,
           ),
           items: const [

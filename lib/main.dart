@@ -47,18 +47,50 @@ class AppEntry extends StatefulWidget {
 class _AppEntryState extends State<AppEntry> {
   late Future<ClinicalData> _dataFuture;
   late Future<bool> _disclaimerFuture;
+  late Future<void> _imagePrecacheFuture;
 
   @override
   void initState() {
     super.initState();
     _dataFuture = DataLoader.load();
     _disclaimerFuture = PreferencesService.getHasSeenDisclaimer();
+    _imagePrecacheFuture = _precacheAllImages();
+  }
+
+  /// Pre-load all asset images so they display instantly on the home screen.
+  Future<void> _precacheAllImages() async {
+    // Wait for the widget tree to be ready
+    await WidgetsBinding.instance.endOfFrame;
+
+    if (!mounted) return;
+
+    // Precache the background image
+    await precacheImage(
+      const AssetImage('assets/images/background/baby_photo.jpg'),
+      context,
+      size: null,
+    );
+
+    if (!mounted) return;
+
+    // Precache all condition card images
+    const conditionIds = [
+      'asthma', 'diarrhea', 'ear_infection', 'fever', 'malaria',
+      'pneumonia', 'skin_infection', 'tonsillitis', 'uti', 'worms',
+    ];
+    await Future.wait(
+      conditionIds.map((id) => precacheImage(
+        AssetImage('assets/images/conditions/$id.jpg'),
+        context,
+        size: null,
+      )),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.wait([_dataFuture, _disclaimerFuture]),
+      future: Future.wait([_dataFuture, _disclaimerFuture, _imagePrecacheFuture]),
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
