@@ -69,7 +69,7 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
               const SizedBox(height: AppTheme.spacingMd),
 
               // Disclaimer text
-              const Text(
+              Text(
                 'DoseGPT assists dosing calculations. It does not replace clinical judgment. Always verify the patient\'s diagnosis and contraindications before administering.',
                 style: AppTheme.body,
                 textAlign: TextAlign.center,

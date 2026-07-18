@@ -36,7 +36,7 @@ class ReferenceScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AppTheme.spacingSm),
-            const Text(
+            Text(
               'Full reference content, protocol citations, and clinical guidelines will be available here in a future update.',
               style: AppTheme.bodyMuted,
               textAlign: TextAlign.center,

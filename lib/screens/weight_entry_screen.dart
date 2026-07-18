@@ -220,7 +220,7 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Patient Age', style: AppTheme.cardLabel),
+                    Text('Patient Age', style: AppTheme.cardLabel),
                     const SizedBox(height: AppTheme.spacingMd),
                     Row(
                       children: [
@@ -268,7 +268,7 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Weight (kg)', style: AppTheme.cardLabel),
+                    Text('Weight (kg)', style: AppTheme.cardLabel),
                     const SizedBox(height: AppTheme.spacingSm),
                     TextFormField(
                       controller: _weightController,
@@ -310,12 +310,12 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Select Drug', style: AppTheme.cardLabel),
+                    Text('Select Drug', style: AppTheme.cardLabel),
                     const SizedBox(height: AppTheme.spacingSm),
 
                     if (_availableDrugs.isEmpty && _isNeonate != true)
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: AppTheme.spacingMd),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: AppTheme.spacingMd),
                         child: Text(
                           'No suitable drugs available for this age.',
                           style: AppTheme.formulaSource,
@@ -418,7 +418,7 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text('Concentration', style: AppTheme.cardLabel),
+                      Text('Concentration', style: AppTheme.cardLabel),
                       const SizedBox(height: AppTheme.spacingSm),
                       Wrap(
                         spacing: AppTheme.spacingSm,
