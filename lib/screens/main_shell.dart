@@ -4,7 +4,11 @@ import '../services/data_loader.dart';
 import 'home_screen.dart';
 import 'reference_screen.dart';
 
-/// Main navigation shell — Spotify-style dark nav with transparent app bar.
+/// Main Navigation Shell
+///
+/// Clean, minimal shell with a subtle top bar and soft bottom navigation.
+/// The app bar blends into the background — no elevation, no dividing lines.
+/// The bottom nav uses 11px labels with gentle icon outlines.
 class MainShell extends StatefulWidget {
   final ClinicalData data;
 
@@ -25,24 +29,18 @@ class _MainShellState extends State<MainShell> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Row(
-          children: [
-            Icon(Icons.medical_services_outlined, size: 22, color: AppTheme.primary),
-            SizedBox(width: 8),
-            Text(
-              'DoseGPT',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppTheme.ink,
-                letterSpacing: -0.3,
-              ),
-            ),
-          ],
+        title: const Text(
+          'DoseGPT',
+          style: TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w700,
+            color: AppTheme.ink,
+            letterSpacing: -0.3,
+          ),
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.search_outlined),
+            icon: const Icon(Icons.search_outlined, size: 22),
             onPressed: () {},
             tooltip: 'Search',
           ),
@@ -59,7 +57,7 @@ class _MainShellState extends State<MainShell> {
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(
-              color: AppTheme.borderHairline.withValues(alpha: 0.3),
+              color: AppTheme.borderHairline.withValues(alpha: 0.4),
               width: 0.5,
             ),
           ),
@@ -73,22 +71,24 @@ class _MainShellState extends State<MainShell> {
           type: BottomNavigationBarType.fixed,
           elevation: 0,
           selectedLabelStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: FontWeight.w600,
+            letterSpacing: 0.2,
           ),
           unselectedLabelStyle: const TextStyle(
-            fontSize: 12,
+            fontSize: 11,
             fontWeight: FontWeight.w400,
+            letterSpacing: 0.2,
           ),
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined, size: 22),
+              activeIcon: Icon(Icons.home, size: 22),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.library_books_outlined),
-              activeIcon: Icon(Icons.library_books),
+              icon: Icon(Icons.library_books_outlined, size: 22),
+              activeIcon: Icon(Icons.library_books, size: 22),
               label: 'Reference',
             ),
           ],
