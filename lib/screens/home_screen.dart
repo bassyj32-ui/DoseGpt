@@ -108,7 +108,7 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.only(bottom: AppTheme.space4),
                   child: Text(
                     _greeting(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
                       color: AppTheme.inkMuted,
@@ -118,7 +118,7 @@ class HomeScreen extends StatelessWidget {
                 ),
 
                 // Main headline with icon
-                const Row(
+                Row(
                   children: [
                     Icon(
                       Icons.medical_services_outlined,
@@ -135,7 +135,7 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
 
-                const SizedBox(height: AppTheme.space20),
+                SizedBox(height: AppTheme.space20),
 
                 // Hero search bar
                 _HeroSearchBar(
@@ -144,15 +144,15 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
 
-                const SizedBox(height: AppTheme.space24),
+                SizedBox(height: AppTheme.space24),
 
                 // Section label
-                const Text(
+                Text(
                   'Featured Conditions',
                   style: AppTheme.headingLarge,
                 ),
 
-                const SizedBox(height: AppTheme.space4),
+                SizedBox(height: AppTheme.space4),
 
                 // Count
                 Text(
@@ -179,7 +179,7 @@ class HomeScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                Text(
                   'All Conditions',
                   style: AppTheme.headingLarge,
                 ),
@@ -196,7 +196,7 @@ class HomeScreen extends StatelessWidget {
         _buildMoreRow(more, data),
 
         // ── Bottom padding for safe area ───────────────────────
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: SizedBox(height: AppTheme.space40),
         ),
       ],
