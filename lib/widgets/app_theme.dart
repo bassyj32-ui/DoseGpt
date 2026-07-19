@@ -12,6 +12,10 @@ import 'package:google_fonts/google_fonts.dart';
 ///   • Medical — professional tone, warm dark palette, purposeful greens
 ///
 /// Inspired by Headspace's visual rhythm and Apple's spatial precision.
+///
+/// The theme exposes both a [theme] (dark) and [lightTheme] (light).
+/// Dark is used for sub-screens (weight entry, result, disclaimer).
+/// Light is used for the main shell (home, reference).
 class AppTheme {
   // ── Brand Colors ──────────────────────────────────────────────
   static const Color primary = Color(0xFF1DB954); // Medical green
@@ -22,19 +26,34 @@ class AppTheme {
   static const Color urgent = Color(0xFFE91429);
   static const Color warning = Color(0xFFFFA42B);
 
-  // ── Surface Palette ──────────────────────────────────────────
+  // ── Surface Palette (Dark) ───────────────────────────────────
   static const Color surface = Color(0xFF121212); // Deep base
   static const Color surfaceCard = Color(0xFF1A1D1A); // Slightly warm
   static const Color surfaceElevated = Color(0xFF242724);
   static const Color surfaceHighlight = Color(0xFF2E312E);
 
-  // ── Text ─────────────────────────────────────────────────────
+  // ── Surface Palette (Light) ──────────────────────────────────
+  static const Color lightSurface = Color(0xFFFFFFFF); // Pure white
+  static const Color lightCardBg = Color(0xFFF4F6F5); // Light grey-green
+  static const Color lightDivider = Color(0xFFD0D5D2); // Visible hairline
+
+  // ── Text (Dark) ──────────────────────────────────────────────
   static const Color ink = Color(0xFFFFFFFF);
   static const Color inkPrimary = Color(0xFFF0F0F0);
   static const Color inkMuted = Color(0xFFB0B5B0);
   static const Color inkSubtle = Color(0xFF6B706B);
 
-  // ── Borders ──────────────────────────────────────────────────
+  // ── Text (Light) ─────────────────────────────────────────────
+  static const Color lightInk = Color(0xFF16211C); // Dark charcoal-green
+  static const Color lightInkMuted = Color(0xFF6B7B73); // Muted grey-green
+  static const Color lightInkSubtle = Color(0xFF8A9B93); // Chevron grey
+  static const Color lightAccent = Color(0xFFB3402B); // Urgent red-orange
+
+  // ── Nav (Light) ──────────────────────────────────────────────
+  static const Color lightNavActive = Color(0xFF0B6E4F); // Deep green
+  static const Color lightNavInactive = Color(0xFF5B6B62); // Muted grey
+
+  // ── Borders (Dark) ───────────────────────────────────────────
   static const Color borderHairline = Color(0xFF2E312E);
   static const Color borderActive = Color(0xFF3A3E3A);
 
@@ -75,7 +94,7 @@ class AppTheme {
   static const double radiusCard = 18.0; // Headspace-inspired
   static const double radiusPill = 28.0;
 
-  // ── Shadows ──────────────────────────────────────────────────
+  // ── Shadows (Dark) ──────────────────────────────────────────
   static const List<BoxShadow> shadowSm = [
     BoxShadow(
       color: Color(0x1A000000),
@@ -105,6 +124,40 @@ class AppTheme {
       color: Color(0x3D000000),
       blurRadius: 12,
       offset: Offset(0, 4),
+    ),
+  ];
+
+  // ── Shadows (Light) — layered for realistic elevation ──────
+  /// Apple-like pill card shadow stack: 3 layers for soft depth.
+  static const List<BoxShadow> lightShadowCard = [
+    BoxShadow(
+      color: Color(0x0A000000),
+      blurRadius: 20,
+      offset: Offset(0, 6),
+    ),
+    BoxShadow(
+      color: Color(0x0D000000),
+      blurRadius: 8,
+      offset: Offset(0, 3),
+    ),
+    BoxShadow(
+      color: Color(0x08000000),
+      blurRadius: 2,
+      offset: Offset(0, 1),
+    ),
+  ];
+
+  /// Subtle icon frame shadow.
+  static const List<BoxShadow> lightShadowIcon = [
+    BoxShadow(
+      color: Color(0x08000000),
+      blurRadius: 4,
+      offset: Offset(0, 2),
+    ),
+    BoxShadow(
+      color: Color(0x04000000),
+      blurRadius: 1,
+      offset: Offset(0, 0),
     ),
   ];
 
@@ -283,6 +336,54 @@ class AppTheme {
         bodyMedium: bodyMuted,
         labelLarge: labelLarge,
         labelMedium: labelMedium,
+      ),
+    );
+  }
+
+  // ── Light Theme ──────────────────────────────────────────────
+  /// Clean white theme for the main shell (Home + Reference).
+  /// Used in [MainShell]; dark sub-screens use [theme].
+  static ThemeData get lightTheme {
+    return ThemeData(
+      useMaterial3: true,
+      brightness: Brightness.light,
+      colorScheme: const ColorScheme.light(
+        primary: Color(0xFF0B6E4F),
+        onPrimary: Color(0xFFFFFFFF),
+        secondary: Color(0xFF16211C),
+        surface: Color(0xFFFFFFFF),
+        onSurface: Color(0xFF16211C),
+        error: Color(0xFFB3402B),
+      ),
+      scaffoldBackgroundColor: lightSurface,
+      appBarTheme: AppBarTheme(
+        backgroundColor: lightSurface,
+        foregroundColor: lightInk,
+        elevation: 0,
+        centerTitle: false,
+        titleTextStyle: GoogleFonts.inter(
+          fontSize: 22,
+          fontWeight: FontWeight.w700,
+          color: lightInk,
+          letterSpacing: -0.3,
+        ),
+      ),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: Color(0xFFFFFFFF),
+        selectedItemColor: Color(0xFF0B6E4F),
+        unselectedItemColor: Color(0xFF5B6B62),
+        type: BottomNavigationBarType.fixed,
+        elevation: 0,
+        selectedLabelStyle: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
+          letterSpacing: 0.2,
+        ),
+        unselectedLabelStyle: TextStyle(
+          fontSize: 11,
+          fontWeight: FontWeight.w400,
+          letterSpacing: 0.2,
+        ),
       ),
     );
   }
