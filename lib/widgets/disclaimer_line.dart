@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'app_theme.dart';
 
 /// Small, muted disclaimer line shown on every Result screen.
 class DisclaimerLine extends StatelessWidget {
@@ -16,7 +17,7 @@ class DisclaimerLine extends StatelessWidget {
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w400,
-          color: Colors.white.withValues(alpha: 0.5),
+          color: AppTheme.lightInkSubtle,
         ),
         textAlign: TextAlign.center,
       ),

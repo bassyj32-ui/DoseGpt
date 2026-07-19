@@ -7,7 +7,7 @@ import '../models/drug.dart';
 import '../services/data_loader.dart';
 import '../services/dose_calculator.dart';
 
-/// Age + Weight entry screen — Spotify dark style.
+/// Age + Weight entry screen — light theme.
 class WeightEntryScreen extends StatefulWidget {
   final ClinicalData data;
   final String illnessId;
@@ -189,284 +189,324 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
   Widget build(BuildContext context) {
     final illness = _illness;
 
-    return Scaffold(
-      backgroundColor: AppTheme.surface,
-      appBar: AppBar(
-        title: Text(illness?.nameEn ?? 'Calculate Dose'),
-        backgroundColor: AppTheme.surface,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppTheme.spacingMd),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // -- Neonatal gate --
-              if (_isNeonate == true && _neonatalMessage != null)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: AppTheme.spacingMd),
-                  child: OutOfRangeView(message: _neonatalMessage!),
+    return Theme(
+      data: AppTheme.lightTheme,
+      child: Scaffold(
+        backgroundColor: AppTheme.lightSurface,
+        appBar: AppBar(
+          title: Text(illness?.nameEn ?? 'Calculate Dose'),
+          backgroundColor: AppTheme.lightSurface,
+          foregroundColor: AppTheme.lightInk,
+          elevation: 0,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(0.5),
+            child: Container(color: AppTheme.lightDivider, height: 0.5),
+          ),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // -- Neonatal gate --
+                if (_isNeonate == true && _neonatalMessage != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: OutOfRangeView(message: _neonatalMessage!),
+                  ),
+
+                // -- Age section --
+                _LightCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Patient Age',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.lightInkMuted)),
+                      const SizedBox(height: 16),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _AgeStepper(
+                              label: 'Years',
+                              value: _years,
+                              min: 0,
+                              max: 18,
+                              onChanged: (v) {
+                                setState(() => _years = v);
+                                _onAgeChanged();
+                              },
+                            ),
+                          ),
+                          const SizedBox(width: 16),
+                          Expanded(
+                            child: _AgeStepper(
+                              label: 'Months',
+                              value: _months,
+                              min: 0,
+                              max: 11,
+                              onChanged: (v) {
+                                setState(() => _months = v);
+                                _onAgeChanged();
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
 
-              // -- Age section --
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(AppTheme.spacingMd),
-                decoration: BoxDecoration(
-                  color: AppTheme.surfaceCard,
-                  borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+                const SizedBox(height: 16),
+
+                // -- Weight section --
+                _LightCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Weight (kg)',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.lightInkMuted)),
+                      const SizedBox(height: 8),
+                      TextFormField(
+                        controller: _weightController,
+                        keyboardType:
+                            const TextInputType.numberWithOptions(decimal: true),
+                        style: const TextStyle(
+                          fontSize: 20,
+                          color: AppTheme.lightInk,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'e.g. 12.5',
+                          hintStyle: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                            color: AppTheme.lightInkSubtle,
+                          ),
+                          suffixText: 'kg',
+                          suffixStyle: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.lightInkMuted,
+                          ),
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: AppTheme.lightDivider, width: 1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide(
+                                color: AppTheme.lightDivider, width: 1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                                color: AppTheme.lightNavActive, width: 1.5),
+                          ),
+                          contentPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 14),
+                        ),
+                        validator: _validateWeight,
+                      ),
+                    ],
+                  ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Patient Age', style: AppTheme.cardLabel),
-                    const SizedBox(height: AppTheme.spacingMd),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: _AgeStepper(
-                            label: 'Years',
-                            value: _years,
-                            min: 0,
-                            max: 18,
-                            onChanged: (v) {
-                              setState(() => _years = v);
-                              _onAgeChanged();
-                            },
+
+                const SizedBox(height: 16),
+
+                // -- Drug selection --
+                _LightCard(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Select Drug',
+                          style: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.w600,
+                              color: AppTheme.lightInkMuted)),
+                      const SizedBox(height: 8),
+
+                      if (_availableDrugs.isEmpty && _isNeonate != true)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Text(
+                            'No suitable drugs available for this age.',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: AppTheme.lightInkMuted,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: AppTheme.spacingMd),
-                        Expanded(
-                          child: _AgeStepper(
-                            label: 'Months',
-                            value: _months,
-                            min: 0,
-                            max: 11,
-                            onChanged: (v) {
-                              setState(() => _months = v);
-                              _onAgeChanged();
+
+                      ..._availableDrugs.map((drug) {
+                        final isSelected = drug.id == _selectedDrugId;
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _selectedDrugId = drug.id;
+                                _selectedConcentrationIndex = 0;
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? AppTheme.lightNavActive.withValues(alpha: 0.08)
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? AppTheme.lightNavActive
+                                      : AppTheme.lightDivider,
+                                  width: isSelected ? 2 : 1,
+                                ),
+                              ),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Text(
+                                              drug.drugNameEn,
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w600,
+                                                color: isSelected
+                                                    ? AppTheme.lightNavActive
+                                                    : AppTheme.lightInk,
+                                              ),
+                                            ),
+                                            if (drug.isRecommended)
+                                              const Padding(
+                                                padding: EdgeInsets.only(left: 8),
+                                                child: _RecommendedBadge(),
+                                              ),
+                                          ],
+                                        ),
+                                        if (drug.notes != null &&
+                                            drug.notes!.contains('VERIFY'))
+                                          Padding(
+                                            padding:
+                                                const EdgeInsets.only(top: 4),
+                                            child: Text(
+                                              drug.notes!,
+                                              style: TextStyle(
+                                                fontSize: 13,
+                                                color: AppTheme.lightInkMuted,
+                                              ),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                  Icon(
+                                    isSelected
+                                        ? Icons.radio_button_checked
+                                        : Icons.radio_button_unchecked,
+                                    color: isSelected
+                                        ? AppTheme.lightNavActive
+                                        : AppTheme.lightInkSubtle,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+
+                // -- Concentration selection --
+                if (_selectedDrug != null &&
+                    _selectedDrug!.concentrations != null &&
+                    _selectedDrug!.concentrations!.length > 1) ...[
+                  const SizedBox(height: 16),
+                  _LightCard(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text('Concentration',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                                color: AppTheme.lightInkMuted)),
+                        const SizedBox(height: 8),
+                        Wrap(
+                          spacing: 8,
+                          runSpacing: 8,
+                          children: List.generate(
+                            _selectedDrug!.concentrations!.length,
+                            (index) {
+                              final conc =
+                                  _selectedDrug!.concentrations![index];
+                              final isSelected =
+                                  index == _selectedConcentrationIndex;
+                              return ChoiceChip(
+                                label: Text(conc.labelEn),
+                                selected: isSelected,
+                                onSelected: (selected) {
+                                  if (selected) {
+                                    setState(() =>
+                                        _selectedConcentrationIndex = index);
+                                  }
+                                },
+                                selectedColor:
+                                    AppTheme.lightNavActive.withValues(alpha: 0.15),
+                                backgroundColor: Colors.white,
+                                labelStyle: TextStyle(
+                                  color: isSelected
+                                      ? AppTheme.lightNavActive
+                                      : AppTheme.lightInkMuted,
+                                  fontWeight: isSelected
+                                      ? FontWeight.w600
+                                      : FontWeight.w400,
+                                ),
+                                side: BorderSide(
+                                  color: isSelected
+                                      ? AppTheme.lightNavActive
+                                      : AppTheme.lightDivider,
+                                ),
+                              );
                             },
                           ),
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: AppTheme.spacingMd),
-
-              // -- Weight section --
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(AppTheme.spacingMd),
-                decoration: BoxDecoration(
-                  color: AppTheme.surfaceCard,
-                  borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Weight (kg)', style: AppTheme.cardLabel),
-                    const SizedBox(height: AppTheme.spacingSm),
-                    TextFormField(
-                      controller: _weightController,
-                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                      style: const TextStyle(
-                        fontSize: 20,
-                        color: AppTheme.ink,
-                        fontWeight: FontWeight.w600,
-                      ),
-                      decoration: const InputDecoration(
-                        hintText: 'e.g. 12.5',
-                        hintStyle: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
-                        ),
-                        suffixText: 'kg',
-                        suffixStyle: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w600,
-                          color: AppTheme.inkMuted,
-                        ),
-                      ),
-                      validator: _validateWeight,
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: AppTheme.spacingMd),
-
-              // -- Drug selection --
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(AppTheme.spacingMd),
-                decoration: BoxDecoration(
-                  color: AppTheme.surfaceCard,
-                  borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Select Drug', style: AppTheme.cardLabel),
-                    const SizedBox(height: AppTheme.spacingSm),
-
-                    if (_availableDrugs.isEmpty && _isNeonate != true)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: AppTheme.spacingMd),
-                        child: Text(
-                          'No suitable drugs available for this age.',
-                          style: AppTheme.formulaSource,
-                        ),
-                      ),
-
-                    ..._availableDrugs.map((drug) {
-                      final isSelected = drug.id == _selectedDrugId;
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: AppTheme.spacingSm),
-                        child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              _selectedDrugId = drug.id;
-                              _selectedConcentrationIndex = 0;
-                            });
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.all(AppTheme.spacingMd),
-                            decoration: BoxDecoration(
-                              color: isSelected
-                                  ? AppTheme.primary.withValues(alpha: 0.15)
-                                  : AppTheme.surfaceElevated,
-                              borderRadius: BorderRadius.circular(AppTheme.radiusSm),
-                              border: Border.all(
-                                color: isSelected
-                                    ? AppTheme.primary
-                                    : AppTheme.borderHairline,
-                                width: isSelected ? 2 : 1,
-                              ),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            drug.drugNameEn,
-                                            style: TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w600,
-                                              color: isSelected
-                                                  ? AppTheme.primary
-                                                  : AppTheme.ink,
-                                            ),
-                                          ),
-                                          if (drug.isRecommended)
-                                            const Padding(
-                                              padding: EdgeInsets.only(left: 8),
-                                              child: _RecommendedBadge(),
-                                            ),
-                                        ],
-                                      ),
-                                      if (drug.notes != null && drug.notes!.contains('VERIFY'))
-                                        Padding(
-                                          padding: const EdgeInsets.only(top: 4),
-                                          child: Text(
-                                            drug.notes!,
-                                            style: AppTheme.formulaSource,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                                Icon(
-                                  isSelected
-                                      ? Icons.radio_button_checked
-                                      : Icons.radio_button_unchecked,
-                                  color: isSelected
-                                      ? AppTheme.primary
-                                      : AppTheme.inkSubtle,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
-                    }),
-                  ],
-                ),
-              ),
-
-              // -- Concentration selection --
-              if (_selectedDrug != null &&
-                  _selectedDrug!.concentrations != null &&
-                  _selectedDrug!.concentrations!.length > 1) ...[
-                const SizedBox(height: AppTheme.spacingMd),
-                Container(
-                  width: double.infinity,
-                  padding: const EdgeInsets.all(AppTheme.spacingMd),
-                  decoration: BoxDecoration(
-                    color: AppTheme.surfaceCard,
-                    borderRadius: BorderRadius.circular(AppTheme.radiusMd),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Concentration', style: AppTheme.cardLabel),
-                      const SizedBox(height: AppTheme.spacingSm),
-                      Wrap(
-                        spacing: AppTheme.spacingSm,
-                        runSpacing: AppTheme.spacingSm,
-                        children: List.generate(
-                          _selectedDrug!.concentrations!.length,
-                          (index) {
-                            final conc = _selectedDrug!.concentrations![index];
-                            final isSelected = index == _selectedConcentrationIndex;
-                            return ChoiceChip(
-                              label: Text(conc.labelEn),
-                              selected: isSelected,
-                              onSelected: (selected) {
-                                if (selected) {
-                                  setState(() => _selectedConcentrationIndex = index);
-                                }
-                              },
-                              selectedColor: AppTheme.primary.withValues(alpha: 0.25),
-                              backgroundColor: AppTheme.surfaceElevated,
-                              labelStyle: TextStyle(
-                                color: isSelected ? AppTheme.primary : AppTheme.inkMuted,
-                                fontWeight:
-                                    isSelected ? FontWeight.w600 : FontWeight.w400,
-                              ),
-                              side: BorderSide(
-                                color: isSelected ? AppTheme.primary : AppTheme.borderHairline,
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                ],
+
+                const SizedBox(height: 24),
+
+                // Calculate button
+                if (_isNeonate != true)
+                  PrimaryButton(
+                    label: 'Calculate Dose',
+                    isLoading: _isCalculating,
+                    onPressed: _calculate,
                   ),
-                ),
+
+                const SizedBox(height: 16),
               ],
-
-              const SizedBox(height: AppTheme.spacingLg),
-
-              // Calculate button
-              if (_isNeonate != true)
-                PrimaryButton(
-                  label: 'Calculate Dose',
-                  isLoading: _isCalculating,
-                  onPressed: _calculate,
-                ),
-
-              const SizedBox(height: AppTheme.spacingMd),
-            ],
+            ),
           ),
         ),
       ),
@@ -474,7 +514,28 @@ class _WeightEntryScreenState extends State<WeightEntryScreen> {
   }
 }
 
-/// Spotify-style age stepper.
+// ── Light card wrapper ─────────────────────────────────────────
+
+class _LightCard extends StatelessWidget {
+  final Widget child;
+  const _LightCard({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppTheme.lightCardBg,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: child,
+    );
+  }
+}
+
+// ── Age stepper ────────────────────────────────────────────────
+
 class _AgeStepper extends StatelessWidget {
   final String label;
   final int value;
@@ -493,15 +554,22 @@ class _AgeStepper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(AppTheme.spacingSm),
+      padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: AppTheme.surfaceElevated,
-        borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         children: [
-          Text(label, style: AppTheme.formulaSource),
-          const SizedBox(height: AppTheme.spacingXs),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 13,
+              color: AppTheme.lightInkMuted,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -512,16 +580,20 @@ class _AgeStepper extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     color: value > min
-                        ? AppTheme.primary.withValues(alpha: 0.2)
-                        : AppTheme.surfaceElevated,
-                    borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                        ? AppTheme.lightNavActive.withValues(alpha: 0.12)
+                        : AppTheme.lightCardBg,
+                    borderRadius: BorderRadius.circular(8),
                     border: Border.all(
                       color: value > min
-                          ? AppTheme.primary.withValues(alpha: 0.3)
-                          : AppTheme.borderHairline,
+                          ? AppTheme.lightNavActive.withValues(alpha: 0.3)
+                          : AppTheme.lightDivider,
                     ),
                   ),
-                  child: const Icon(Icons.remove, size: 20, color: AppTheme.ink),
+                  child: Icon(Icons.remove,
+                      size: 20,
+                      color: value > min
+                          ? AppTheme.lightNavActive
+                          : AppTheme.lightInkSubtle),
                 ),
               ),
               SizedBox(
@@ -532,7 +604,7 @@ class _AgeStepper extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: AppTheme.ink,
+                    color: AppTheme.lightInk,
                   ),
                 ),
               ),
@@ -543,16 +615,20 @@ class _AgeStepper extends StatelessWidget {
                   height: 40,
                   decoration: BoxDecoration(
                     color: value < max
-                        ? AppTheme.primary.withValues(alpha: 0.2)
-                        : AppTheme.surfaceElevated,
-                    borderRadius: BorderRadius.circular(AppTheme.radiusSm),
+                        ? AppTheme.lightNavActive.withValues(alpha: 0.12)
+                        : AppTheme.lightCardBg,
+                    borderRadius: BorderRadius.circular(8),
                     border: Border.all(
                       color: value < max
-                          ? AppTheme.primary.withValues(alpha: 0.3)
-                          : AppTheme.borderHairline,
+                          ? AppTheme.lightNavActive.withValues(alpha: 0.3)
+                          : AppTheme.lightDivider,
                     ),
                   ),
-                  child: const Icon(Icons.add, size: 20, color: AppTheme.ink),
+                  child: Icon(Icons.add,
+                      size: 20,
+                      color: value < max
+                          ? AppTheme.lightNavActive
+                          : AppTheme.lightInkSubtle),
                 ),
               ),
             ],
@@ -571,7 +647,7 @@ class _RecommendedBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
       decoration: BoxDecoration(
-        color: AppTheme.primary.withValues(alpha: 0.2),
+        color: AppTheme.lightNavActive.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(4),
       ),
       child: const Text(
@@ -579,7 +655,7 @@ class _RecommendedBadge extends StatelessWidget {
         style: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w600,
-          color: AppTheme.primary,
+          color: AppTheme.lightNavActive,
         ),
       ),
     );

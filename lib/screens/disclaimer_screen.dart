@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../widgets/app_theme.dart';
 import '../services/preferences_service.dart';
 
-/// First-launch disclaimer — Spotify dark style.
+/// First-launch disclaimer — light theme.
 class DisclaimerScreen extends StatefulWidget {
   final Widget Function() onDismissed;
 
@@ -29,75 +29,95 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppTheme.surface,
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(AppTheme.spacingLg),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Spacer(flex: 2),
+    return Theme(
+      data: AppTheme.lightTheme,
+      child: Scaffold(
+        backgroundColor: AppTheme.lightSurface,
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(flex: 2),
 
-              // Icon
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: AppTheme.primary.withValues(alpha: 0.15),
-                  borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+                // Icon
+                Container(
+                  width: 80,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: AppTheme.lightNavActive.withValues(alpha: 0.1),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Icon(
+                    Icons.medical_services_outlined,
+                    color: AppTheme.lightNavActive,
+                    size: 40,
+                  ),
                 ),
-                child: const Icon(
-                  Icons.medical_services_outlined,
-                  color: AppTheme.primary,
-                  size: 40,
+
+                const SizedBox(height: 24),
+
+                // Title
+                const Text(
+                  'DoseGPT',
+                  style: TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                    color: AppTheme.lightInk,
+                  ),
                 ),
-              ),
 
-              const SizedBox(height: AppTheme.spacingLg),
+                const SizedBox(height: 16),
 
-              // Title
-              const Text(
-                'DoseGPT',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: AppTheme.ink,
+                // Disclaimer text
+                const Text(
+                  'DoseGPT assists dosing calculations. It does not replace clinical judgment. Always verify the patient\'s diagnosis and contraindications before administering.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: AppTheme.lightInkMuted,
+                    height: 1.55,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-              ),
 
-              const SizedBox(height: AppTheme.spacingMd),
+                const Spacer(flex: 2),
 
-              // Disclaimer text
-              Text(
-                'DoseGPT assists dosing calculations. It does not replace clinical judgment. Always verify the patient\'s diagnosis and contraindications before administering.',
-                style: AppTheme.body,
-                textAlign: TextAlign.center,
-              ),
-
-              const Spacer(flex: 2),
-
-              // Continue button
-              SizedBox(
-                width: double.infinity,
-                height: AppTheme.minTapHeight,
-                child: ElevatedButton(
-                  onPressed: _isLoading ? null : _handleContinue,
-                  child: _isLoading
-                      ? const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            color: AppTheme.ink,
-                          ),
-                        )
-                      : const Text('I Understand / Continue'),
+                // Continue button
+                SizedBox(
+                  width: double.infinity,
+                  height: 56,
+                  child: ElevatedButton(
+                    onPressed: _isLoading ? null : _handleContinue,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppTheme.lightNavActive,
+                      foregroundColor: Colors.white,
+                      disabledColor: AppTheme.lightNavActive.withValues(alpha: 0.5),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(28),
+                      ),
+                      elevation: 0,
+                      textStyle: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    child: _isLoading
+                        ? const SizedBox(
+                            width: 24,
+                            height: 24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
+                        : const Text('I Understand / Continue'),
+                  ),
                 ),
-              ),
 
-              const Spacer(flex: 1),
-            ],
+                const Spacer(flex: 1),
+              ],
+            ),
           ),
         ),
       ),

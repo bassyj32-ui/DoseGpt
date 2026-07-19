@@ -5,7 +5,7 @@ import '../widgets/disclaimer_line.dart';
 import '../models/drug.dart';
 import '../services/dose_calculator.dart';
 
-/// Result screen — Spotify dark style with hero dose display.
+/// Result screen — light theme.
 class ResultScreen extends StatelessWidget {
   final Drug drug;
   final DoseResult result;
@@ -42,17 +42,26 @@ class ResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppTheme.surface,
-      appBar: AppBar(
-        title: Text(illnessName.isNotEmpty ? illnessName : 'Dose'),
-        backgroundColor: AppTheme.surface,
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(AppTheme.spacingMd),
-        child: result.isOutOfRange
-            ? _buildOutOfRange(context)
-            : _buildResult(context),
+    return Theme(
+      data: AppTheme.lightTheme,
+      child: Scaffold(
+        backgroundColor: AppTheme.lightSurface,
+        appBar: AppBar(
+          title: Text(illnessName.isNotEmpty ? illnessName : 'Dose'),
+          backgroundColor: AppTheme.lightSurface,
+          foregroundColor: AppTheme.lightInk,
+          elevation: 0,
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(0.5),
+            child: Container(color: AppTheme.lightDivider, height: 0.5),
+          ),
+        ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20),
+          child: result.isOutOfRange
+              ? _buildOutOfRange(context)
+              : _buildResult(context),
+        ),
       ),
     );
   }
@@ -60,47 +69,55 @@ class ResultScreen extends StatelessWidget {
   Widget _buildOutOfRange(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: AppTheme.spacingXl),
+        const SizedBox(height: 32),
         Container(
           width: 80,
           height: 80,
           decoration: BoxDecoration(
-            color: AppTheme.urgent.withValues(alpha: 0.15),
-            borderRadius: BorderRadius.circular(AppTheme.radiusLg),
+            color: AppTheme.lightAccent.withValues(alpha: 0.12),
+            borderRadius: BorderRadius.circular(20),
           ),
           child: const Icon(
             Icons.warning_amber_rounded,
-            color: AppTheme.urgent,
+            color: AppTheme.lightAccent,
             size: 48,
           ),
         ),
-        const SizedBox(height: AppTheme.spacingMd),
+        const SizedBox(height: 20),
         Text(
           drug.drugNameEn,
-          style: AppTheme.bodyMuted,
+          style: const TextStyle(
+            fontSize: 17,
+            fontWeight: FontWeight.w600,
+            color: AppTheme.lightInkMuted,
+          ),
         ),
-        const SizedBox(height: AppTheme.spacingSm),
+        const SizedBox(height: 12),
         Text(
           result.outOfRangeMessage ??
               'This weight is outside the safe range for this calculation. '
               'Please double-check the weight or consult a colleague/refer the patient.',
-          style: AppTheme.body,
+          style: const TextStyle(
+            fontSize: 16,
+            color: AppTheme.lightInk,
+            height: 1.5,
+          ),
           textAlign: TextAlign.center,
         ),
         if (drug.referralTriggerText != null) ...[
-          const SizedBox(height: AppTheme.spacingMd),
+          const SizedBox(height: 16),
           _WarningBanner(
             icon: Icons.local_hospital,
             message: drug.referralTriggerText!,
-            color: AppTheme.urgent,
+            color: AppTheme.lightAccent,
           ),
         ],
-        const SizedBox(height: AppTheme.spacingXl),
+        const SizedBox(height: 32),
         PrimaryButton(
           label: 'New Calculation',
           onPressed: () => Navigator.of(context).pop(),
         ),
-        const SizedBox(height: AppTheme.spacingLg),
+        const SizedBox(height: 20),
         const DisclaimerLine(),
       ],
     );
@@ -115,38 +132,56 @@ class ResultScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Drug name
-        Text(
-          drug.drugNameEn,
-          style: AppTheme.bodyMuted,
+        // Drug name + patient info
+        _LightCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                drug.drugNameEn,
+                style: const TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.lightInkMuted,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                '${weightKg.toStringAsFixed(1)} kg · ${ageMonths ~/ 12}y ${ageMonths % 12}m',
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: AppTheme.lightInkSubtle,
+                ),
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: AppTheme.spacingSm),
 
-        // Patient info
-        Text(
-          '${weightKg.toStringAsFixed(1)} kg · ${ageMonths ~/ 12}y ${ageMonths % 12}m',
-          style: AppTheme.formulaSource,
-        ),
-        const SizedBox(height: AppTheme.spacingMd),
+        const SizedBox(height: 16),
 
-        // Hero result card
+        // Hero dose result card
         Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(AppTheme.spacingLg),
+          padding: const EdgeInsets.all(24),
           decoration: BoxDecoration(
-            color: AppTheme.surfaceCard,
-            borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-            border: Border.all(color: AppTheme.borderHairline),
+            color: AppTheme.lightSurface,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: AppTheme.lightShadowCard,
           ),
           child: Column(
             children: [
               Text(
                 result.prescription ?? '',
-                style: AppTheme.doseResult,
+                style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: AppTheme.lightNavActive,
+                  letterSpacing: 0.2,
+                ),
                 textAlign: TextAlign.center,
               ),
               if (result.calculatedMl != null) ...[
-                const SizedBox(height: AppTheme.spacingSm),
+                const SizedBox(height: 12),
                 _DoseVisual(
                   calculatedMl: result.calculatedMl!,
                   maxSafeMl: _maxSafeMl,
@@ -156,41 +191,54 @@ class ResultScreen extends StatelessWidget {
           ),
         ),
 
-        const SizedBox(height: AppTheme.spacingMd),
+        const SizedBox(height: 16),
 
         // Safety warning
         if (result.safetyWarning != null)
           _WarningBanner(
             icon: hasCriticalWarning ? Icons.warning : Icons.info_outline,
             message: result.safetyWarning!,
-            color: hasCriticalWarning ? AppTheme.urgent : AppTheme.warning,
+            color: hasCriticalWarning ? AppTheme.lightAccent : AppTheme.accentGold,
           ),
 
-        if (result.safetyWarning != null)
-          const SizedBox(height: AppTheme.spacingSm),
+        if (result.safetyWarning != null) const SizedBox(height: 8),
 
         // Duration warning
         if (result.durationWarning != null) ...[
           _WarningBanner(
             icon: Icons.access_time,
             message: result.durationWarning!,
-            color: AppTheme.warning,
+            color: AppTheme.accentGold,
           ),
-          const SizedBox(height: AppTheme.spacingSm),
+          const SizedBox(height: 8),
         ],
 
         // Calculation toggle
         _CalculationToggle(result: result, drug: drug),
 
-        const SizedBox(height: AppTheme.spacingMd),
+        const SizedBox(height: 16),
 
         // Source
-        Text(
-          'Source: ${drug.sourceName}',
-          style: AppTheme.formulaSource,
+        _LightCard(
+          child: Row(
+            children: [
+              Icon(Icons.article_outlined,
+                  size: 16, color: AppTheme.lightInkSubtle),
+              const SizedBox(width: 8),
+              Expanded(
+                child: Text(
+                  'Source: ${drug.sourceName}',
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: AppTheme.lightInkMuted,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
 
-        const SizedBox(height: AppTheme.spacingLg),
+        const SizedBox(height: 24),
 
         // New Calculation button
         PrimaryButton(
@@ -198,7 +246,7 @@ class ResultScreen extends StatelessWidget {
           onPressed: () => Navigator.of(context).pop(),
         ),
 
-        const SizedBox(height: AppTheme.spacingMd),
+        const SizedBox(height: 16),
 
         // Disclaimer
         const DisclaimerLine(),
@@ -212,7 +260,28 @@ class ResultScreen extends StatelessWidget {
   }
 }
 
-/// Dose volume bar indicator.
+// ── Light card ─────────────────────────────────────────────────
+
+class _LightCard extends StatelessWidget {
+  final Widget child;
+  const _LightCard({required this.child});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppTheme.lightCardBg,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: child,
+    );
+  }
+}
+
+// ── Dose volume bar ────────────────────────────────────────────
+
 class _DoseVisual extends StatelessWidget {
   final double calculatedMl;
   final double? maxSafeMl;
@@ -233,24 +302,28 @@ class _DoseVisual extends StatelessWidget {
       children: [
         Text(
           'Dose volume: ${calculatedMl.toStringAsFixed(1)} ml',
-          style: AppTheme.cardLabel,
+          style: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w500,
+            color: AppTheme.lightInkMuted,
+          ),
         ),
-        const SizedBox(height: AppTheme.spacingSm),
+        const SizedBox(height: 8),
         ClipRRect(
-          borderRadius: BorderRadius.circular(AppTheme.radiusPill),
+          borderRadius: BorderRadius.circular(8),
           child: Container(
-            height: 16,
+            height: 12,
             width: double.infinity,
-            color: AppTheme.surfaceElevated,
+            color: AppTheme.lightCardBg,
             child: FractionallySizedBox(
               alignment: Alignment.centerLeft,
               widthFactor: fillPercent,
               child: Container(
                 decoration: BoxDecoration(
                   color: fillPercent > 0.9
-                      ? AppTheme.urgent
-                      : AppTheme.primary,
-                  borderRadius: BorderRadius.circular(AppTheme.radiusPill),
+                      ? AppTheme.lightAccent
+                      : AppTheme.lightNavActive,
+                  borderRadius: BorderRadius.circular(8),
                 ),
               ),
             ),
@@ -261,7 +334,8 @@ class _DoseVisual extends StatelessWidget {
   }
 }
 
-/// Collapsible calculation details.
+// ── Calculation toggle ─────────────────────────────────────────
+
 class _CalculationToggle extends StatefulWidget {
   final DoseResult result;
   final Drug drug;
@@ -283,25 +357,27 @@ class _CalculationToggleState extends State<_CalculationToggle> {
           onTap: () => setState(() => _expanded = !_expanded),
           child: Container(
             padding: const EdgeInsets.symmetric(
-              horizontal: AppTheme.spacingMd,
-              vertical: AppTheme.spacingSm,
+              horizontal: 16,
+              vertical: 10,
             ),
             decoration: BoxDecoration(
-              color: AppTheme.surfaceCard,
-              borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-              border: Border.all(color: AppTheme.borderHairline),
+              color: AppTheme.lightCardBg,
+              borderRadius: BorderRadius.circular(12),
             ),
             child: Row(
               children: [
                 Icon(
                   _expanded ? Icons.expand_less : Icons.expand_more,
-                  color: AppTheme.inkMuted,
+                  color: AppTheme.lightInkMuted,
                   size: 20,
                 ),
-                const SizedBox(width: AppTheme.spacingSm),
+                const SizedBox(width: 8),
                 Text(
                   _expanded ? 'Hide calculation' : 'Show calculation',
-                  style: AppTheme.formulaSource,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: AppTheme.lightInkMuted,
+                  ),
                 ),
               ],
             ),
@@ -310,15 +386,19 @@ class _CalculationToggleState extends State<_CalculationToggle> {
         if (_expanded && widget.result.formula != null)
           Container(
             width: double.infinity,
-            margin: const EdgeInsets.only(top: AppTheme.spacingXs),
-            padding: const EdgeInsets.all(AppTheme.spacingMd),
+            margin: const EdgeInsets.only(top: 8),
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
-              color: AppTheme.surfaceCard,
-              borderRadius: BorderRadius.circular(AppTheme.radiusMd),
+              color: AppTheme.lightCardBg,
+              borderRadius: BorderRadius.circular(12),
             ),
             child: Text(
               widget.result.formula!,
-              style: AppTheme.formulaSource,
+              style: const TextStyle(
+                fontSize: 13,
+                color: AppTheme.lightInkMuted,
+                height: 1.5,
+              ),
             ),
           ),
       ],
@@ -326,7 +406,8 @@ class _CalculationToggleState extends State<_CalculationToggle> {
   }
 }
 
-/// Warning/info banner widget.
+// ── Warning banner ─────────────────────────────────────────────
+
 class _WarningBanner extends StatelessWidget {
   final IconData icon;
   final String message;
@@ -342,21 +423,25 @@ class _WarningBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(AppTheme.spacingSm),
+      padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        color: color.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: color.withValues(alpha: 0.2)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Icon(icon, color: color, size: 18),
-          const SizedBox(width: AppTheme.spacingSm),
+          const SizedBox(width: 8),
           Expanded(
             child: Text(
               message,
-              style: AppTheme.formulaSource.copyWith(color: color),
+              style: TextStyle(
+                fontSize: 14,
+                color: color,
+                height: 1.4,
+              ),
             ),
           ),
         ],
