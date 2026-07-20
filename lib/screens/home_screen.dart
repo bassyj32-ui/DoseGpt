@@ -3,7 +3,7 @@ import '../widgets/app_theme.dart';
 import '../widgets/condition_icons.dart';
 import '../models/illness.dart';
 import '../services/data_loader.dart';
-import 'weight_entry_screen.dart';
+import 'drug_list_screen.dart';
 
 /// Home Screen — Light Mode
 ///
@@ -83,17 +83,17 @@ class HomeScreen extends StatelessWidget {
           painter: iconPainterFor(illness.id),
           isUrgent: isUrgent,
           screenWidth: screenWidth,
-          onTap: () => _navigateToWeightEntry(context, data, illness.id),
+          onTap: () => _navigateToDrugList(context, data, illness.id),
         );
       },
     );
   }
 
-  void _navigateToWeightEntry(
+  void _navigateToDrugList(
       BuildContext context, ClinicalData data, String illnessId) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => WeightEntryScreen(
+        builder: (_) => DrugListScreen(
           data: data,
           illnessId: illnessId,
         ),
@@ -246,68 +246,88 @@ class _CardContent extends StatelessWidget {
       height: 72,
       decoration: BoxDecoration(
         color: AppTheme.lightCardBg,
-        borderRadius: BorderRadius.circular(36), // Pill shape
+        borderRadius: BorderRadius.circular(36),
         boxShadow: AppTheme.lightShadowCard,
       ),
       clipBehavior: Clip.antiAlias,
-      child: Row(
+      child: Stack(
         children: [
-          // ── Urgent accent bar ────────────────────────────────
-          if (isUrgent)
-            Container(
-              width: 3,
-              color: AppTheme.lightAccent,
-            ),
+          // ── Main content row ──────────────────────────────────
+          Row(
+            children: [
+              // Constant spacer matching the urgent bar width
+              // so urgent/non-urgent cards have identical layout
+              const SizedBox(width: 3),
 
-          // ── Icon frame ────────────────────────────────────────
-          Padding(
-            padding: const EdgeInsets.only(left: 12),
-            child: Container(
-              width: 48,
-              height: 48,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: AppTheme.lightShadowIcon,
+              // ── Icon frame ────────────────────────────────────
+              Padding(
+                padding: const EdgeInsets.only(left: 9),
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: AppTheme.lightShadowIcon,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(7),
+                    child: CustomPaint(
+                      size: const Size(34, 34),
+                      painter: painter,
+                    ),
+                  ),
+                ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(7),
-                child: CustomPaint(
-                  size: const Size(34, 34),
-                  painter: painter,
+
+              // ── Label ─────────────────────────────────────────
+              const SizedBox(width: 14),
+              Expanded(
+                child: Text(
+                  illness.nameEn,
+                  style: const TextStyle(
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.lightInk,
+                    letterSpacing: 0.2,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+
+              // ── Chevron ───────────────────────────────────────
+              Padding(
+                padding: const EdgeInsets.only(right: 18),
+                child: Text(
+                  '\u203A',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.w300,
+                    color: AppTheme.lightInkSubtle,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          // ── Urgent accent bar (overlay — doesn't affect layout)
+          if (isUrgent)
+            Positioned(
+              left: 0,
+              top: 0,
+              bottom: 0,
+              child: Container(
+                width: 3,
+                decoration: BoxDecoration(
+                  color: AppTheme.lightAccent,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(36),
+                    bottomLeft: Radius.circular(36),
+                  ),
                 ),
               ),
             ),
-          ),
-
-          // ── Label ─────────────────────────────────────────────
-          const SizedBox(width: 14),
-          Expanded(
-            child: Text(
-              illness.nameEn,
-              style: const TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w600,
-                color: AppTheme.lightInk,
-                letterSpacing: 0.2,
-              ),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-
-          // ── Chevron ───────────────────────────────────────────
-          Padding(
-            padding: const EdgeInsets.only(right: 18),
-            child: Text(
-              '\u203A',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w300,
-                color: AppTheme.lightInkSubtle,
-              ),
-            ),
-          ),
         ],
       ),
     );
