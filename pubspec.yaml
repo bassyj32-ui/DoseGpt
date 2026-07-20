@@ -26,5 +26,7 @@ flutter:
     - lib/data/illnesses.json
     - lib/data/drugs.json
     - lib/data/meta.json
+    - lib/data/adult_illnesses.json
+    - lib/data/adult_drugs.json
     - assets/images/background/
     - assets/images/conditions/

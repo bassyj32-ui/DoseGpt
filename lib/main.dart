@@ -45,14 +45,18 @@ class AppEntry extends StatefulWidget {
 }
 
 class _AppEntryState extends State<AppEntry> {
-  late Future<ClinicalData> _dataFuture;
+  late Future<List<ClinicalData>> _dataFuture;
   late Future<bool> _disclaimerFuture;
   late Future<void> _imagePrecacheFuture;
 
   @override
   void initState() {
     super.initState();
-    _dataFuture = DataLoader.load();
+    // Load both pediatric and adult datasets in parallel
+    _dataFuture = Future.wait([
+      DataLoader.loadPediatric(),
+      DataLoader.loadAdult(),
+    ]);
     _disclaimerFuture = PreferencesService.getHasSeenDisclaimer();
     _imagePrecacheFuture = _precacheAllImages();
   }
@@ -90,7 +94,11 @@ class _AppEntryState extends State<AppEntry> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: Future.wait([_dataFuture, _disclaimerFuture, _imagePrecacheFuture]),
+      future: Future.wait([
+        _dataFuture,
+        _disclaimerFuture,
+        _imagePrecacheFuture,
+      ]),
       builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Scaffold(
@@ -152,16 +160,24 @@ class _AppEntryState extends State<AppEntry> {
           );
         }
 
-        final data = snapshot.data![0] as ClinicalData;
+        final datasets = snapshot.data![0] as List<ClinicalData>;
+        final pediatricData = datasets[0];
+        final adultData = datasets[1];
         final hasSeenDisclaimer = snapshot.data![1] as bool;
 
         if (!hasSeenDisclaimer) {
           return DisclaimerScreen(
-            onDismissed: () => MainShell(data: data),
+            onDismissed: () => MainShell(
+              pediatricData: pediatricData,
+              adultData: adultData,
+            ),
           );
         }
 
-        return MainShell(data: data);
+        return MainShell(
+          pediatricData: pediatricData,
+          adultData: adultData,
+        );
       },
     );
   }

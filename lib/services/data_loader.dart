@@ -65,17 +65,39 @@ class MetaInfo {
 }
 
 class DataLoader {
-  static Future<ClinicalData> load() async {
+  /// Load the pediatric dataset (illnesses.json + drugs.json + meta.json)
+  static Future<ClinicalData> loadPediatric() async {
+    return loadFrom(
+      illnessesPath: 'lib/data/illnesses.json',
+      drugsPath: 'lib/data/drugs.json',
+      metaPath: 'lib/data/meta.json',
+    );
+  }
+
+  /// Load the adult dataset (adult_illnesses.json + adult_drugs.json + meta.json)
+  static Future<ClinicalData> loadAdult() async {
+    return loadFrom(
+      illnessesPath: 'lib/data/adult_illnesses.json',
+      drugsPath: 'lib/data/adult_drugs.json',
+      metaPath: 'lib/data/meta.json',
+    );
+  }
+
+  static Future<ClinicalData> loadFrom({
+    required String illnessesPath,
+    required String drugsPath,
+    required String metaPath,
+  }) async {
     final illnessesJson = jsonDecode(
-      await rootBundle.loadString('lib/data/illnesses.json'),
+      await rootBundle.loadString(illnessesPath),
     ) as Map<String, dynamic>;
 
     final drugsJson = jsonDecode(
-      await rootBundle.loadString('lib/data/drugs.json'),
+      await rootBundle.loadString(drugsPath),
     ) as Map<String, dynamic>;
 
     final metaJson = jsonDecode(
-      await rootBundle.loadString('lib/data/meta.json'),
+      await rootBundle.loadString(metaPath),
     ) as Map<String, dynamic>;
 
     final illnesses = (illnessesJson['illnesses'] as List)

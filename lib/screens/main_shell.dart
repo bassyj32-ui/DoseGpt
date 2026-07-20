@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import '../widgets/app_theme.dart';
 import '../services/data_loader.dart';
 import 'home_screen.dart';
-import 'reference_screen.dart';
 
 /// Main Navigation Shell — Light Mode
 ///
-/// Apple Health-inspired:
-///   - Pure white scaffold background
-///   - "DoseGPT" header text only (no icons)
-///   - Thin hairline divider below header
-///   - Clean bottom nav bar with green/grey tabs
+/// Two tabs: Pediatrics | Adults
 class MainShell extends StatefulWidget {
-  final ClinicalData data;
+  final ClinicalData pediatricData;
+  final ClinicalData adultData;
 
-  const MainShell({super.key, required this.data});
+  const MainShell({
+    super.key,
+    required this.pediatricData,
+    required this.adultData,
+  });
 
   @override
   State<MainShell> createState() => _MainShellState();
@@ -56,13 +56,13 @@ class _MainShellState extends State<MainShell> {
                 color: AppTheme.lightDivider,
               ),
 
-              // ── Body (Home / Reference) ───────────────────
+              // ── Body (Pediatrics / Adults) ────────────────
               Expanded(
                 child: IndexedStack(
                   index: _currentIndex,
                   children: [
-                    HomeScreen(data: widget.data),
-                    const ReferenceScreen(),
+                    HomeScreen(data: widget.pediatricData),
+                    HomeScreen(data: widget.adultData),
                   ],
                 ),
               ),
@@ -98,14 +98,14 @@ class _MainShellState extends State<MainShell> {
             ),
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home_outlined, size: 22),
-                activeIcon: Icon(Icons.home, size: 22),
-                label: 'Home',
+                icon: Icon(Icons.child_care_outlined, size: 22),
+                activeIcon: Icon(Icons.child_care, size: 22),
+                label: 'Pediatrics',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.library_books_outlined, size: 22),
-                activeIcon: Icon(Icons.library_books, size: 22),
-                label: 'Reference',
+                icon: Icon(Icons.person_outlined, size: 22),
+                activeIcon: Icon(Icons.person, size: 22),
+                label: 'Adults',
               ),
             ],
           ),

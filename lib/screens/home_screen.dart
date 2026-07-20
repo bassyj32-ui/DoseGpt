@@ -38,6 +38,14 @@ class HomeScreen extends StatelessWidget {
         return EarIconPainter();
       case 'asthma':
         return InhalerIconPainter();
+      case 'hypertension':
+        return HeartIconPainter();
+      case 'diabetes':
+        return DropletIconPainter();
+      case 'dyspepsia':
+        return StomachIconPainter();
+      case 'typhoid':
+        return TyphoidIconPainter();
       default:
         return MosquitoIconPainter();
     }
@@ -48,21 +56,8 @@ class HomeScreen extends StatelessWidget {
     final illnesses = List<Illness>.from(data.illnesses)
       ..sort((a, b) => a.displayOrder.compareTo(b.displayOrder));
 
-    // Filter to only the 8 we want, in order
-    final orderedIds = [
-      'malaria',
-      'pneumonia',
-      'diarrhea',
-      'fever',
-      'uti',
-      'tonsillitis',
-      'otitis_media',
-      'asthma',
-    ];
-    final filtered = orderedIds
-        .map((id) => illnesses.where((i) => i.id == id).firstOrNull)
-        .whereType<Illness>()
-        .toList();
+    // All illnesses are shown in display_order — no hardcoded filtering
+    final filtered = illnesses;
 
     final screenWidth = MediaQuery.of(context).size.width;
 

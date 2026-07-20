@@ -1,0 +1,113 @@
+{
+  "_status": "DRAFT — CLINICALLY UNVERIFIED. Every entry requires sign-off by a licensed clinician before use in a shipped app. Do not treat any value here as final.",
+  "illnesses": [
+    {
+      "id": "malaria",
+      "name_en": "Malaria",
+      "name_am": "ወባ",
+      "icon": "icon_mosquito",
+      "display_order": 1,
+      "urgent_accent": true,
+      "drug_ids": ["adult_al_malaria", "adult_chloroquine_malaria", "adult_primaquine_malaria", "adult_artesunate_iv_malaria"]
+    },
+    {
+      "id": "pneumonia",
+      "name_en": "Pneumonia / LRTI",
+      "name_am": "የሳምባ ምች",
+      "icon": "icon_lungs",
+      "display_order": 2,
+      "urgent_accent": true,
+      "drug_ids": ["adult_amoxicillin_pneumonia", "adult_azithromycin_pneumonia", "adult_augmentin_pneumonia", "adult_ceftriaxone_iv_pneumonia"]
+    },
+    {
+      "id": "diarrhea",
+      "name_en": "Diarrhea / Dehydration",
+      "name_am": "ተቅማጥ",
+      "icon": "icon_droplet",
+      "display_order": 3,
+      "urgent_accent": false,
+      "drug_ids": ["adult_ors_diarrhea", "adult_zinc_diarrhea", "adult_plan_c_fluids_diarrhea", "adult_ceftriaxone_diarrhea"]
+    },
+    {
+      "id": "fever",
+      "name_en": "Fever / Pain",
+      "name_am": "ትኩሳት",
+      "icon": "icon_thermometer",
+      "display_order": 4,
+      "urgent_accent": false,
+      "drug_ids": ["adult_paracetamol_fever", "adult_ibuprofen_fever"]
+    },
+    {
+      "id": "uti",
+      "name_en": "UTI",
+      "name_am": "የሽንት ቧንቧ ኢንፌክሽን",
+      "icon": "icon_kidney",
+      "display_order": 5,
+      "urgent_accent": false,
+      "drug_ids": ["adult_cotrimoxazole_uti", "adult_amoxicillin_uti", "adult_ceftriaxone_uti"]
+    },
+    {
+      "id": "tonsillitis",
+      "name_en": "Tonsillitis / Pharyngitis",
+      "name_am": "የቶንሲል እብጠት",
+      "icon": "icon_throat",
+      "display_order": 6,
+      "urgent_accent": false,
+      "drug_ids": ["adult_amoxicillin_tonsillitis", "adult_azithromycin_tonsillitis"]
+    },
+    {
+      "id": "asthma",
+      "name_en": "Asthma / COPD",
+      "name_am": "አስም",
+      "icon": "icon_inhaler",
+      "display_order": 7,
+      "urgent_accent": false,
+      "drug_ids": ["adult_salbutamol_asthma", "adult_prednisolone_asthma", "adult_aminophylline_asthma"]
+    },
+    {
+      "id": "hypertension",
+      "name_en": "Hypertension",
+      "name_am": "የደም ግፊት",
+      "icon": "icon_heart",
+      "display_order": 8,
+      "urgent_accent": false,
+      "drug_ids": ["adult_hctz_htn", "adult_amlodipine_htn", "adult_enalapril_htn", "adult_methyldopa_htn"]
+    },
+    {
+      "id": "diabetes",
+      "name_en": "Diabetes (Type 2)",
+      "name_am": "የስኳር በሽታ",
+      "icon": "icon_droplet",
+      "display_order": 9,
+      "urgent_accent": false,
+      "drug_ids": ["adult_metformin_dm", "adult_gliclazide_dm", "adult_insulin_dm"]
+    },
+    {
+      "id": "dyspepsia",
+      "name_en": "Dyspepsia / Gastritis",
+      "name_am": "የሆድ ቁስል",
+      "icon": "icon_stomach",
+      "display_order": 10,
+      "urgent_accent": false,
+      "drug_ids": ["adult_omeprazole_dyspepsia", "adult_ranitidine_dyspepsia", "adult_antacid_dyspepsia"]
+    },
+    {
+      "id": "impetigo",
+      "name_en": "Skin Infection",
+      "name_am": "የቆዳ ኢንፌክሽን",
+      "icon": "icon_skin",
+      "display_order": 11,
+      "urgent_accent": false,
+      "drug_ids": ["adult_cloxacillin_skin", "adult_amoxicillin_skin"]
+    },
+    {
+      "id": "typhoid",
+      "name_en": "Typhoid Fever",
+      "name_am": "ታይፎይድ",
+      "icon": "icon_typhoid",
+      "display_order": 12,
+      "urgent_accent": true,
+      "drug_ids": ["adult_ceftriaxone_typhoid", "adult_azithromycin_typhoid", "adult_ciprofloxacin_typhoid"]
+    }
+  ]
+}

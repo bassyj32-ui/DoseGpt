@@ -149,6 +149,217 @@ class MosquitoIconPainter extends ConditionIconPainter {
 }
 
 // ═══════════════════════════════════════════════════════════════
+// 9. HEART — Hypertension
+// ═══════════════════════════════════════════════════════════════
+class HeartIconPainter extends ConditionIconPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cx = size.width / 2;
+    final cy = size.height / 2;
+    final s = size.width / 100;
+
+    // Heart shape
+    final heart = Paint()
+      ..shader = ui.Gradient.linear(Offset(cx - 15 * s, cy - 10 * s), Offset(cx + 15 * s, cy + 15 * s), [
+        Color(0xFFE63946).withValues(alpha: 0.85),
+        Color(0xFFC1121F).withValues(alpha: 0.8),
+        Color(0xFF780000).withValues(alpha: 0.7),
+      ]);
+    final heartPath = Path()
+      ..moveTo(cx, cy + 18 * s)
+      ..quadraticBezierTo(cx - 30 * s, cy, cx - 16 * s, cy - 14 * s)
+      ..quadraticBezierTo(cx - 8 * s, cy - 24 * s, cx, cy - 16 * s)
+      ..quadraticBezierTo(cx + 8 * s, cy - 24 * s, cx + 16 * s, cy - 14 * s)
+      ..quadraticBezierTo(cx + 30 * s, cy, cx, cy + 18 * s)
+      ..close();
+    canvas.drawPath(heartPath, heart);
+
+    // Heart highlight (left lobe)
+    final hl = Paint()
+      ..shader = glassHighlight(Offset(cx - 18 * s, cy - 16 * s), Offset(cx - 2 * s, cy + 4 * s), opacity: 0.3);
+    final hlPath = Path()
+      ..moveTo(cx - 4 * s, cy - 12 * s)
+      ..quadraticBezierTo(cx - 12 * s, cy - 20 * s, cx - 16 * s, cy - 12 * s)
+      ..quadraticBezierTo(cx - 20 * s, cy - 4 * s, cx - 4 * s, cy + 10 * s)
+      ..quadraticBezierTo(cx - 2 * s, cy + 4 * s, cx - 4 * s, cy - 12 * s)
+      ..close();
+    canvas.drawPath(hlPath, hl);
+
+    // BP measurement lines (systolic/diastolic indicators)
+    final bpLine = Paint()
+      ..color = Colors.white.withValues(alpha: 0.4)
+      ..strokeWidth = 1.5 * s
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(Offset(cx - 10 * s, cy - 28 * s), Offset(cx + 10 * s, cy - 28 * s), bpLine);
+    canvas.drawLine(Offset(cx - 8 * s, cy - 24 * s), Offset(cx + 8 * s, cy - 24 * s), bpLine);
+
+    // Small pulse dots
+    final pulse = Paint()..color = Colors.white.withValues(alpha: 0.3);
+    canvas.drawCircle(Offset(cx, cy - 32 * s), 2 * s, pulse);
+
+    drawInnerShadow(canvas, size);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 10. STOMACH — Dyspepsia / Gastritis
+// ═══════════════════════════════════════════════════════════════
+class StomachIconPainter extends ConditionIconPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cx = size.width / 2;
+    final cy = size.height / 2;
+    final s = size.width / 100;
+
+    // Stomach shape (J-shaped pouch)
+    final stomach = Paint()
+      ..shader = ui.Gradient.linear(Offset(cx - 15 * s, cy - 15 * s), Offset(cx + 15 * s, cy + 15 * s), [
+        Color(0xFFE8A090).withValues(alpha: 0.7),
+        Color(0xFFC47A68).withValues(alpha: 0.6),
+        Color(0xFFA85D4A).withValues(alpha: 0.5),
+      ]);
+    final stomachPath = Path()
+      ..moveTo(cx - 4 * s, cy - 20 * s)
+      ..quadraticBezierTo(cx - 16 * s, cy - 18 * s, cx - 16 * s, cy - 6 * s)
+      ..quadraticBezierTo(cx - 16 * s, cy + 8 * s, cx - 8 * s, cy + 14 * s)
+      ..quadraticBezierTo(cx, cy + 22 * s, cx + 12 * s, cy + 18 * s)
+      ..quadraticBezierTo(cx + 22 * s, cy + 14 * s, cx + 20 * s, cy + 4 * s)
+      ..quadraticBezierTo(cx + 18 * s, cy - 6 * s, cx + 8 * s, cy - 16 * s)
+      ..quadraticBezierTo(cx + 4 * s, cy - 20 * s, cx - 4 * s, cy - 20 * s)
+      ..close();
+    canvas.drawPath(stomachPath, stomach);
+
+    // Glass highlight
+    final hl = Paint()
+      ..shader = glassHighlight(Offset(cx - 14 * s, cy - 12 * s), Offset(cx + 4 * s, cy + 10 * s), opacity: 0.25);
+    final hlPath = Path()
+      ..moveTo(cx - 6 * s, cy - 16 * s)
+      ..quadraticBezierTo(cx - 12 * s, cy - 14 * s, cx - 12 * s, cy - 6 * s)
+      ..quadraticBezierTo(cx - 12 * s, cy + 4 * s, cx - 4 * s, cy + 12 * s)
+      ..quadraticBezierTo(cx - 2 * s, cy + 6 * s, cx - 4 * s, cy - 4 * s)
+      ..quadraticBezierTo(cx - 6 * s, cy - 10 * s, cx - 6 * s, cy - 16 * s)
+      ..close();
+    canvas.drawPath(hlPath, hl);
+
+    // Esophagus (tube coming in)
+    final eso = Paint()
+      ..shader = ui.Gradient.linear(Offset(cx - 3 * s, cy - 28 * s), Offset(cx + 3 * s, cy - 20 * s), [
+        Color(0xFFE8A090).withValues(alpha: 0.5),
+        Color(0xFFC47A68).withValues(alpha: 0.4),
+      ]);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(center: Offset(cx, cy - 24 * s), width: 8 * s, height: 10 * s),
+        const Radius.circular(4),
+      ),
+      eso,
+    );
+
+    // Inflammation marks (small red dots)
+    final inflame = Paint()..color = Color(0xFFE63946).withValues(alpha: 0.3);
+    canvas.drawCircle(Offset(cx - 6 * s, cy + 2 * s), 3 * s, inflame);
+    canvas.drawCircle(Offset(cx + 4 * s, cy + 6 * s), 2.5 * s, inflame);
+
+    drawInnerShadow(canvas, size);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 11. TYPHOID — Typhoid Fever (thermometer + bacteria)
+// ═══════════════════════════════════════════════════════════════
+class TyphoidIconPainter extends ConditionIconPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final cx = size.width / 2;
+    final cy = size.height / 2;
+    final s = size.width / 100;
+
+    // Thermometer tube (fever indicator)
+    final tube = Paint()
+      ..shader = ui.Gradient.linear(Offset(cx - 8 * s, cy - 28 * s), Offset(cx + 8 * s, cy + 18 * s), [
+        Colors.white.withValues(alpha: 0.1),
+        const Color(0xFFE8E8E8).withValues(alpha: 0.15),
+        Colors.white.withValues(alpha: 0.05),
+      ])
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 7 * s
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(Offset(cx, cy - 30 * s), Offset(cx, cy + 14 * s), tube);
+
+    // Mercury column (high fever)
+    final merc = Paint()
+      ..shader = ui.Gradient.linear(Offset(cx - 3 * s, cy + 8 * s), Offset(cx + 3 * s, cy - 18 * s), [
+        const Color(0xFFE63946),
+        const Color(0xFFD62828),
+        const Color(0xFFB71C1C),
+      ])
+      ..strokeWidth = 4 * s
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(Offset(cx, cy + 12 * s), Offset(cx, cy - 4 * s), merc);
+
+    // Mercury bulb
+    final bulb = Paint()
+      ..shader = ui.Gradient.radial(Offset(cx - 2 * s, cy + 18 * s), 10 * s, [
+        const Color(0xFFE63946),
+        const Color(0xFFB71C1C),
+      ]);
+    canvas.drawCircle(Offset(cx, cy + 16 * s), 6 * s, bulb);
+
+    // Bacteria/rod shapes (Salmonella typhi)
+    final bacteria = Paint()
+      ..shader = ui.Gradient.linear(Offset(cx + 10 * s, cy - 18 * s), Offset(cx + 24 * s, cy - 8 * s), [
+        Color(0xFF6B4A3A).withValues(alpha: 0.6),
+        Color(0xFF3D2218).withValues(alpha: 0.5),
+      ]);
+    // Rod 1
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(center: Offset(cx + 18 * s, cy - 12 * s), width: 14 * s, height: 5 * s),
+        const Radius.circular(2.5),
+      ),
+      bacteria,
+    );
+    // Rod 2
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(center: Offset(cx + 14 * s, cy - 4 * s), width: 10 * s, height: 4 * s),
+        const Radius.circular(2),
+      ),
+      bacteria,
+    );
+    // Rod 3
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(
+        Rect.fromCenter(center: Offset(cx + 20 * s, cy + 2 * s), width: 12 * s, height: 4 * s),
+        const Radius.circular(2),
+      ),
+      bacteria,
+    );
+
+    // Flagella (tiny tails on bacteria)
+    final flag = Paint()
+      ..color = Color(0xFF6B4A3A).withValues(alpha: 0.3)
+      ..strokeWidth = 0.8 * s
+      ..strokeCap = StrokeCap.round;
+    canvas.drawLine(Offset(cx + 25 * s, cy - 12 * s), Offset(cx + 28 * s, cy - 14 * s), flag);
+    canvas.drawLine(Offset(cx + 24 * s, cy - 4 * s), Offset(cx + 26 * s, cy - 6 * s), flag);
+    canvas.drawLine(Offset(cx + 26 * s, cy + 2 * s), Offset(cx + 28 * s, cy,), flag);
+
+    // Temperature markings
+    final mark = Paint()
+      ..color = const Color(0xFF8A9B93).withValues(alpha: 0.5)
+      ..strokeWidth = 1.2 * s
+      ..strokeCap = StrokeCap.round;
+    for (var i = 0; i < 3; i++) {
+      final my = cy - 22 * s + i * 8 * s;
+      canvas.drawLine(Offset(cx - 6 * s, my), Offset(cx - 3 * s, my), mark);
+    }
+
+    drawInnerShadow(canvas, size);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
 // 2. LUNGS — Pneumonia
 // ═══════════════════════════════════════════════════════════════
 class LungsIconPainter extends ConditionIconPainter {
