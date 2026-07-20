@@ -92,7 +92,7 @@ class _DisclaimerScreenState extends State<DisclaimerScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppTheme.lightNavActive,
                       foregroundColor: Colors.white,
-                      disabledColor: AppTheme.lightNavActive.withValues(alpha: 0.5),
+                      disabledBackgroundColor: AppTheme.lightNavActive.withValues(alpha: 0.5),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(28),
                       ),
