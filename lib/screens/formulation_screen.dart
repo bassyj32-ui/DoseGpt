@@ -58,14 +58,22 @@ class _FormulationScreenState extends State<FormulationScreen> {
   }
 
   String _formulationType(Concentration c) {
+    if (c.volumeMl != null && c.strengthMg != null && c.volumeMl == 1 && c.strengthMg == 1) {
+      return 'IV / IM';
+    }
     if (c.volumeMl != null) return 'Syrup';
     return 'Tablet';
   }
 
   String _strengthText(Concentration c) {
     final parts = <String>[];
-    if (c.strengthMg != null) parts.add('${c.strengthMg!.toInt()}mg');
-    if (c.volumeMl != null) parts.add('per ${c.volumeMl!.toInt()}mL');
+    if (c.volumeMl != null && c.strengthMg != null) {
+      parts.add('${c.strengthMg!.toInt()}mg/${c.volumeMl!.toInt()}mL');
+    } else if (c.strengthMg != null) {
+      parts.add('${c.strengthMg!.toInt()}mg');
+    } else if (c.volumeMl != null) {
+      parts.add('per ${c.volumeMl!.toInt()}mL');
+    }
     return parts.join(' ');
   }
 

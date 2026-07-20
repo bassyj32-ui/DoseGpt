@@ -28,6 +28,32 @@
       "verified_by": "PENDING — Dr. Basliel review required"
     },
     {
+      "id": "artesunate_iv_malaria",
+      "illness_id": "malaria",
+      "drug_name_en": "Artesunate IV (severe malaria)",
+      "drug_name_am": "",
+      "drug_synonyms": ["Artesunate"],
+      "is_recommended": false,
+      "combination_drug": false,
+      "dosing_shape": "mg_per_kg",
+      "dose_per_kg_mg": 3,
+      "frequency_en": "IV at 0h, 12h, 24h, then daily",
+      "duration_days": null,
+      "notes": "IV artesunate for severe malaria. Give IV (preferred) or IM. Always follow with full 3-day oral ACT (Coartem) once patient can tolerate oral. Monitor Hb weekly for 4 weeks for post-artesunate delayed hemolysis (PADH).\n\nWeight-based dosing:\n• <20kg: 3.0 mg/kg per dose\n• ≥20kg: 2.4 mg/kg per dose\n\nVials needed per dose:\n• ≤25kg: 1 vial\n• 26-50kg: 2 vials\n• 51-75kg: 3 vials\n• 76-100kg: 4 vials",
+      "max_daily_dose_mg": null,
+      "valid_weight_range": { "min_kg": 5, "max_kg": null },
+      "referral_trigger_text": "Below 5kg or under 2 months old: refer immediately for specialist care.",
+      "concentrations": [
+        { "label_en": "Severe malaria (weight-based dosing)", "strength_mg": 1, "volume_ml": 1, "round_to_ml": 0.5 }
+      ],
+      "iv_info": "[conc:20]Reconstitute:\n1. Add 3ml of provided arginine/NaHCO₃ solvent to 60mg artesunate vial\n2. Shake gently until clear (~1 min)\n3. Final concentration = 20mg/ml → draw [ml]ml\n• ≤25kg child: use 1 vial per dose (round up to 2ml minimum)\n\nGive slow IV over 1-2 min (do NOT further dilute for IV push).\nUse within 1 hour of reconstitution.\nDiscard if solution is not clear.\n\nAlways follow with full 3-day oral ACT (Coartem) once patient can swallow.\nMonitor Hb weekly for 4 weeks for post-artesunate delayed hemolysis (PADH).",
+      "safety_warning": "Monitor for post-artesunate delayed hemolysis (PADH) — check Hb weekly for 4 weeks after treatment.",
+      "source_name": "WHO Severe Malaria Guidelines + MMV Injectable Artesunate Toolkit (WHO PQ MA168)",
+      "source_detail": "WHO: 3mg/kg <20kg, 2.4mg/kg ≥20kg at 0, 12, 24h. Reconstitute with 3ml solvent = 20mg/ml. CDC confirms same regimen.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
       "id": "chloroquine_malaria",
       "illness_id": "malaria",
       "drug_name_en": "Chloroquine",
@@ -114,6 +140,34 @@
       "verified_by": "PENDING — Dr. Basliel review required"
     },
     {
+      "id": "ceftriaxone_iv_pneumonia",
+      "illness_id": "pneumonia",
+      "drug_name_en": "Ceftriaxone IV",
+      "drug_name_am": "",
+      "drug_synonyms": ["Ceftriaxone"],
+      "is_recommended": false,
+      "combination_drug": false,
+      "dosing_shape": "mg_per_kg",
+      "dose_per_kg_mg": 25,
+      "notes": "Contraindicated in hyperbilirubinemic neonates. Administer IV over 30-60 minutes. Each dose is given IV every 12 hours (BID).",
+      "frequency_en": "IV every 12 hours (BID)",
+      "duration_days": 5,
+      "max_daily_dose_mg": 4000,
+      "valid_weight_range": { "min_kg": 3, "max_kg": null },
+      "referral_trigger_text": "Below 3kg: refer immediately. Contraindicated in hyperbilirubinemic neonates.",
+      "concentrations": [
+        { "label_en": "50 mg/kg/day — moderate infections", "strength_mg": 1, "volume_ml": 1, "round_to_ml": 0.5 },
+        { "label_en": "75 mg/kg/day — severe infections", "strength_mg": 1, "volume_ml": 1, "round_to_ml": 0.5 },
+        { "label_en": "100 mg/kg/day — meningitis/sepsis", "strength_mg": 1, "volume_ml": 1, "round_to_ml": 0.5 }
+      ],
+      "iv_info": "Reconstitute:\n• 1g vial + 9.6ml sterile water = 100mg/ml → draw [ml]ml (most common)\n• 500mg vial + 4.8ml sterile water = 100mg/ml → draw [ml]ml\n• 250mg vial + 2.4ml sterile water = 100mg/ml → draw [ml]ml\n\nInfuse over 30 min (60 min in neonates).\nDo NOT use calcium-containing fluids (Ringer's, Hartmann's).",
+      "safety_warning": "Contraindicated in hyperbilirubinemic neonates (risk of bilirubin encephalopathy). Administer IV over 30-60 minutes.",
+      "source_name": "WHO/AAP ceftriaxone pediatric dosing guidelines",
+      "source_detail": "50-100mg/kg/day divided q12h. Max 4g/day.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
       "id": "azithromycin_pneumonia",
       "illness_id": "pneumonia",
       "drug_name_en": "Azithromycin",
@@ -165,6 +219,50 @@
       "verified_by": "PENDING — Dr. Basliel review required"
     },
     {
+      "id": "plan_c_fluids_diarrhea",
+      "illness_id": "diarrhea",
+      "drug_name_en": "Ringer's Lactate IV (Plan C — severe dehydration)",
+      "drug_name_am": "",
+      "drug_synonyms": ["Ringer's Lactate", "Hartmann's", "Normal Saline"],
+      "is_recommended": false,
+      "combination_drug": false,
+      "dosing_shape": "fixed",
+      "dose_display_en": "WHO PLAN C — Severe Dehydration\nTotal: 100 ml/kg IV Ringer's Lactate\n\nIf age <12 months:\n  Step 1: 30 ml/kg IV over 1 hour\n  Step 2: 70 ml/kg IV over 5 hours\n\nIf age ≥12 months:\n  Step 1: 30 ml/kg IV over 30 minutes\n  Step 2: 70 ml/kg IV over 2.5 hours\n\nReassess every 15-30 minutes.\nGive ORS 5ml/kg/hour once child can drink.\nGive Zinc 20mg/day (10mg if <6mo) for 14 days.",
+      "frequency_en": null,
+      "duration_days": null,
+      "notes": "WHO Plan C for severe dehydration with diarrhea. Use Ringer's Lactate first line. Normal Saline if RL unavailable. For severe acute malnutrition (SAM), use ReSoMal or half-strength standard ORS with added K+ and glucose — do NOT use standard Plan C volumes.",
+      "valid_weight_range": { "min_kg": null, "max_kg": null },
+      "safety_warning": "Reassess the child every 15-30 minutes during IV therapy. If child has severe acute malnutrition (SAM), do NOT use standard Plan C — use ReSoMal or special SAM protocol instead.",
+      "source_name": "WHO IMCI Guidelines — Plan C for Severe Dehydration",
+      "source_detail": "100ml/kg total. Age-dependent timing: <12mo: 30ml/kg/1hr + 70ml/kg/5hrs. ≥12mo: 30ml/kg/30min + 70ml/kg/2.5hrs.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
+      "id": "ceftazidime_diarrhea",
+      "illness_id": "diarrhea",
+      "drug_name_en": "Ceftazidime IV",
+      "drug_name_am": "",
+      "drug_synonyms": ["Fortum", "Ceftazidime"],
+      "is_recommended": false,
+      "combination_drug": false,
+      "dosing_shape": "mg_per_kg",
+      "dose_per_kg_mg": 50,
+      "notes": "For bacterial gastroenteritis (Salmonella, Shigella) not responding to oral antibiotics. 150mg/kg/day divided q8h. HIDDEN — only shown when severe/professional use needed.",
+      "frequency_en": "IV every 8 hours",
+      "duration_days": 5,
+      "max_daily_dose_mg": 6000,
+      "concentrations": [
+        { "label_en": "1g vial — reconstitute per protocol", "strength_mg": 1000, "volume_ml": 10, "round_to_ml": 0.5, "min_safe_ml": null, "max_safe_ml": null }
+      ],
+      "valid_weight_range": { "min_kg": null, "max_kg": null },
+      "safety_warning": "Adjust dose in renal impairment. Monitor for C. difficile diarrhea.",
+      "source_name": "WHO pediatric ceftazidime dosing guidelines",
+      "source_detail": "150mg/kg/day IV divided q8h for bacterial gastroenteritis. Good gram-negative coverage including Pseudomonas.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
       "id": "zinc_diarrhea",
       "illness_id": "diarrhea",
       "drug_name_en": "Zinc",
@@ -174,11 +272,11 @@
       "combination_drug": false,
       "dosing_shape": "age_band",
       "frequency_en": "once daily",
-      "duration_days": 12,
+      "duration_days": 14,
       "max_daily_dose_mg": null,
       "bands": [
-        { "min_months": 0, "max_months": 5, "dose_display_en": "10mg once daily for 10-14 days" },
-        { "min_months": 6, "max_months": null, "dose_display_en": "20mg once daily for 10-14 days" }
+        { "min_kg": 0, "max_kg": 5, "dose_display_en": "10mg once daily for 14 days" },
+        { "min_kg": 6, "max_kg": null, "dose_display_en": "20mg once daily for 14 days" }
       ],
       "safety_warning": null,
       "source_name": "WHO/UNICEF diarrhea management guideline",
@@ -468,6 +566,48 @@
       "verified_by": "PENDING — Dr. Basliel review required, structural design decision needed"
     },
     {
+      "id": "hydrocortisone_iv_asthma",
+      "illness_id": "asthma",
+      "drug_name_en": "Hydrocortisone IV",
+      "drug_name_am": "",
+      "drug_synonyms": ["Solu-Cortef", "Hydrocortisone"],
+      "is_recommended": false,
+      "combination_drug": false,
+      "dosing_shape": "fixed",
+      "dose_display_en": "Hydrocortisone IV (age-based dosing):\n\nIf age <1 year:\n  25mg IV every 6 hours\n\nIf age 1-5 years:\n  50mg IV every 6 hours\n\nIf age 6-12 years:\n  100mg IV every 6 hours\n\nOR weight-based: 4mg/kg/dose IV q6h (max 100mg/dose)\n\nGive by slow IV injection over at least 1 minute.\nContinue until patient stabilizes, typically 24-48 hours.",
+      "frequency_en": "every 6 hours",
+      "duration_days": 2,
+      "notes": "For acute severe asthma / status asthmaticus when oral steroids cannot be given (vomiting, severe distress). For mild-moderate exacerbations, oral dexamethasone (0.6mg/kg single dose) is preferred. No taper needed for courses <7 days.",
+      "valid_weight_range": { "min_kg": null, "max_kg": null },
+      "safety_warning": "Monitor for hypernatremia if therapy extends beyond 48 hours. No advantage exists for higher corticosteroid doses in severe asthma exacerbations.",
+      "source_name": "WHO/BTS GINA guidelines for acute asthma",
+      "source_detail": "Age-based dosing per UK NHS guidelines. 4mg/kg/dose IV q6h alternative from BTS/SIGN.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
+      "id": "dexamethasone_stat_asthma",
+      "illness_id": "asthma",
+      "drug_name_en": "Dexamethasone (stat dose)",
+      "drug_name_am": "",
+      "drug_synonyms": ["Decadron", "Dexamethasone"],
+      "is_recommended": false,
+      "combination_drug": false,
+      "dosing_shape": "fixed",
+      "dose_display_en": "Dexamethasone stat dose:\n\n0.6 mg/kg oral/IM single dose (max 16mg)\n\nWeight-based quick reference:\n  7-10 kg → 6mg\n  11-20 kg → 10mg\n  >20 kg → 16mg\n\nSingle dose is sufficient — equivalent to 5 days of prednisolone.\nNo discharge prescription needed for mild-moderate cases.\n\nFor PICU (critical asthma):\n  0.25 mg/kg IV every 6 hours (max 15mg/dose) for 48 hours",
+      "frequency_en": "single dose (may repeat once after 24h if needed)",
+      "duration_days": 1,
+      "notes": "Preferred over prednisolone for acute asthma exacerbations. Advantages: single dose, less vomiting, better compliance, longer half-life (36-54h). Use oral route if patient can swallow. Use IM if vomiting or severe distress. For PICU, use IV route.",
+      "valid_weight_range": { "min_kg": 7, "max_kg": null },
+      "valid_age_range": { "min_months": 24, "max_months": null },
+      "referral_trigger_text": "Not studied in children under 2 years. Evidence limited below this age.",
+      "safety_warning": "Slightly higher ED return visits reported vs prednisolone (OR 1.07) but lower hospitalization rates (OR 0.90). Monitor for vomiting and mood changes.",
+      "source_name": "Multiple RCTs + AAP/ACEP guidelines",
+      "source_detail": "0.6mg/kg single dose non-inferior to 5-day prednisolone. Standardized weight-band dosing validated in multiple pediatric ED studies.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
       "id": "prednisolone_asthma",
       "illness_id": "asthma",
       "drug_name_en": "Prednisolone",
@@ -524,8 +664,8 @@
       "frequency_en": "single dose",
       "duration_days": 1,
       "bands": [
-        { "min_months": 12, "max_months": 23, "dose_display_en": "200mg (half tablet) single dose" },
-        { "min_months": 24, "max_months": null, "dose_display_en": "400mg (full tablet) single dose" }
+        { "min_kg": 0, "max_kg": 11, "dose_display_en": "200mg (half tablet) single dose" },
+        { "min_kg": 12, "max_kg": null, "dose_display_en": "400mg (full tablet) single dose" }
       ],
       "safety_warning": null,
       "source_name": "VERIFY against Ethiopia's specific national deworming program schedule",
@@ -545,7 +685,7 @@
       "frequency_en": "single dose (or twice daily for 3 days depending on regimen — VERIFY)",
       "duration_days": 1,
       "bands": [
-        { "min_months": 12, "max_months": null, "dose_display_en": "VERIFY exact dose — commonly 500mg single dose" }
+        { "min_kg": 12, "max_kg": null, "dose_display_en": "VERIFY exact dose — commonly 500mg single dose" }
       ],
       "safety_warning": null,
       "source_name": "VERIFY against Ethiopia's specific national deworming program schedule",

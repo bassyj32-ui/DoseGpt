@@ -27,6 +27,9 @@ class DoseResult {
   /// The duration warning, if any.
   final String? durationWarning;
 
+  /// IV reconstitution instructions (displayed below main prescription).
+  final String? ivReconstitution;
+
   const DoseResult({
     this.prescription,
     this.calculatedMl,
@@ -36,6 +39,7 @@ class DoseResult {
     this.outOfRangeMessage,
     this.safetyWarning,
     this.durationWarning,
+    this.ivReconstitution,
   });
 
   /// Creates an out-of-range result with the standard message.
@@ -49,7 +53,8 @@ class DoseResult {
             'This weight is outside the safe range for this calculation. '
                 'Please double-check the weight or consult a colleague/refer the patient.',
         safetyWarning = null,
-        durationWarning = null;
+        durationWarning = null,
+        ivReconstitution = null;
 
   /// Creates a neonatal referral result.
   const DoseResult.neonatalReferral()
@@ -61,7 +66,8 @@ class DoseResult {
         outOfRangeMessage =
             'This app is not designed for newborns. Please refer to a physician immediately.',
         safetyWarning = null,
-        durationWarning = null;
+        durationWarning = null,
+        ivReconstitution = null;
 }
 
 /// The calculation engine for DoseGPT.
@@ -174,8 +180,14 @@ class DoseCalculator {
       return _calculateSchedule(drug, weightKg, conc);
     }
 
+    // Handle weight-based dose adjustment (e.g. Artesunate: 3mg/kg <20kg, 2.4mg/kg ≥20kg)
+    double effectiveDosePerKg = drug.dosePerKgMg!;
+    if (drug.id == 'artesunate_iv_malaria' && weightKg >= 20) {
+      effectiveDosePerKg = 2.4;
+    }
+
     // Simple single-dose mg_per_kg
-    final doseMg = weightKg * drug.dosePerKgMg!;
+    final doseMg = weightKg * effectiveDosePerKg;
 
     // -- Max daily dose cap (absolute) --
     double effectiveDoseMg = doseMg;
@@ -197,38 +209,86 @@ class DoseCalculator {
     String formula;
 
     if (conc != null && conc.volumeMl != null) {
-      // mg → ml: (dose_mg / strength_mg) × volume_ml
-      final rawMl = (effectiveDoseMg / conc.strengthMg!) * conc.volumeMl!;
-      final double roundedMl = _roundToNearest(rawMl, conc.roundToMl);
+      // Detect dummy IV concentration (1mg/1ml) — show mg + ml with vial reconstitution
+      if (conc.strengthMg == 1 && conc.volumeMl == 1) {
+        // Parse concentration from ivInfo marker [conc:N] or default to 100mg/ml
+        final rawIvInfo = drug.ivInfo ?? '';
+        double standardConc = 100;
+        final concMatch = RegExp(r'\[conc:(\d+)\]').firstMatch(rawIvInfo);
+        if (concMatch != null) {
+          standardConc = double.parse(concMatch.group(1)!);
+        }
+        final mlToGive = effectiveDoseMg / standardConc;
+        final roundedMl = _roundToNearest(mlToGive, 0.1);
 
-      // -- Clamp to min/max safe ml --
-      final double? minSafe = conc.minSafeMl;
-      final double? maxSafe = conc.maxSafeMl;
-      final double clampedMl;
-      if (minSafe != null && roundedMl < minSafe) {
-        clampedMl = minSafe;
-      } else if (maxSafe != null && roundedMl > maxSafe) {
-        clampedMl = maxSafe;
+        final durationPart = _durationPart(drug);
+        final prescriptionText = '${drug.drugNameEn} — give ${effectiveDoseMg.toStringAsFixed(0)}mg '
+            '(× ${roundedMl.toStringAsFixed(1)}ml), '
+            '${drug.frequencyEn}$durationPart';
+
+        prescription = prescriptionText;
+        calculatedMl = roundedMl;
+
+        formula = '${weightKg}kg × ${effectiveDosePerKg}mg/kg = '
+            '${effectiveDoseMg.toStringAsFixed(0)}mg\n'
+            '→ ${effectiveDoseMg.toStringAsFixed(0)}mg ÷ ${standardConc.toStringAsFixed(0)}mg/ml = '
+            '${roundedMl.toStringAsFixed(1)}ml';
+
+        // Use ivInfo from drug if available, else default ceftriaxone protocol
+        // Strip [conc:N] marker before displaying
+        final cleanIvInfo = rawIvInfo.replaceAll(RegExp(r'\[conc:\d+\]'), '');
+        final finalIvInfo = cleanIvInfo.isNotEmpty ? cleanIvInfo : (
+          'Reconstitute:\n'
+          '• 1g vial + 9.6ml sterile water = 100mg/ml → draw [ml]ml\n'
+          '• 500mg vial + 4.8ml sterile water = 100mg/ml → draw [ml]ml\n'
+          '• 250mg vial + 2.4ml sterile water = 100mg/ml → draw [ml]ml\n'
+          'Infuse over 30 min (60 min in neonates). Do NOT use calcium-containing fluids.'
+        );
+        final reconInfo = finalIvInfo.replaceAll('[ml]', roundedMl.toStringAsFixed(1));
+
+        return DoseResult(
+          prescription: prescriptionText,
+          calculatedMl: calculatedMl,
+          calculatedMg: effectiveDoseMg,
+          formula: formula,
+          ivReconstitution: reconInfo,
+          safetyWarning: drug.safetyWarning,
+          durationWarning: drug.durationWarning,
+        );
       } else {
-        clampedMl = roundedMl;
-      }
+        // mg → ml: (dose_mg / strength_mg) × volume_ml
+        final rawMl = (effectiveDoseMg / conc.strengthMg!) * conc.volumeMl!;
+        final double roundedMl = _roundToNearest(rawMl, conc.roundToMl);
 
-      calculatedMl = clampedMl;
+        // -- Clamp to min/max safe ml --
+        final double? minSafe = conc.minSafeMl;
+        final double? maxSafe = conc.maxSafeMl;
+        final double clampedMl;
+        if (minSafe != null && roundedMl < minSafe) {
+          clampedMl = minSafe;
+        } else if (maxSafe != null && roundedMl > maxSafe) {
+          clampedMl = maxSafe;
+        } else {
+          clampedMl = roundedMl;
+        }
 
-      final durationPart = _durationPart(drug);
-      prescription =
-          '${drug.drugNameEn} — give ${clampedMl.toStringAsFixed(1)}ml, '
-          '${drug.frequencyEn}$durationPart';
+        calculatedMl = clampedMl;
 
-      formula = '${weightKg}kg × ${drug.dosePerKgMg}mg/kg = '
-          '${doseMg.toStringAsFixed(1)}mg\n'
-          '→ ${effectiveDoseMg.toStringAsFixed(1)}mg ÷ '
-          '${conc.strengthMg}mg × ${conc.volumeMl}ml = '
-          '${rawMl.toStringAsFixed(2)}ml\n'
-          '→ rounded to ${calculatedMl.toStringAsFixed(1)}ml';
+        final durationPart = _durationPart(drug);
+        prescription =
+            '${drug.drugNameEn} — give ${clampedMl.toStringAsFixed(1)}ml, '
+            '${drug.frequencyEn}$durationPart';
 
-      if (drug.maxDailyDoseMg != null && doseMg > drug.maxDailyDoseMg!) {
-        formula += '\n(capped at ${drug.maxDailyDoseMg}mg/day max)';
+        formula = '${weightKg}kg × ${drug.dosePerKgMg}mg/kg = '
+            '${doseMg.toStringAsFixed(1)}mg\n'
+            '→ ${effectiveDoseMg.toStringAsFixed(1)}mg ÷ '
+            '${conc.strengthMg}mg × ${conc.volumeMl}ml = '
+            '${rawMl.toStringAsFixed(2)}ml\n'
+            '→ rounded to ${calculatedMl.toStringAsFixed(1)}ml';
+
+        if (drug.maxDailyDoseMg != null && doseMg > drug.maxDailyDoseMg!) {
+          formula += '\n(capped at ${drug.maxDailyDoseMg}mg/day max)';
+        }
       }
     } else if (conc != null && conc.roundToTablet != null) {
       // Tablet-based dosing (e.g. Primaquine)

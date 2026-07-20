@@ -173,6 +173,7 @@ class Drug {
   final String? sourceDetail;
   final String? lastVerified;
   final String verifiedBy;
+  final String? ivInfo;
 
   Drug({
     required this.id,
@@ -204,6 +205,7 @@ class Drug {
     this.sourceDetail,
     this.lastVerified,
     required this.verifiedBy,
+    this.ivInfo,
   });
 
   factory Drug.fromJson(Map<String, dynamic> json) {
@@ -251,6 +253,7 @@ class Drug {
       sourceDetail: json['source_detail'] as String?,
       lastVerified: json['last_verified'] as String?,
       verifiedBy: json['verified_by'] as String? ?? '',
+      ivInfo: json['iv_info'] as String?,
     );
   }
 }

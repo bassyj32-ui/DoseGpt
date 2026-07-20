@@ -180,11 +180,33 @@ class ResultScreen extends StatelessWidget {
                 ),
                 textAlign: TextAlign.center,
               ),
-              if (result.calculatedMl != null) ...[
+              if (result.calculatedMl != null && result.ivReconstitution == null) ...[
                 const SizedBox(height: 12),
                 _DoseVisual(
                   calculatedMl: result.calculatedMl!,
                   maxSafeMl: _maxSafeMl,
+                ),
+              ],
+
+              // IV reconstitution instructions
+              if (result.ivReconstitution != null) ...[
+                const SizedBox(height: 16),
+                Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: AppTheme.lightCardBg,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: AppTheme.lightDivider),
+                  ),
+                  child: Text(
+                    result.ivReconstitution!,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      color: AppTheme.lightInkMuted,
+                      height: 1.5,
+                    ),
+                  ),
                 ),
               ],
             ],

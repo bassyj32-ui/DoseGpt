@@ -122,7 +122,7 @@ class _ConditionCard extends StatefulWidget {
 }
 
 class _ConditionCardState extends State<_ConditionCard>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late AnimationController _staggerCtrl;
   late Animation<double> _fadeAnim;
   late Animation<Offset> _slideAnim;
