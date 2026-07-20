@@ -100,12 +100,36 @@ class _DrugCard extends StatelessWidget {
 
   const _DrugCard({required this.drug, required this.onTap});
 
+  /// Extract a short display name (brand) and a subtitle (generic).
+  /// Priority: drugSynonyms > parentheses in drugNameEn > plain drugNameEn.
+  ({String display, String? subtitle}) _names() {
+    // Check synonyms
+    if (drug.drugSynonyms.isNotEmpty) {
+      final brand = drug.drugSynonyms.first;
+      // Use drugNameEn as subtitle after cleaning up parentheses
+      final generic = drug.drugNameEn.replaceAll(RegExp(r'\s*\([^)]*\)'), '').trim();
+      return (display: brand, subtitle: generic);
+    }
+
+    // Check parentheses in drugNameEn, e.g. "Generic (Brand)"
+    final parenMatch = RegExp(r'^(.+?)\s*\(([^)]+)\)$').firstMatch(drug.drugNameEn);
+    if (parenMatch != null) {
+      final generic = parenMatch.group(1)!.trim();
+      final brand = parenMatch.group(2)!.trim();
+      return (display: brand, subtitle: generic);
+    }
+
+    // Fallback: just the name, no subtitle
+    return (display: drug.drugNameEn, subtitle: null);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final names = _names();
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 60,
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: AppTheme.lightCardBg,
           borderRadius: BorderRadius.circular(16),
@@ -113,43 +137,47 @@ class _DrugCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            const SizedBox(width: 16),
-            // Radio indicator circle
-            Container(
-              width: 22,
-              height: 22,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppTheme.lightInkSubtle,
-                  width: 2,
-                ),
-              ),
-            ),
-            const SizedBox(width: 14),
-            // Drug name
-            Expanded(
-              child: Text(
-                drug.drugNameEn,
-                style: const TextStyle(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.lightInk,
-                ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
             // Chevron
-            Padding(
-              padding: const EdgeInsets.only(right: 16),
-              child: Text(
-                '\u203A',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w300,
-                  color: AppTheme.lightInkSubtle,
-                ),
+            Text(
+              '\u203A',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w300,
+                color: AppTheme.lightInkSubtle,
+              ),
+            ),
+            const SizedBox(width: 12),
+
+            // Drug names
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    names.display,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                      color: AppTheme.lightInk,
+                    ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  if (names.subtitle != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 1),
+                      child: Text(
+                        names.subtitle!,
+                        style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          color: AppTheme.lightInkMuted,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                ],
               ),
             ),
           ],

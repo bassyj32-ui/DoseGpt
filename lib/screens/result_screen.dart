@@ -114,8 +114,8 @@ class ResultScreen extends StatelessWidget {
         ],
         const SizedBox(height: 32),
         PrimaryButton(
-          label: 'New Calculation',
-          onPressed: () => Navigator.of(context).pop(),
+          label: 'New Patient',
+          onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
         ),
         const SizedBox(height: 20),
         const DisclaimerLine(),
@@ -242,8 +242,8 @@ class ResultScreen extends StatelessWidget {
 
         // New Calculation button
         PrimaryButton(
-          label: 'New Calculation',
-          onPressed: () => Navigator.of(context).pop(),
+          label: 'New Patient',
+          onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
         ),
 
         const SizedBox(height: 16),

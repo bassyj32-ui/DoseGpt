@@ -254,28 +254,25 @@ class _CardContent extends StatelessWidget {
         children: [
           // ── Main content row ──────────────────────────────────
           Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Constant spacer matching the urgent bar width
-              // so urgent/non-urgent cards have identical layout
-              const SizedBox(width: 3),
+              // Constant spacer for alignment consistency
+              const SizedBox(width: 12),
 
               // ── Icon frame ────────────────────────────────────
-              Padding(
-                padding: const EdgeInsets.only(left: 9),
-                child: Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: AppTheme.lightShadowIcon,
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(7),
-                    child: CustomPaint(
-                      size: const Size(34, 34),
-                      painter: painter,
-                    ),
+              Container(
+                width: 48,
+                height: 48,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: AppTheme.lightShadowIcon,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(7),
+                  child: CustomPaint(
+                    size: const Size(34, 34),
+                    painter: painter,
                   ),
                 ),
               ),
