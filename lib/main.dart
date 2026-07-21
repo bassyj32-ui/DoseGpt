@@ -61,33 +61,16 @@ class _AppEntryState extends State<AppEntry> {
     _imagePrecacheFuture = _precacheAllImages();
   }
 
-  /// Pre-load all asset images so they display instantly on the home screen.
+  /// Pre-load the background image so it displays instantly on the home screen.
   Future<void> _precacheAllImages() async {
-    // Wait for the widget tree to be ready
     await WidgetsBinding.instance.endOfFrame;
 
     if (!mounted) return;
 
-    // Precache the background image
     await precacheImage(
       const AssetImage('assets/images/background/baby_photo.jpg'),
       context,
       size: null,
-    );
-
-    if (!mounted) return;
-
-    // Precache all condition card images
-    const conditionIds = [
-      'asthma', 'diarrhea', 'ear_infection', 'fever', 'malaria',
-      'pneumonia', 'skin_infection', 'tonsillitis', 'uti', 'worms',
-    ];
-    await Future.wait(
-      conditionIds.map((id) => precacheImage(
-        AssetImage('assets/images/conditions/$id.jpg'),
-        context,
-        size: null,
-      )),
     );
   }
 
@@ -150,10 +133,37 @@ class _AppEntryState extends State<AppEntry> {
             body: Center(
               child: Padding(
                 padding: const EdgeInsets.all(AppTheme.spacingLg),
-                child: Text(
-                  'Failed to load app data: ${snapshot.error}',
-                  style: AppTheme.body,
-                  textAlign: TextAlign.center,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(
+                      Icons.cloud_off,
+                      color: AppTheme.inkSubtle,
+                      size: 48,
+                    ),
+                    const SizedBox(height: AppTheme.spacingMd),
+                    Text(
+                      'Failed to load app data.\nPlease check your connection and try again.',
+                      style: AppTheme.body,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: AppTheme.spacingLg),
+                    TextButton.icon(
+                      onPressed: () {
+                        setState(() {
+                          _dataFuture = Future.wait([
+                            DataLoader.loadPediatric(),
+                            DataLoader.loadAdult(),
+                          ]);
+                        });
+                      },
+                      icon: const Icon(Icons.refresh),
+                      label: const Text('Retry'),
+                      style: TextButton.styleFrom(
+                        foregroundColor: AppTheme.primary,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

@@ -18,9 +18,9 @@ import 'package:google_fonts/google_fonts.dart';
 /// Light is used for the main shell (home, reference).
 class AppTheme {
   // ── Brand Colors ──────────────────────────────────────────────
-  static const Color primary = Color(0xFF1DB954); // Medical green
-  static const Color primaryDark = Color(0xFF169C46);
-  static const Color primaryLight = Color(0xFF2EE76A);
+  static const Color primary = Color(0xFF08805B); // Deep teal green
+  static const Color primaryDark = Color(0xFF066847);
+  static const Color primaryLight = Color(0xFF4ADE80);
 
   static const Color accentGold = Color(0xFFC98A1F);
   static const Color urgent = Color(0xFFE91429);
@@ -128,34 +128,35 @@ class AppTheme {
   ];
 
   // ── Shadows (Light) — layered for realistic elevation ──────
-  /// Apple-like pill card shadow stack: 3 layers for soft depth.
+  /// Apple-like pill card shadow stack using the brand teal at
+  /// low opacity so shadows feel cohesive with the card colour.
   static const List<BoxShadow> lightShadowCard = [
     BoxShadow(
-      color: Color(0x0A000000),
-      blurRadius: 20,
-      offset: Offset(0, 6),
+      color: Color(0x0A08805B), // teal 4%
+      blurRadius: 24,
+      offset: Offset(0, 8),
     ),
     BoxShadow(
-      color: Color(0x0D000000),
-      blurRadius: 8,
-      offset: Offset(0, 3),
+      color: Color(0x0D08805B), // teal 5%
+      blurRadius: 10,
+      offset: Offset(0, 4),
     ),
     BoxShadow(
-      color: Color(0x08000000),
-      blurRadius: 2,
+      color: Color(0x0608805B), // teal 2.5%
+      blurRadius: 3,
       offset: Offset(0, 1),
     ),
   ];
 
-  /// Subtle icon frame shadow.
+  /// Subtle icon frame shadow (teal-tinted to match cards).
   static const List<BoxShadow> lightShadowIcon = [
     BoxShadow(
-      color: Color(0x08000000),
+      color: Color(0x0808805B), // teal 3%
       blurRadius: 4,
       offset: Offset(0, 2),
     ),
     BoxShadow(
-      color: Color(0x04000000),
+      color: Color(0x0408805B), // teal 1.5%
       blurRadius: 1,
       offset: Offset(0, 0),
     ),

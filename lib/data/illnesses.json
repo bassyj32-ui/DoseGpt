@@ -1,9 +1,10 @@
 {
+  "_status": "DRAFT — CLINICALLY UNVERIFIED. Every entry requires sign-off by a licensed clinician before use in a shipped app. Do not treat any value here as final.",
   "illnesses": [
     {
       "id": "malaria",
       "name_en": "Malaria",
-      "name_am": "",
+      "name_am": "ወባ",
       "icon": "icon_mosquito",
       "display_order": 1,
       "urgent_accent": true,
@@ -12,7 +13,7 @@
     {
       "id": "pneumonia",
       "name_en": "Pneumonia",
-      "name_am": "",
+      "name_am": "የሳምባ ምች",
       "icon": "icon_lungs",
       "display_order": 2,
       "urgent_accent": true,
@@ -21,74 +22,155 @@
     {
       "id": "diarrhea",
       "name_en": "Diarrhea",
-      "name_am": "",
+      "name_am": "ተቅማጥ",
       "icon": "icon_droplet",
       "display_order": 3,
       "urgent_accent": false,
       "drug_ids": ["zinc_diarrhea", "ors_diarrhea", "plan_c_fluids_diarrhea", "ceftazidime_diarrhea"]
     },
     {
-      "id": "fever",
-      "name_en": "Fever / Pain",
-      "name_am": "",
-      "icon": "icon_thermometer",
+      "id": "fluids",
+      "name_en": "Maintenance Fluids & Others",
+      "name_am": "የሰውነት ፈሳሽ አያያዝ",
+      "icon": "icon_droplet",
       "display_order": 4,
       "urgent_accent": false,
-      "drug_ids": ["paracetamol_fever", "ibuprofen_fever"]
-    },
-    {
-      "id": "uti",
-      "name_en": "UTI",
-      "name_am": "",
-      "icon": "icon_kidney",
-      "display_order": 5,
-      "urgent_accent": false,
-      "drug_ids": ["cotrimoxazole_uti", "amoxicillin_uti"]
+      "drug_ids": ["iv_fluids_maintenance", "iv_fluids_shock", "iv_fluids_dehydration"]
     },
     {
       "id": "tonsillitis",
       "name_en": "Tonsillitis",
-      "name_am": "",
+      "name_am": "የቶንሲል እብጠት",
       "icon": "icon_throat",
-      "display_order": 6,
+      "display_order": 5,
       "urgent_accent": false,
       "drug_ids": ["penicillin_v_tonsillitis", "amoxicillin_tonsillitis", "azithromycin_tonsillitis"]
     },
     {
       "id": "otitis_media",
       "name_en": "Ear Infection",
-      "name_am": "",
+      "name_am": "የጆሮ ኢንፌክሽን",
       "icon": "icon_ear",
-      "display_order": 7,
+      "display_order": 6,
       "urgent_accent": false,
       "drug_ids": ["amoxicillin_otitis", "azithromycin_otitis", "augmentin_otitis"]
     },
     {
       "id": "asthma",
       "name_en": "Asthma / Wheeze",
-      "name_am": "",
+      "name_am": "አስም",
       "icon": "icon_inhaler",
-      "display_order": 8,
+      "display_order": 7,
       "urgent_accent": false,
       "drug_ids": ["salbutamol_asthma", "prednisolone_asthma", "hydrocortisone_iv_asthma", "dexamethasone_stat_asthma"]
     },
     {
       "id": "impetigo",
       "name_en": "Skin Infection",
-      "name_am": "",
+      "name_am": "የቆዳ ኢንፌክሽን",
       "icon": "icon_skin",
-      "display_order": 9,
+      "display_order": 8,
       "urgent_accent": false,
       "drug_ids": ["cloxacillin_impetigo"]
     },
     {
       "id": "worms",
       "name_en": "Intestinal Worms",
-      "name_am": "",
+      "name_am": "የሆድ ትል",
       "icon": "icon_worm",
-      "display_order": 10,
+      "display_order": 9,
       "urgent_accent": false,
       "drug_ids": ["albendazole_worms", "mebendazole_worms"]
+    },
+    {
+      "id": "fever",
+      "name_en": "Fever / Pain",
+      "name_am": "ትኩሳት",
+      "icon": "icon_thermometer",
+      "display_order": 10,
+      "urgent_accent": false,
+      "drug_ids": ["paracetamol_fever", "ibuprofen_fever"]
+    },
+    {
+      "id": "uti",
+      "name_en": "UTI",
+      "name_am": "የሽንት ቧንቧ ኢንፌክሽን",
+      "icon": "icon_kidney",
+      "display_order": 11,
+      "urgent_accent": false,
+      "drug_ids": ["cotrimoxazole_uti", "amoxicillin_uti"]
+    },
+    {
+      "id": "giardiasis",
+      "name_en": "Giardiasis",
+      "name_am": "ጃርዲያ",
+      "icon": "icon_stomach",
+      "display_order": 12,
+      "urgent_accent": false,
+      "drug_ids": ["metronidazole_giardiasis"]
+    },
+    {
+      "id": "amebiasis",
+      "name_en": "Amebiasis",
+      "name_am": "አሜባ",
+      "icon": "icon_stomach",
+      "display_order": 13,
+      "urgent_accent": false,
+      "drug_ids": ["metronidazole_amebiasis", "tinidazole_amebiasis"]
+    },
+    {
+      "id": "measles",
+      "name_en": "Measles",
+      "name_am": "ኩፍኝ",
+      "icon": "icon_mosquito",
+      "display_order": 14,
+      "urgent_accent": false,
+      "drug_ids": ["vitamin_a_measles"]
+    },
+    {
+      "id": "chickenpox",
+      "name_en": "Chickenpox",
+      "name_am": "የዶሮ በሽታ",
+      "icon": "icon_skin",
+      "display_order": 15,
+      "urgent_accent": false,
+      "drug_ids": ["calamine_chickenpox", "paracetamol_chickenpox"]
+    },
+    {
+      "id": "scabies",
+      "name_en": "Scabies",
+      "name_am": "ቁንዳ",
+      "icon": "icon_skin",
+      "display_order": 16,
+      "urgent_accent": false,
+      "drug_ids": ["permethrin_scabies"]
+    },
+    {
+      "id": "eczema",
+      "name_en": "Eczema",
+      "name_am": "ኤክዜማ",
+      "icon": "icon_skin",
+      "display_order": 17,
+      "urgent_accent": false,
+      "drug_ids": ["hydrocortisone_eczema", "emollient_eczema"]
+    },
+    {
+      "id": "tinea",
+      "name_en": "Fungal Skin Infection",
+      "name_am": "የቆዳ ፈንገስ",
+      "icon": "icon_skin",
+      "display_order": 18,
+      "urgent_accent": false,
+      "drug_ids": ["clotrimazole_tinea", "griseofulvin_tinea"]
+    },
+    {
+      "id": "cellulitis",
+      "name_en": "Cellulitis",
+      "name_am": "ሴሉላይቲስ",
+      "icon": "icon_skin",
+      "display_order": 19,
+      "urgent_accent": false,
+      "drug_ids": ["cloxacillin_cellulitis", "amoxicillin_cellulitis"]
     }
   ]
 }

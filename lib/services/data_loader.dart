@@ -2,18 +2,23 @@ import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import '../models/illness.dart';
 import '../models/drug.dart';
+import '../models/category.dart';
 
 class ClinicalData {
   final List<Illness> illnesses;
   final Map<String, Illness> illnessMap;
   final Map<String, Drug> drugMap;
   final Map<String, MetaInfo> meta;
+  final List<Category> categories;
+  final Map<String, Category> categoryMap;
 
   ClinicalData({
     required this.illnesses,
     required this.illnessMap,
     required this.drugMap,
     required this.meta,
+    required this.categories,
+    required this.categoryMap,
   });
 
   Drug? getDrug(String id) => drugMap[id];
@@ -32,6 +37,26 @@ class ClinicalData {
     if (illness == null) return null;
     final firstDrug = drugMap[illness.drugIds.first];
     return firstDrug;
+  }
+
+  /// Returns the category that contains the given [illnessId], or null.
+  Category? categoryForIllness(String illnessId) {
+    for (final category in categories) {
+      if (category.illnessIds.contains(illnessId)) return category;
+    }
+    return null;
+  }
+
+  /// Returns all illnesses that belong to the given [categoryId],
+  /// sorted by their display_order.
+  List<Illness> getIllnessesForCategory(String categoryId) {
+    final category = categoryMap[categoryId];
+    if (category == null) return [];
+    return category.illnessIds
+        .map((id) => illnessMap[id])
+        .whereType<Illness>()
+        .toList()
+      ..sort((a, b) => a.displayOrder.compareTo(b.displayOrder));
   }
 }
 
@@ -65,21 +90,23 @@ class MetaInfo {
 }
 
 class DataLoader {
-  /// Load the pediatric dataset (illnesses.json + drugs.json + meta.json)
+  /// Load the pediatric dataset (illnesses.json + drugs.json + meta.json + pediatric_categories.json)
   static Future<ClinicalData> loadPediatric() async {
     return loadFrom(
       illnessesPath: 'lib/data/illnesses.json',
       drugsPath: 'lib/data/drugs.json',
       metaPath: 'lib/data/meta.json',
+      categoriesPath: 'lib/data/pediatric_categories.json',
     );
   }
 
-  /// Load the adult dataset (adult_illnesses.json + adult_drugs.json + meta.json)
+  /// Load the adult dataset (adult_illnesses.json + adult_drugs.json + meta.json + adult_categories.json)
   static Future<ClinicalData> loadAdult() async {
     return loadFrom(
       illnessesPath: 'lib/data/adult_illnesses.json',
       drugsPath: 'lib/data/adult_drugs.json',
       metaPath: 'lib/data/meta.json',
+      categoriesPath: 'lib/data/adult_categories.json',
     );
   }
 
@@ -87,6 +114,7 @@ class DataLoader {
     required String illnessesPath,
     required String drugsPath,
     required String metaPath,
+    required String categoriesPath,
   }) async {
     final illnessesJson = jsonDecode(
       await rootBundle.loadString(illnessesPath),
@@ -100,6 +128,10 @@ class DataLoader {
       await rootBundle.loadString(metaPath),
     ) as Map<String, dynamic>;
 
+    final categoriesJson = jsonDecode(
+      await rootBundle.loadString(categoriesPath),
+    ) as Map<String, dynamic>;
+
     final illnesses = (illnessesJson['illnesses'] as List)
         .map((e) => Illness.fromJson(e as Map<String, dynamic>))
         .toList();
@@ -109,6 +141,10 @@ class DataLoader {
         .toList();
 
     final meta = MetaInfo.fromJson(metaJson);
+
+    final categories = (categoriesJson['categories'] as List)
+        .map((e) => Category.fromJson(e as Map<String, dynamic>))
+        .toList();
 
     final illnessMap = <String, Illness>{};
     for (final illness in illnesses) {
@@ -120,11 +156,18 @@ class DataLoader {
       drugMap[drug.id] = drug;
     }
 
+    final categoryMap = <String, Category>{};
+    for (final category in categories) {
+      categoryMap[category.id] = category;
+    }
+
     return ClinicalData(
       illnesses: illnesses,
       illnessMap: illnessMap,
       drugMap: drugMap,
       meta: {'meta': meta},
+      categories: categories,
+      categoryMap: categoryMap,
     );
   }
 }

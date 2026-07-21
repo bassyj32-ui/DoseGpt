@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import '../widgets/app_theme.dart';
 import '../widgets/condition_icons.dart';
+import '../widgets/category_card.dart';
+import '../models/category.dart';
 import '../models/illness.dart';
 import '../services/data_loader.dart';
 import 'drug_list_screen.dart';
+import 'category_conditions_screen.dart';
+import 'fluid_options_screen.dart';
 
 /// Home Screen — Light Mode
 ///
@@ -14,83 +19,257 @@ import 'drug_list_screen.dart';
 ///   - Staggered card entrance + press-down animation
 ///   - Responsive card width (full-width with max cap)
 ///   - Urgent accent lines on Malaria & Pneumonia
-class HomeScreen extends StatelessWidget {
+///   - Top 6 conditions are hero cards; the rest are grouped into
+///     body-system [CategoryCard]s that navigate to a sub-screen.
+///
+/// Optionally accepts a [searchQuery] to filter the displayed illnesses
+/// in real time (used by the parent [MainShell] search bar).
+class HomeScreen extends StatefulWidget {
   final ClinicalData data;
+  final String searchQuery;
 
-  const HomeScreen({super.key, required this.data});
+  const HomeScreen({
+    super.key,
+    required this.data,
+    this.searchQuery = '',
+  });
 
-  /// Map illness ID → icon painter
-  static CustomPainter iconPainterFor(String id) {
-    switch (id) {
-      case 'malaria':
-        return MosquitoIconPainter();
-      case 'pneumonia':
-        return LungsIconPainter();
-      case 'diarrhea':
-        return DropletIconPainter();
-      case 'fever':
-        return ThermometerIconPainter();
-      case 'uti':
-        return KidneyIconPainter();
-      case 'tonsillitis':
-        return ThroatIconPainter();
-      case 'otitis_media':
-        return EarIconPainter();
-      case 'asthma':
-        return InhalerIconPainter();
-      case 'hypertension':
-        return HeartIconPainter();
-      case 'diabetes':
-        return DropletIconPainter();
-      case 'dyspepsia':
-        return StomachIconPainter();
-      case 'typhoid':
-        return TyphoidIconPainter();
-      default:
-        return MosquitoIconPainter();
-    }
-  }
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  static const int _maxPinnedCards = 6;
 
   @override
   Widget build(BuildContext context) {
-    final illnesses = List<Illness>.from(data.illnesses)
+    final illnesses = List<Illness>.from(widget.data.illnesses)
       ..sort((a, b) => a.displayOrder.compareTo(b.displayOrder));
 
-    // All illnesses are shown in display_order — no hardcoded filtering
-    final filtered = illnesses;
+    final query = widget.searchQuery.trim().toLowerCase();
+    final hasSearch = query.isNotEmpty;
+
+    // If user is searching, show ALL matching conditions (no categories)
+    if (hasSearch) {
+      final filtered = illnesses
+          .where((i) => i.nameEn.toLowerCase().contains(query))
+          .toList();
+      return _buildSearchView(context, filtered);
+    }
+
+    // Normal (non-search) view: top 6 hero cards + category section
+    final pinned = illnesses.where((i) => i.displayOrder <= _maxPinnedCards).toList();
+    // Sort remaining by display_order
+    final remaining = illnesses.where((i) => i.displayOrder > _maxPinnedCards).toList();
+    final categories = widget.data.categories;
 
     final screenWidth = MediaQuery.of(context).size.width;
 
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
+      itemCount: _computeItemCount(pinned, remaining, categories),
+      itemBuilder: (context, index) {
+        int i = 0;
+
+        // ── Top spacer ─────────────────────────────────────────
+        if (index == i++) {
+          return const SizedBox(height: 8);
+        }
+
+        // ── Pinned hero cards (display_order 1-6) ────────────
+        for (int pinIdx = 0; pinIdx < pinned.length; pinIdx++) {
+          if (index == i++) {
+            final illness = pinned[pinIdx];
+            return _ConditionCard(
+              index: pinIdx,
+              illness: illness,
+              iconData: ConditionIcons.iconFor(illness.id),
+              isUrgent: illness.urgentAccent,
+              screenWidth: screenWidth,
+              onTap: () => _onConditionTap(context, illness.id),
+            );
+          }
+        }
+
+        // ── Category section divider (only if there are categories) ──
+        if (categories.isNotEmpty) {
+          if (index == i++) {
+            return _CategoryDivider();
+          }
+
+          // ── Unpinned remaining conditions ──
+          for (int remIdx = 0; remIdx < remaining.length; remIdx++) {
+            if (index == i++) {
+              final illness = remaining[remIdx];
+              // Show as a small hero card (same styling) but muted
+              return _ConditionCard(
+                index: _maxPinnedCards + remIdx,
+                illness: illness,
+                iconData: ConditionIcons.iconFor(illness.id),
+                isUrgent: illness.urgentAccent,
+                screenWidth: screenWidth,
+                onTap: () => _onConditionTap(context, illness.id),
+              );
+            }
+          }
+
+          // ── Category cards ──
+          for (int catIdx = 0; catIdx < categories.length; catIdx++) {
+            if (index == i++) {
+              final category = categories[catIdx];
+              return CategoryCard(
+                category: category,
+                screenWidth: screenWidth,
+                onTap: () => _onCategoryTap(context, category),
+              );
+            }
+          }
+        } else {
+          // No categories — just show remaining conditions
+          if (index == i++) {
+            return const SizedBox(height: 8); // spacer before remaining
+          }
+          for (int remIdx = 0; remIdx < remaining.length; remIdx++) {
+            if (index == i++) {
+              final illness = remaining[remIdx];
+              return _ConditionCard(
+                index: _maxPinnedCards + remIdx,
+                illness: illness,
+                iconData: ConditionIcons.iconFor(illness.id),
+                isUrgent: illness.urgentAccent,
+                screenWidth: screenWidth,
+                onTap: () => _onConditionTap(context, illness.id),
+              );
+            }
+          }
+        }
+
+        // Fallback (shouldn't be reached)
+        return const SizedBox.shrink();
+      },
+    );
+  }
+
+  int _computeItemCount(
+    List<Illness> pinned,
+    List<Illness> remaining,
+    List<Category> categories,
+  ) {
+    // spacer (1) + pinned + no items below
+    int count = 1 + pinned.length;
+
+    if (categories.isNotEmpty) {
+      count += 1; // divider
+      count += remaining.length; // unpinned conditions
+      count += categories.length; // category cards
+    } else {
+      count += 1; // spacer before remaining
+      count += remaining.length;
+    }
+
+    return count;
+  }
+
+  /// Build a flat list of all matching conditions (search mode).
+  Widget _buildSearchView(BuildContext context, List<Illness> filtered) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    return ListView.builder(
+      physics: const BouncingScrollPhysics(),
+      padding: EdgeInsets.zero,
       itemCount: filtered.length + 1, // +1 for top spacer
       itemBuilder: (context, index) {
-        if (index == 0) {
-          return const SizedBox(height: 8); // Top breathing room
-        }
+        if (index == 0) return const SizedBox(height: 8);
         final illness = filtered[index - 1];
         final cardIndex = index - 1;
-        final isUrgent = illness.urgentAccent;
         return _ConditionCard(
           index: cardIndex,
           illness: illness,
-          painter: iconPainterFor(illness.id),
-          isUrgent: isUrgent,
+          iconData: ConditionIcons.iconFor(illness.id),
+          isUrgent: illness.urgentAccent,
           screenWidth: screenWidth,
-          onTap: () => _navigateToDrugList(context, data, illness.id),
+          onTap: () => _onConditionTap(context, illness.id),
         );
       },
     );
   }
 
-  void _navigateToDrugList(
-      BuildContext context, ClinicalData data, String illnessId) {
+  void _onConditionTap(BuildContext context, String illnessId) {
+    if (illnessId == 'fluids') {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => FluidOptionsScreen(data: widget.data),
+        ),
+      );
+      return;
+    }
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => DrugListScreen(
-          data: data,
+          data: widget.data,
           illnessId: illnessId,
+        ),
+      ),
+    );
+  }
+
+  void _onCategoryTap(BuildContext context, Category category) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => CategoryConditionsScreen(
+          data: widget.data,
+          category: category,
+        ),
+      ),
+    );
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Category Divider
+// ═══════════════════════════════════════════════════════════════════
+class _CategoryDivider extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    const double horizontalPadding = 24;
+    const double maxCardWidth = 600;
+    final screenWidth = MediaQuery.of(context).size.width;
+    final cardWidth = (screenWidth - horizontalPadding * 2)
+        .clamp(0.0, maxCardWidth);
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(horizontalPadding, 8, horizontalPadding, 12),
+      child: Center(
+        child: SizedBox(
+          width: cardWidth,
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  height: 1,
+                  color: const Color(0xFFE8EBE9),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Text(
+                  'CATEGORIES',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.lightInkSubtle.withValues(alpha: 0.8),
+                    letterSpacing: 1.0,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  height: 1,
+                  color: const Color(0xFFE8EBE9),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -103,7 +282,7 @@ class HomeScreen extends StatelessWidget {
 class _ConditionCard extends StatefulWidget {
   final int index;
   final Illness illness;
-  final CustomPainter painter;
+  final PhosphorDuotoneIconData iconData;
   final bool isUrgent;
   final double screenWidth;
   final VoidCallback onTap;
@@ -111,7 +290,7 @@ class _ConditionCard extends StatefulWidget {
   const _ConditionCard({
     required this.index,
     required this.illness,
-    required this.painter,
+    required this.iconData,
     required this.isUrgent,
     required this.screenWidth,
     required this.onTap,
@@ -123,12 +302,18 @@ class _ConditionCard extends StatefulWidget {
 
 class _ConditionCardState extends State<_ConditionCard>
     with TickerProviderStateMixin {
+  // ── Staggered entrance ─────────────────────────────────────────
   late AnimationController _staggerCtrl;
   late Animation<double> _fadeAnim;
   late Animation<Offset> _slideAnim;
 
+  // ── Press animation ───────────────────────────────────────────
   late AnimationController _pressCtrl;
   late Animation<double> _scaleAnim;
+
+  // ── Icon entrance pulse ───────────────────────────────────────
+  late AnimationController _pulseCtrl;
+  late Animation<double> _pulseAnim;
 
   @override
   void initState() {
@@ -151,8 +336,13 @@ class _ConditionCardState extends State<_ConditionCard>
       curve: Curves.easeOutCubic,
     ));
 
-    Future.delayed(Duration(milliseconds: 60 * widget.index), () {
-      if (mounted) _staggerCtrl.forward();
+    final delay = Duration(milliseconds: 60 * widget.index);
+    Future.delayed(delay, () {
+      if (mounted) {
+        _staggerCtrl.forward().then((_) {
+          if (mounted) _pulseCtrl.forward();
+        });
+      }
     });
 
     // Press-down spring
@@ -160,21 +350,34 @@ class _ConditionCardState extends State<_ConditionCard>
       duration: const Duration(milliseconds: 120),
       vsync: this,
     );
-    _scaleAnim = Tween<double>(begin: 1.0, end: 0.98).animate(
+    _scaleAnim = Tween<double>(begin: 1.0, end: 0.97).animate(
       CurvedAnimation(parent: _pressCtrl, curve: Curves.easeOutCubic),
     );
+
+    // Icon entrance pulse
+    _pulseCtrl = AnimationController(
+      duration: const Duration(milliseconds: 350),
+      vsync: this,
+    );
+    _pulseAnim = TweenSequence<double>([
+      TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.15), weight: 40),
+      TweenSequenceItem(tween: Tween(begin: 1.15, end: 1.0), weight: 60),
+    ]).animate(CurvedAnimation(
+      parent: _pulseCtrl,
+      curve: Curves.easeOutCubic,
+    ));
   }
 
   @override
   void dispose() {
     _staggerCtrl.dispose();
     _pressCtrl.dispose();
+    _pulseCtrl.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Responsive card width
     const double horizontalPadding = 24;
     const double maxCardWidth = 600;
     final cardWidth = (widget.screenWidth - horizontalPadding * 2).clamp(
@@ -201,15 +404,16 @@ class _ConditionCardState extends State<_ConditionCard>
                 },
                 onTapCancel: () => _pressCtrl.reverse(),
                 child: AnimatedBuilder(
-                  animation: _scaleAnim,
+                  animation: Listenable.merge([_scaleAnim, _pulseAnim]),
                   builder: (context, child) => Transform.scale(
                     scale: _scaleAnim.value,
                     child: child,
                   ),
                   child: _CardContent(
                     illness: widget.illness,
-                    painter: widget.painter,
+                    iconData: widget.iconData,
                     isUrgent: widget.isUrgent,
+                    pulseAnim: _pulseAnim,
                   ),
                 ),
               ),
@@ -222,17 +426,19 @@ class _ConditionCardState extends State<_ConditionCard>
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// Card Content (stateless — no animation)
+// Card Content
 // ═══════════════════════════════════════════════════════════════════
 class _CardContent extends StatelessWidget {
   final Illness illness;
-  final CustomPainter painter;
+  final PhosphorDuotoneIconData iconData;
   final bool isUrgent;
+  final Animation<double> pulseAnim;
 
   const _CardContent({
     required this.illness,
-    required this.painter,
+    required this.iconData,
     required this.isUrgent,
+    required this.pulseAnim,
   });
 
   @override
@@ -247,32 +453,31 @@ class _CardContent extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Stack(
         children: [
-          // ── Main content row ──────────────────────────────────
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Constant spacer for alignment consistency
               const SizedBox(width: 12),
-
-              // ── Icon frame ────────────────────────────────────
-              Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  boxShadow: AppTheme.lightShadowIcon,
+              AnimatedBuilder(
+                animation: pulseAnim,
+                builder: (context, child) => Transform.scale(
+                  scale: pulseAnim.value,
+                  child: child,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(7),
-                  child: CustomPaint(
-                    size: const Size(34, 34),
-                    painter: painter,
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: AppTheme.lightShadowIcon,
+                  ),
+                  child: PhosphorIcon(
+                    iconData,
+                    color: AppTheme.primary,
+                    size: 30,
                   ),
                 ),
               ),
-
-              // ── Label ─────────────────────────────────────────
               const SizedBox(width: 14),
               Expanded(
                 child: Text(
@@ -287,8 +492,6 @@ class _CardContent extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
-
-              // ── Chevron ───────────────────────────────────────
               Padding(
                 padding: const EdgeInsets.only(right: 18),
                 child: Text(
@@ -302,8 +505,6 @@ class _CardContent extends StatelessWidget {
               ),
             ],
           ),
-
-          // ── Urgent accent bar (overlay — doesn't affect layout)
           if (isUrgent)
             Positioned(
               left: 0,
