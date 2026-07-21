@@ -240,7 +240,7 @@ class _CategoryDivider extends StatelessWidget {
 class _ConditionCard extends StatefulWidget {
   final int index;
   final Illness illness;
-  final PhosphorDuotoneIconData iconData;
+  final IconData iconData;
   final bool isUrgent;
   final double screenWidth;
   final VoidCallback onTap;
@@ -388,7 +388,7 @@ class _ConditionCardState extends State<_ConditionCard>
 // ═══════════════════════════════════════════════════════════════════
 class _CardContent extends StatelessWidget {
   final Illness illness;
-  final PhosphorDuotoneIconData iconData;
+  final IconData iconData;
   final bool isUrgent;
   final Animation<double> pulseAnim;
 

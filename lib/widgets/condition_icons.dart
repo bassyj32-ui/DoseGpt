@@ -72,7 +72,7 @@ class ConditionIcons {
   ///
   /// Categories are body-system groups (e.g. "respiratory", "git", "cvs")
   /// that appear as navigation cards on the home screen.
-  static PhosphorDuotoneIconData categoryIconFor(String categoryId) {
+  static IconData categoryIconFor(String categoryId) {
     switch (categoryId) {
       case 'respiratory':
         return PhosphorIconsDuotone.stethoscope;

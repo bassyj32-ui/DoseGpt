@@ -100,7 +100,7 @@ class FluidOptionsScreen extends StatelessWidget {
 }
 
 class _FluidOptionTile extends StatelessWidget {
-  final PhosphorDuotoneIconData icon;
+  final IconData icon;
   final String title;
   final String subtitle;
   final Color color;
