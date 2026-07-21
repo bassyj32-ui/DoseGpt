@@ -2,25 +2,39 @@
   "_note": "Body system categories for pediatric conditions. Based on WHO IMNCI guidelines, WHO Essential Medicines List for Children (EMLc 2023), WHO consolidated guidelines for management of common childhood illness (2026), and Standard Treatment Guidelines for primary care in Ethiopia. Conditions listed represent common primary care presentations at health centre level.",
   "categories": [
     {
+      "id": "respiratory",
+      "name_en": "Respiratory / Chest",
+      "icon": "icon_lungs",
+      "display_order": 1,
+      "illness_ids": ["asthma"]
+    },
+    {
       "id": "git",
       "name_en": "Gastrointestinal",
       "icon": "icon_stomach",
-      "display_order": 1,
-      "illness_ids": ["giardiasis", "amebiasis"]
+      "display_order": 2,
+      "illness_ids": ["giardiasis", "amebiasis", "worms"]
     },
     {
       "id": "infectious",
       "name_en": "Infectious Diseases",
       "icon": "icon_mosquito",
-      "display_order": 2,
+      "display_order": 3,
       "illness_ids": ["measles", "chickenpox"]
     },
     {
       "id": "dermatology",
       "name_en": "Dermatology / Skin",
       "icon": "icon_skin",
-      "display_order": 3,
+      "display_order": 4,
       "illness_ids": ["impetigo", "scabies", "eczema", "tinea", "cellulitis"]
+    },
+    {
+      "id": "general",
+      "name_en": "General / Other",
+      "icon": "icon_thermometer",
+      "display_order": 5,
+      "illness_ids": ["fever", "uti"]
     }
   ]
 }

@@ -59,8 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Normal (non-search) view: top 6 hero cards + category section
     final pinned = illnesses.where((i) => i.displayOrder <= _maxPinnedCards).toList();
-    // Sort remaining by display_order
-    final remaining = illnesses.where((i) => i.displayOrder > _maxPinnedCards).toList();
     final categories = widget.data.categories;
 
     final screenWidth = MediaQuery.of(context).size.width;
@@ -68,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: _computeItemCount(pinned, remaining, categories),
+      itemCount: _computeItemCount(pinned, categories),
       itemBuilder: (context, index) {
         int i = 0;
 
@@ -92,29 +90,12 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         }
 
-        // ── Category section divider (only if there are categories) ──
+        // ── Category section divider followed by category cards ──
         if (categories.isNotEmpty) {
           if (index == i++) {
             return _CategoryDivider();
           }
 
-          // ── Unpinned remaining conditions ──
-          for (int remIdx = 0; remIdx < remaining.length; remIdx++) {
-            if (index == i++) {
-              final illness = remaining[remIdx];
-              // Show as a small hero card (same styling) but muted
-              return _ConditionCard(
-                index: _maxPinnedCards + remIdx,
-                illness: illness,
-                iconData: ConditionIcons.iconFor(illness.id),
-                isUrgent: illness.urgentAccent,
-                screenWidth: screenWidth,
-                onTap: () => _onConditionTap(context, illness.id),
-              );
-            }
-          }
-
-          // ── Category cards ──
           for (int catIdx = 0; catIdx < categories.length; catIdx++) {
             if (index == i++) {
               final category = categories[catIdx];
@@ -122,24 +103,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 category: category,
                 screenWidth: screenWidth,
                 onTap: () => _onCategoryTap(context, category),
-              );
-            }
-          }
-        } else {
-          // No categories — just show remaining conditions
-          if (index == i++) {
-            return const SizedBox(height: 8); // spacer before remaining
-          }
-          for (int remIdx = 0; remIdx < remaining.length; remIdx++) {
-            if (index == i++) {
-              final illness = remaining[remIdx];
-              return _ConditionCard(
-                index: _maxPinnedCards + remIdx,
-                illness: illness,
-                iconData: ConditionIcons.iconFor(illness.id),
-                isUrgent: illness.urgentAccent,
-                screenWidth: screenWidth,
-                onTap: () => _onConditionTap(context, illness.id),
               );
             }
           }
@@ -153,19 +116,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int _computeItemCount(
     List<Illness> pinned,
-    List<Illness> remaining,
     List<Category> categories,
   ) {
-    // spacer (1) + pinned + no items below
+    // spacer (1) + pinned
     int count = 1 + pinned.length;
 
     if (categories.isNotEmpty) {
       count += 1; // divider
-      count += remaining.length; // unpinned conditions
       count += categories.length; // category cards
-    } else {
-      count += 1; // spacer before remaining
-      count += remaining.length;
     }
 
     return count;

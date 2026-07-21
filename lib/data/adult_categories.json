@@ -35,6 +35,13 @@
       "icon": "icon_skin",
       "display_order": 5,
       "illness_ids": ["impetigo", "scabies", "eczema", "tinea"]
+    },
+    {
+      "id": "general",
+      "name_en": "General / Other",
+      "icon": "icon_thermometer",
+      "display_order": 6,
+      "illness_ids": ["fever", "renal_stone"]
     }
   ]
 }
