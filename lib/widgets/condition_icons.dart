@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 /// Mapping from condition ID to Phosphor duotone icon data.
