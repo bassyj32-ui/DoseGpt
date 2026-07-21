@@ -13,7 +13,7 @@ class ConditionIcons {
   ///
   /// Falls back to [PhosphorIconsDuotone.heartbeat] when no matching
   /// icon is found.
-  static PhosphorDuotoneIconData iconFor(String illnessId) {
+  static IconData iconFor(String illnessId) {
     switch (illnessId) {
       case 'malaria':
         return PhosphorIconsDuotone.bugBeetle;
