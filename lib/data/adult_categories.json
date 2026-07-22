@@ -6,7 +6,7 @@
       "name_en": "Respiratory / Chest",
       "icon": "icon_lungs",
       "display_order": 1,
-      "illness_ids": ["asthma"]
+      "illness_ids": ["asthma", "pneumonia"]
     },
     {
       "id": "git",

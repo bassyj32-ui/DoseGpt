@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import '../widgets/app_theme.dart';
 import '../services/data_loader.dart';
 import 'drug_list_screen.dart';
@@ -29,13 +29,13 @@ class FluidOptionsScreen extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: const Icon(PhosphorIconsBold.arrowLeft, size: 24),
+          icon: const Icon(LucideIcons.arrow_left, size: 24),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: const Row(
           children: [
             SizedBox(width: 4),
-            Icon(PhosphorIconsDuotone.drop, color: AppTheme.primary, size: 24),
+            Icon(LucideIcons.droplet, color: AppTheme.primary, size: 24),
             SizedBox(width: 12),
             Text(
               'Maintenance Fluids & Others',
@@ -54,7 +54,7 @@ class FluidOptionsScreen extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
         children: [
           _FluidOptionTile(
-            icon: PhosphorIconsDuotone.drop,
+            icon: LucideIcons.droplet,
             title: 'Maintenance IV Fluids',
             subtitle: 'Holliday-Segar 4-2-1 rule: calculate daily & hourly rates',
             color: const Color(0xFF1976D2),
@@ -63,7 +63,7 @@ class FluidOptionsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           _FluidOptionTile(
-            icon: PhosphorIconsDuotone.heartbeat,
+            icon: LucideIcons.heart_pulse,
             title: 'IV Bolus — Shock / Severe Dehydration',
             subtitle: '20 mL/kg isotonic crystalloid, reassess, repeat PRN',
             color: const Color(0xFFD32F2F),
@@ -72,7 +72,7 @@ class FluidOptionsScreen extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           _FluidOptionTile(
-            icon: PhosphorIconsDuotone.thermometerHot,
+            icon: LucideIcons.thermometer,
             title: 'Dehydration Deficit Replacement',
             subtitle: 'Estimate deficit, give 50% in 8h + 50% over 16h',
             color: const Color(0xFFFBC02D),
@@ -138,7 +138,7 @@ class _FluidOptionTile extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: PhosphorIcon(icon, color: color, size: 28),
+                child: Icon(icon, color: color, size: 28),
               ),
               const SizedBox(width: 14),
               Expanded(
@@ -168,7 +168,7 @@ class _FluidOptionTile extends StatelessWidget {
               ),
               const SizedBox(width: 12),
               Icon(
-                PhosphorIconsRegular.caretRight,
+                LucideIcons.chevron_right,
                 color: AppTheme.lightInkSubtle,
                 size: 20,
               ),

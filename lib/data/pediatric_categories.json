@@ -9,31 +9,38 @@
       "illness_ids": ["asthma"]
     },
     {
+      "id": "ent",
+      "name_en": "ENT / Throat",
+      "icon": "icon_throat",
+      "display_order": 2,
+      "illness_ids": ["tonsillitis", "otitis_media", "sinusitis"]
+    },
+    {
       "id": "git",
       "name_en": "Gastrointestinal",
       "icon": "icon_stomach",
-      "display_order": 2,
+      "display_order": 3,
       "illness_ids": ["giardiasis", "amebiasis", "worms"]
     },
     {
       "id": "infectious",
       "name_en": "Infectious Diseases",
       "icon": "icon_mosquito",
-      "display_order": 3,
+      "display_order": 4,
       "illness_ids": ["measles", "chickenpox"]
     },
     {
       "id": "dermatology",
       "name_en": "Dermatology / Skin",
       "icon": "icon_skin",
-      "display_order": 4,
+      "display_order": 5,
       "illness_ids": ["impetigo", "scabies", "eczema", "tinea", "cellulitis"]
     },
     {
       "id": "general",
       "name_en": "General / Other",
       "icon": "icon_thermometer",
-      "display_order": 5,
+      "display_order": 6,
       "illness_ids": ["fever", "uti"]
     }
   ]

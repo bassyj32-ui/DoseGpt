@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import '../models/category.dart';
 import 'app_theme.dart';
 import 'condition_icons.dart';
@@ -119,7 +119,7 @@ class _CategoryCardState extends State<CategoryCard>
                           color: const Color(0xFFF4F6F5),
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: PhosphorIcon(
+                        child: Icon(
                           iconData,
                           color: AppTheme.primary,
                           size: 20,
@@ -146,7 +146,7 @@ class _CategoryCardState extends State<CategoryCard>
                       Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: Icon(
-                          PhosphorIconsRegular.caretRight,
+                          LucideIcons.chevron_right,
                           size: 16,
                           color: AppTheme.lightInkSubtle,
                         ),

@@ -1,7 +1,9 @@
 import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../widgets/app_theme.dart';
+import '../widgets/widgets.dart';
 import '../services/data_loader.dart';
 import 'home_screen.dart';
 
@@ -70,102 +72,86 @@ class _MainShellState extends State<MainShell> {
       data: AppTheme.lightTheme,
       child: Scaffold(
         backgroundColor: AppTheme.lightSurface,
-        body: SafeArea(
-          child: Stack(
-            children: [
-              // ── Scrollable content ──────────────────────────
-              Padding(
-                padding: const EdgeInsets.only(top: 60),
-                child: HomeScreen(
-                  data: currentData,
-                  searchQuery: _searchController.text,
-                ),
+        body: Stack(
+          children: [
+            // ── Scrollable content (no cross-fade) ──────────
+            Padding(
+              padding: const EdgeInsets.only(top: 60, bottom: 0),
+              child: HomeScreen(
+                key: ValueKey(_currentIndex),
+                data: currentData,
+                searchQuery: _searchController.text,
               ),
+            ),
 
-              // ── Glass-morphism app bar ──────────────────────
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: ClipRect(
-                  child: BackdropFilter(
-                    filter: ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 200),
-                      height: 60,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withValues(alpha: 0.72),
-                        border: Border(
-                          bottom: BorderSide(
-                            color: Colors.black.withValues(alpha: 0.06),
-                            width: 0.5,
-                          ),
+            // ── Glass-morphism app bar ──────────────────────
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: ClipRect(
+                child: BackdropFilter(
+                  filter: ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 200),
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.72),
+                      border: Border(
+                        bottom: BorderSide(
+                          color: Colors.black.withValues(alpha: 0.06),
+                          width: 0.5,
                         ),
                       ),
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: _isSearching
-                          ? _buildSearchField()
-                          : _buildTitleBar(),
                     ),
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: _isSearching
+                        ? _buildSearchField()
+                        : _buildTitleBar(),
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              top: BorderSide(
-                color: Colors.black.withValues(alpha: 0.06),
-                width: 0.5,
-              ),
-            ),
-          ),
-          child: ClipRect(
-            child: BackdropFilter(
-              filter: ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-              child: Container(
-                color: Colors.white.withValues(alpha: 0.72),
-                child: _BottomNav(
-                  currentIndex: _currentIndex,
-                  onTap: (index) {
-                    setState(() => _currentIndex = index);
-                    _searchController.clear();
-                  },
-                ),
-              ),
-            ),
-          ),
+        // ── Floating glass bottom nav (Apple-style) ──────────
+        bottomNavigationBar: _FloatingBottomNav(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() => _currentIndex = index);
+            _searchController.clear();
+          },
         ),
       ),
     );
   }
 
-  // ── Title bar (default state) ──────────────────────────────────
+  // ── Title bar: Logo tile + DoseGPT text (no repetition) ──────
   Widget _buildTitleBar() {
     return Row(
       children: [
-        PhosphorIcon(
-          PhosphorIconsDuotone.stethoscope,
-          color: AppTheme.primary,
-          size: 22,
-        ),
-        const SizedBox(width: 10),
-        Text(
-          'DoseGPT',
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-            color: AppTheme.lightInk,
-            letterSpacing: -0.4,
-          ),
+        // DoseLogoTile (small) + DoseGPT
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const DoseLogoTile(size: 38),
+            const SizedBox(width: 8),
+            Text(
+              'DoseGPT',
+              style: GoogleFonts.inter(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: AppTheme.lightInk,
+                letterSpacing: -0.3,
+              ),
+            ),
+          ],
         ),
         const Spacer(),
         GestureDetector(
           onTap: _toggleSearch,
-          child: PhosphorIcon(
-            PhosphorIconsRegular.magnifyingGlass,
+          child: Icon(
+            LucideIcons.search,
             color: AppTheme.lightInkMuted,
             size: 22,
           ),
@@ -180,8 +166,8 @@ class _MainShellState extends State<MainShell> {
       children: [
         GestureDetector(
           onTap: _toggleSearch,
-          child: PhosphorIcon(
-            PhosphorIconsRegular.arrowLeft,
+          child: Icon(
+            LucideIcons.arrow_left,
             color: AppTheme.lightInkMuted,
             size: 22,
           ),
@@ -220,8 +206,8 @@ class _MainShellState extends State<MainShell> {
               _searchController.clear();
               setState(() {});
             },
-            child: PhosphorIcon(
-              PhosphorIconsRegular.xCircle,
+            child: Icon(
+              LucideIcons.circle_x,
               color: AppTheme.lightInkSubtle,
               size: 20,
             ),
@@ -232,59 +218,75 @@ class _MainShellState extends State<MainShell> {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// Custom Bottom Navigation
+// Floating Bottom Navigation — Apple-inspired glass + emoji
 // ═══════════════════════════════════════════════════════════════════
-/// A minimal two-tab bottom navigation with Phosphor icons and a
-/// pill-shaped active indicator for a premium, modern feel.
-class _BottomNav extends StatelessWidget {
+/// Apple-style floating bottom nav with:
+///   - Glass-morphism backdrop (same as app bar)
+///   - Left/right/bottom margin for floating effect
+///   - Emoji instead of icons, with brand-green active pill
+///   - Soft shadow for depth
+class _FloatingBottomNav extends StatelessWidget {
   final int currentIndex;
   final ValueChanged<int> onTap;
 
-  const _BottomNav({
+  const _FloatingBottomNav({
     required this.currentIndex,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: false,
-      child: SizedBox(
-        height: 60,
-        child: Row(
-          children: [
-            _NavItem(
-              icon: PhosphorIconsRegular.baby,
-              activeIcon: PhosphorIconsFill.baby,
-              label: 'Pediatrics',
-              isSelected: currentIndex == 0,
-              onTap: () => onTap(0),
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(28),
+        child: BackdropFilter(
+          filter: ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+          child: Container(
+            height: 56,
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.65),
+              borderRadius: BorderRadius.circular(28),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.08),
+                  blurRadius: 20,
+                  offset: const Offset(0, 8),
+                ),
+              ],
             ),
-            _NavItem(
-              icon: PhosphorIconsRegular.person,
-              activeIcon: PhosphorIconsFill.person,
-              label: 'Adults',
-              isSelected: currentIndex == 1,
-              onTap: () => onTap(1),
+            child: Row(
+              children: [
+                _EmojiNavItem(
+                  emoji: '🧸',
+                  label: 'Pediatrics',
+                  isSelected: currentIndex == 0,
+                  onTap: () => onTap(0),
+                ),
+                _EmojiNavItem(
+                  emoji: '❤️',
+                  label: 'Adults',
+                  isSelected: currentIndex == 1,
+                  onTap: () => onTap(1),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 }
 
-/// Individual nav item with a pill indicator below the label.
-class _NavItem extends StatelessWidget {
-  final PhosphorIconData icon;
-  final PhosphorIconData activeIcon;
+/// Individual nav item with emoji + brand-green active container.
+class _EmojiNavItem extends StatelessWidget {
+  final String emoji;
   final String label;
   final bool isSelected;
   final VoidCallback onTap;
 
-  const _NavItem({
-    required this.icon,
-    required this.activeIcon,
+  const _EmojiNavItem({
+    required this.emoji,
     required this.label,
     required this.isSelected,
     required this.onTap,
@@ -292,41 +294,63 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isSelected ? AppTheme.lightNavActive : AppTheme.lightNavInactive;
-
     return Expanded(
       child: GestureDetector(
         onTap: onTap,
         behavior: HitTestBehavior.opaque,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            PhosphorIcon(
-              isSelected ? activeIcon : icon,
-              color: color,
-              size: 22,
-            ),
-            const SizedBox(height: 4),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 11,
-                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                color: color,
-                letterSpacing: 0.2,
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOutCubic,
+          margin: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+          decoration: BoxDecoration(
+            color: isSelected
+                ? AppTheme.primary.withValues(alpha: 0.12)
+                : Colors.transparent,
+            borderRadius: BorderRadius.circular(22),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeOutCubic,
+                width: isSelected ? 32 : 28,
+                height: isSelected ? 32 : 28,
+                decoration: BoxDecoration(
+                  color: isSelected ? AppTheme.primary : Colors.transparent,
+                  borderRadius: BorderRadius.circular(isSelected ? 16 : 14),
+                  border: isSelected
+                      ? Border.all(color: AppTheme.primary, width: 1.5)
+                      : Border.all(
+                          color: AppTheme.lightNavInactive.withValues(alpha: 0.3),
+                          width: 1,
+                        ),
+                ),
+                child: Center(
+                  child: Text(
+                    emoji,
+                    style: TextStyle(
+                      fontSize: isSelected ? 16 : 14,
+                    ),
+                  ),
+                ),
               ),
-            ),
-            const SizedBox(height: 4),
-            // Active indicator pill
-            Container(
-              width: 16,
-              height: 3,
-              decoration: BoxDecoration(
-                color: isSelected ? AppTheme.lightNavActive : Colors.transparent,
-                borderRadius: BorderRadius.circular(1.5),
+              const SizedBox(width: 6),
+              AnimatedDefaultTextStyle(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeOutCubic,
+                style: TextStyle(
+                  fontSize: isSelected ? 13 : 12,
+                  fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                  color: isSelected
+                      ? AppTheme.lightNavActive
+                      : AppTheme.lightNavInactive,
+                  letterSpacing: 0.1,
+                ),
+                child: Text(label),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'widgets/app_theme.dart';
+import 'widgets/dose_wordmark.dart';
+import 'widgets/widgets.dart';
 import 'screens/disclaimer_screen.dart';
 import 'screens/main_shell.dart';
 import 'screens/result_screen.dart';
@@ -90,35 +92,17 @@ class _AppEntryState extends State<AppEntry> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: AppTheme.primary.withValues(alpha: 0.1),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: const Icon(
-                      Icons.medical_services_outlined,
-                      color: AppTheme.primary,
-                      size: 32,
-                    ),
+                  // DOSE brand logo tile
+                  const DoseLogoTile(
+                    size: 80,
                   ),
-                  const SizedBox(height: AppTheme.spacingMd),
-                  const Text(
-                    'DoseGPT',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: AppTheme.ink,
-                    ),
-                  ),
-                  const SizedBox(height: AppTheme.spacingSm),
+                  const SizedBox(height: AppTheme.spacingLg),
                   const SizedBox(
                     width: 24,
                     height: 24,
                     child: CircularProgressIndicator(
                       strokeWidth: 2,
-                      color: AppTheme.primary,
+                      color: AppTheme.primaryMid,
                     ),
                   ),
                 ],
@@ -144,7 +128,7 @@ class _AppEntryState extends State<AppEntry> {
                     const SizedBox(height: AppTheme.spacingMd),
                     Text(
                       'Failed to load app data.\nPlease check your connection and try again.',
-                      style: AppTheme.body,
+                      style: AppTheme.bodyLarge,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(height: AppTheme.spacingLg),
@@ -160,7 +144,7 @@ class _AppEntryState extends State<AppEntry> {
                       icon: const Icon(Icons.refresh),
                       label: const Text('Retry'),
                       style: TextButton.styleFrom(
-                        foregroundColor: AppTheme.primary,
+                        foregroundColor: AppTheme.primaryMid,
                       ),
                     ),
                   ],

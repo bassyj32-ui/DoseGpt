@@ -30,7 +30,7 @@
     },
     {
       "id": "fluids",
-      "name_en": "Maintenance Fluids & Others",
+      "name_en": "IV Fluids",
       "name_am": "የሰውነት ፈሳሽ አያያዝ",
       "icon": "icon_droplet",
       "display_order": 4,
@@ -51,16 +51,16 @@
       "name_en": "Ear Infection",
       "name_am": "የጆሮ ኢንፌክሽን",
       "icon": "icon_ear",
-      "display_order": 6,
+      "display_order": 7,
       "urgent_accent": false,
       "drug_ids": ["amoxicillin_otitis", "azithromycin_otitis", "augmentin_otitis"]
     },
     {
       "id": "asthma",
-      "name_en": "Asthma / Wheeze",
+      "name_en": "Asthma / HAAD",
       "name_am": "አስም",
       "icon": "icon_inhaler",
-      "display_order": 7,
+      "display_order": 6,
       "urgent_accent": false,
       "drug_ids": ["salbutamol_asthma", "prednisolone_asthma", "hydrocortisone_iv_asthma", "dexamethasone_stat_asthma"]
     },

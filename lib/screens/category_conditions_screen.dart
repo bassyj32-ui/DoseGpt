@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import '../widgets/app_theme.dart';
 import '../widgets/condition_icons.dart';
 import '../models/category.dart';
@@ -35,7 +35,7 @@ class CategoryConditionsScreen extends StatelessWidget {
         elevation: 0,
         scrolledUnderElevation: 0,
         leading: IconButton(
-          icon: const Icon(PhosphorIconsBold.arrowLeft, size: 24),
+          icon: const Icon(LucideIcons.arrow_left, size: 24),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Row(
@@ -44,10 +44,10 @@ class CategoryConditionsScreen extends StatelessWidget {
               width: 32,
               height: 32,
               decoration: BoxDecoration(
-                color: const Color(0xFFF4F6F5),
+                color: AppTheme.lightCardBg,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: PhosphorIcon(
+              child: Icon(
                 iconData,
                 color: AppTheme.primary,
                 size: 20,
@@ -226,7 +226,7 @@ class _CardContent extends StatelessWidget {
                   borderRadius: BorderRadius.circular(12),
                   boxShadow: AppTheme.lightShadowIcon,
                 ),
-                child: PhosphorIcon(
+                child: Icon(
                   iconData,
                   color: AppTheme.primary,
                   size: 30,

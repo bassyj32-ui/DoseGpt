@@ -1,41 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// DoseGPT Design System
+/// DoseGPT Design System — v2.0 (Emerald)
 ///
 /// Philosophy: "Apple designed Headspace for doctors."
 ///
 /// Principles:
 ///   • Calm — generous whitespace, muted surfaces, restrained color
-///   • Premium — soft shadows, large corner radii, tactile elevation
+///   • Premium — long-burr shadows, large corner radii, tactile elevation
 ///   • Trustworthy — clear hierarchy, excellent contrast, no gimmicks
-///   • Medical — professional tone, warm dark palette, purposeful greens
+///   • Medical — professional tone, purposeful greens
 ///
-/// Inspired by Headspace's visual rhythm and Apple's spatial precision.
-///
-/// The theme exposes both a [theme] (dark) and [lightTheme] (light).
-/// Dark is used for sub-screens (weight entry, result, disclaimer).
-/// Light is used for the main shell (home, reference).
+/// Brand colours shifted to emerald family with neon emerald (#00FF87)
+/// used sparingly for accents (icons, active states, the DOSE "O" capsule).
 class AppTheme {
-  // ── Brand Colors ──────────────────────────────────────────────
-  static const Color primary = Color(0xFF08805B); // Deep teal green
-  static const Color primaryDark = Color(0xFF066847);
-  static const Color primaryLight = Color(0xFF4ADE80);
+  // ── Brand Colors (Emerald Palette) ──────────────────────────
+  static const Color primary = Color(0xFF004D36); // Dark emerald
+  static const Color primaryDark = Color(0xFF003326);
+  static const Color primaryMid = Color(0xFF006B4D); // Mid emerald
+  static const Color neonEmerald = Color(0xFF00FF87); // Vibrant accent
+  static const Color mintWhite = Color(0xFFE6F9F0); // Mint tint
 
   static const Color accentGold = Color(0xFFC98A1F);
   static const Color urgent = Color(0xFFE91429);
   static const Color warning = Color(0xFFFFA42B);
 
   // ── Surface Palette (Dark) ───────────────────────────────────
-  static const Color surface = Color(0xFF121212); // Deep base
-  static const Color surfaceCard = Color(0xFF1A1D1A); // Slightly warm
-  static const Color surfaceElevated = Color(0xFF242724);
-  static const Color surfaceHighlight = Color(0xFF2E312E);
+  static const Color surface = Color(0xFF0D1110); // Emerald-black base
+  static const Color surfaceCard = Color(0xFF161A18); // Slightly warm
+  static const Color surfaceElevated = Color(0xFF1E2421);
+  static const Color surfaceHighlight = Color(0xFF282E2B);
 
   // ── Surface Palette (Light) ──────────────────────────────────
-  static const Color lightSurface = Color(0xFFFFFFFF); // Pure white
-  static const Color lightCardBg = Color(0xFFF4F6F5); // Light grey-green
-  static const Color lightDivider = Color(0xFFD0D5D2); // Visible hairline
+  static const Color lightSurface = Color(0xFFFFFFFF);
+  static const Color lightSectionBg = Color(0xFFF0F4F2); // Section container
+  static const Color lightCardBg = Color(0xFFF4F6F5);
+  static const Color lightDivider = Color(0xFFD0D5D2);
 
   // ── Text (Dark) ──────────────────────────────────────────────
   static const Color ink = Color(0xFFFFFFFF);
@@ -44,32 +44,18 @@ class AppTheme {
   static const Color inkSubtle = Color(0xFF6B706B);
 
   // ── Text (Light) ─────────────────────────────────────────────
-  static const Color lightInk = Color(0xFF16211C); // Dark charcoal-green
-  static const Color lightInkMuted = Color(0xFF6B7B73); // Muted grey-green
-  static const Color lightInkSubtle = Color(0xFF8A9B93); // Chevron grey
-  static const Color lightAccent = Color(0xFFB3402B); // Urgent red-orange
+  static const Color lightInk = Color(0xFF16211C);
+  static const Color lightInkMuted = Color(0xFF6B7B73);
+  static const Color lightInkSubtle = Color(0xFF8A9B93);
+  static const Color lightAccent = Color(0xFFB3402B);
 
   // ── Nav (Light) ──────────────────────────────────────────────
-  static const Color lightNavActive = Color(0xFF0B6E4F); // Deep green
-  static const Color lightNavInactive = Color(0xFF5B6B62); // Muted grey
+  static const Color lightNavActive = Color(0xFF004D36); // Dark emerald
+  static const Color lightNavInactive = Color(0xFF6B7B73);
 
   // ── Borders (Dark) ───────────────────────────────────────────
-  static const Color borderHairline = Color(0xFF2E312E);
-  static const Color borderActive = Color(0xFF3A3E3A);
-
-  // ── Condition Gradients ─────────────────────────────────────
-  static const Map<String, List<Color>> conditionGradients = {
-    'malaria': [Color(0xFFD32F2F), Color(0xFFB71C1C)],
-    'pneumonia': [Color(0xFF1976D2), Color(0xFF0D47A1)],
-    'diarrhea': [Color(0xFFFBC02D), Color(0xFFF57F17)],
-    'fever': [Color(0xFFF57C00), Color(0xFFE65100)],
-    'uti': [Color(0xFF7B1FA2), Color(0xFF4A148C)],
-    'tonsillitis': [Color(0xFFC62828), Color(0xFF8E0000)],
-    'otitis_media': [Color(0xFFAD1457), Color(0xFF78002E)],
-    'asthma': [Color(0xFF00695C), Color(0xFF00352C)],
-    'impetigo': [Color(0xFF1565C0), Color(0xFF0D47A1)],
-    'worms': [Color(0xFF2E7D32), Color(0xFF1B5E20)],
-  };
+  static const Color borderHairline = Color(0xFF282E2B);
+  static const Color borderActive = Color(0xFF343A37);
 
   // ── Spacing (12pt base — Apple HIG inspired) ─────────────────
   static const double space2 = 2.0;
@@ -91,8 +77,9 @@ class AppTheme {
   static const double radiusSm = 8.0;
   static const double radiusMd = 12.0;
   static const double radiusLg = 16.0;
-  static const double radiusCard = 18.0; // Headspace-inspired
+  static const double radiusCard = 18.0;
   static const double radiusPill = 28.0;
+  static const double radiusSection = 14.0; // Section container corners
 
   // ── Shadows (Dark) ──────────────────────────────────────────
   static const List<BoxShadow> shadowSm = [
@@ -127,104 +114,95 @@ class AppTheme {
     ),
   ];
 
-  // ── Shadows (Light) — layered for realistic elevation ──────
-  /// Apple-like pill card shadow stack using the brand teal at
-  /// low opacity so shadows feel cohesive with the card colour.
+  // ── Shadows (Light) — Apple-inspired, single long-blur ────
+  /// Single-layer shadow for cards — very low opacity, long blur.
+  /// Pure neutral black at 3% for realistic elevation without competing
+  /// with the card itself.
   static const List<BoxShadow> lightShadowCard = [
     BoxShadow(
-      color: Color(0x0A08805B), // teal 4%
-      blurRadius: 24,
-      offset: Offset(0, 8),
-    ),
-    BoxShadow(
-      color: Color(0x0D08805B), // teal 5%
-      blurRadius: 10,
-      offset: Offset(0, 4),
-    ),
-    BoxShadow(
-      color: Color(0x0608805B), // teal 2.5%
-      blurRadius: 3,
-      offset: Offset(0, 1),
+      color: Color(0x08000000), // black 3%
+      blurRadius: 40,
+      offset: Offset(0, 12),
     ),
   ];
 
-  /// Subtle icon frame shadow (teal-tinted to match cards).
+  /// Subtle shadow for icon frames.
   static const List<BoxShadow> lightShadowIcon = [
     BoxShadow(
-      color: Color(0x0808805B), // teal 3%
-      blurRadius: 4,
+      color: Color(0x04000000), // black 1.5%
+      blurRadius: 6,
       offset: Offset(0, 2),
-    ),
-    BoxShadow(
-      color: Color(0x0408805B), // teal 1.5%
-      blurRadius: 1,
-      offset: Offset(0, 0),
     ),
   ];
 
-  // ── Typography ───────────────────────────────────────────────
-  // Inter font family — clean, modern, designed for UI at all sizes.
-  // Headspace uses large, welcoming headings with generous leading.
-  // Apple uses dynamic type with strict hierarchy.
+  // ── Typography — 5-Tier System ────────────────────────────
+  // Tier 1: Display (28/700) — hero numbers, dose results
+  // Tier 2: Heading (22/700) — section titles, app bar
+  // Tier 3: Body (17/500) — card labels, main text
+  // Tier 4: Secondary (14/400) — subtitles, descriptions
+  // Tier 5: Label (12/600) — badges, tab text, small labels
 
+  /// T1: Display — 28px, Bold. Hero numbers, splash heading.
   static TextStyle get displayLarge => GoogleFonts.inter(
-    fontSize: 34, fontWeight: FontWeight.w700, color: ink,
+    fontSize: 28, fontWeight: FontWeight.w700, color: ink,
     height: 1.1, letterSpacing: -0.5,
   );
 
-  static TextStyle get displayMedium => GoogleFonts.inter(
-    fontSize: 28, fontWeight: FontWeight.w700, color: ink,
-    height: 1.15, letterSpacing: -0.3,
-  );
-
+  /// T2: Heading — 22px, Bold. Section titles, app bar title.
   static TextStyle get headingLarge => GoogleFonts.inter(
-    fontSize: 24, fontWeight: FontWeight.w700, color: ink,
-    height: 1.2, letterSpacing: -0.2,
+    fontSize: 22, fontWeight: FontWeight.w700, color: ink,
+    height: 1.2, letterSpacing: -0.3,
   );
 
-  static TextStyle get headingMedium => GoogleFonts.inter(
-    fontSize: 20, fontWeight: FontWeight.w600, color: ink,
-    height: 1.25, letterSpacing: -0.2,
+  /// T3: Body — 17px, Medium. Card labels, primary reading.
+  static TextStyle get bodyLarge => GoogleFonts.inter(
+    fontSize: 17, fontWeight: FontWeight.w500, color: ink,
+    height: 1.4, letterSpacing: 0.1,
   );
 
-  static TextStyle get subtitleLarge => GoogleFonts.inter(
-    fontSize: 17, fontWeight: FontWeight.w500, color: inkMuted,
-    height: 1.3, letterSpacing: 0.1,
+  /// T3: Body (light) — 17px, Medium for light theme.
+  static TextStyle get bodyLargeLight => GoogleFonts.inter(
+    fontSize: 17, fontWeight: FontWeight.w500, color: lightInk,
+    height: 1.4, letterSpacing: 0.1,
   );
 
-  static TextStyle get body => GoogleFonts.inter(
-    fontSize: 17, fontWeight: FontWeight.w400, color: inkPrimary,
-    height: 1.5, letterSpacing: 0.1,
-  );
-
+  /// T3: Body (muted) — 17px, Regular for secondary content.
   static TextStyle get bodyMuted => GoogleFonts.inter(
-    fontSize: 15, fontWeight: FontWeight.w400, color: inkMuted,
+    fontSize: 17, fontWeight: FontWeight.w400, color: inkMuted,
     height: 1.45, letterSpacing: 0.1,
   );
 
-  static TextStyle get caption => GoogleFonts.inter(
-    fontSize: 13, fontWeight: FontWeight.w400, color: inkSubtle,
-    height: 1.35, letterSpacing: 0.2,
+  /// T4: Secondary — 14px, Regular. Subtitles, descriptions.
+  static TextStyle get secondaryText => GoogleFonts.inter(
+    fontSize: 14, fontWeight: FontWeight.w400, color: inkMuted,
+    height: 1.35, letterSpacing: 0.15,
   );
 
-  static TextStyle get labelLarge => GoogleFonts.inter(
-    fontSize: 17, fontWeight: FontWeight.w600, color: ink,
-    height: 1.3,
+  /// T4: Secondary (light) — 14px, Regular for light theme.
+  static TextStyle get secondaryTextLight => GoogleFonts.inter(
+    fontSize: 14, fontWeight: FontWeight.w400, color: lightInkMuted,
+    height: 1.35, letterSpacing: 0.15,
   );
 
-  static TextStyle get labelMedium => GoogleFonts.inter(
-    fontSize: 15, fontWeight: FontWeight.w600, color: ink,
-    height: 1.3,
+  /// T5: Label — 12px, Semibold. Small labels, badges, tab text.
+  static TextStyle get labelSmall => GoogleFonts.inter(
+    fontSize: 12, fontWeight: FontWeight.w600, color: ink,
+    height: 1.2, letterSpacing: 0.3,
   );
 
+  /// T5: Label (light muted) — for category divider text.
+  static TextStyle get labelSmallMuted => GoogleFonts.inter(
+    fontSize: 12, fontWeight: FontWeight.w600, color: inkSubtle,
+    height: 1.2, letterSpacing: 0.8,
+  );
+
+  /// Dose hero — 48px, Bold. Big dose result number.
   static TextStyle get doseHero => GoogleFonts.inter(
     fontSize: 48, fontWeight: FontWeight.w700, color: ink,
     height: 1.05, letterSpacing: -1.0,
   );
 
   // ── Deprecated / Legacy aliases ──────────────────────────────
-  // Keep these so existing screens don't break — they'll be
-  // migrated one at a time.
   static const double spacingXs = space4;
   static const double spacingSm = space8;
   static const double spacingMd = space16;
@@ -232,27 +210,26 @@ class AppTheme {
   static const double spacingXl = space32;
   static const double spacingXxl = space48;
 
-  static const double radiusCardOld = 12.0; // Used by legacy cards
-
+  static const double radiusCardOld = 12.0;
   static const double minTapHeight = 56.0;
   static const double minTapWidth = 48.0;
 
   static const List<BoxShadow> cardShadow = shadowCard;
 
-  // Legacy aliases — use these to avoid const issues with GoogleFonts getters
-  static TextStyle get screenTitle => displayMedium;
+  // Legacy aliases
+  static TextStyle get screenTitle => displayLarge;
   static TextStyle get sectionTitle => headingLarge;
-  static TextStyle get cardLabel => headingMedium;
+  static TextStyle get cardLabel => bodyLarge;
   static TextStyle get formulaSource => bodyMuted;
   static TextStyle get doseResult => doseHero;
 
-  // ── Theme ────────────────────────────────────────────────────
+  // ── Dark Theme ────────────────────────────────────────────
   static ThemeData get theme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
       colorScheme: ColorScheme.dark(
-        primary: primary,
+        primary: primaryMid,
         onPrimary: surface,
         secondary: primaryDark,
         surface: surface,
@@ -266,14 +243,14 @@ class AppTheme {
         elevation: 0,
         centerTitle: false,
         titleTextStyle: GoogleFonts.inter(
-          fontSize: 20,
+          fontSize: 22,
           fontWeight: FontWeight.w700,
           color: ink,
           letterSpacing: -0.3,
         ),
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: const Color(0xFF121212),
+        backgroundColor: const Color(0xFF0D1110),
         selectedItemColor: ink,
         unselectedItemColor: inkSubtle,
         type: BottomNavigationBarType.fixed,
@@ -291,7 +268,7 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
-          backgroundColor: primary,
+          backgroundColor: primaryMid,
           foregroundColor: Colors.white,
           minimumSize: const Size(double.infinity, 60),
           shape: RoundedRectangleBorder(
@@ -322,34 +299,28 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radiusMd),
-          borderSide: const BorderSide(color: primary, width: 2),
+          borderSide: const BorderSide(color: primaryMid, width: 2),
         ),
         labelStyle: GoogleFonts.inter(color: inkMuted),
         hintStyle: GoogleFonts.inter(color: inkSubtle),
       ),
       textTheme: TextTheme(
         displayLarge: displayLarge,
-        displayMedium: displayMedium,
         headlineLarge: headingLarge,
-        headlineMedium: headingMedium,
-        titleLarge: subtitleLarge,
-        bodyLarge: body,
+        bodyLarge: bodyLarge,
         bodyMedium: bodyMuted,
-        labelLarge: labelLarge,
-        labelMedium: labelMedium,
+        labelSmall: labelSmall,
       ),
     );
   }
 
   // ── Light Theme ──────────────────────────────────────────────
-  /// Clean white theme for the main shell (Home + Reference).
-  /// Used in [MainShell]; dark sub-screens use [theme].
   static ThemeData get lightTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.light,
       colorScheme: const ColorScheme.light(
-        primary: Color(0xFF0B6E4F),
+        primary: Color(0xFF004D36),
         onPrimary: Color(0xFFFFFFFF),
         secondary: Color(0xFF16211C),
         surface: Color(0xFFFFFFFF),
@@ -371,8 +342,8 @@ class AppTheme {
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Color(0xFFFFFFFF),
-        selectedItemColor: Color(0xFF0B6E4F),
-        unselectedItemColor: Color(0xFF5B6B62),
+        selectedItemColor: Color(0xFF004D36),
+        unselectedItemColor: Color(0xFF6B7B73),
         type: BottomNavigationBarType.fixed,
         elevation: 0,
         selectedLabelStyle: TextStyle(

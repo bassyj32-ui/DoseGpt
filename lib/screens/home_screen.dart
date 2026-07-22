@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+
 import '../widgets/app_theme.dart';
 import '../widgets/condition_icons.dart';
 import '../widgets/category_card.dart';
@@ -10,20 +10,14 @@ import 'drug_list_screen.dart';
 import 'category_conditions_screen.dart';
 import 'fluid_options_screen.dart';
 
-/// Home Screen — Light Mode
+/// Home Screen — Light Mode (v2.0 with Section Grouping)
 ///
-/// Apple Health-inspired design:
-///   - White background, clean and clinical
-///   - Vertically scrollable list of pill-shaped cards
-///   - Custom glass-style icons in white rounded frames
-///   - Staggered card entrance + press-down animation
-///   - Responsive card width (full-width with max cap)
-///   - Urgent accent lines on Malaria & Pneumonia
-///   - Top 6 conditions are hero cards; the rest are grouped into
-///     body-system [CategoryCard]s that navigate to a sub-screen.
+/// Cards are grouped into subtle rounded containers:
+///   - "Common Conditions" (top 6 pinned hero cards)
+///   - "Systems" (body-system category cards)
 ///
-/// Optionally accepts a [searchQuery] to filter the displayed illnesses
-/// in real time (used by the parent [MainShell] search bar).
+/// This eliminates floating whitespace by giving each group a
+/// deliberate visual container, inspired by Apple Health.
 class HomeScreen extends StatefulWidget {
   final ClinicalData data;
   final String searchQuery;
@@ -38,8 +32,46 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with TickerProviderStateMixin {
   static const int _maxPinnedCards = 6;
+
+  // Subtle ambient breathe animation for section containers (scale)
+  late AnimationController _breatheCtrl;
+  late Animation<double> _breatheAnim;
+
+  // Ambient card glow — shifts card bg between white and soft tint
+  late AnimationController _glowCtrl;
+  late Animation<double> _glowAnim;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _breatheCtrl = AnimationController(
+      duration: const Duration(seconds: 6),
+      vsync: this,
+    )..repeat(reverse: true);
+    _breatheAnim = Tween<double>(begin: 1.0, end: 1.004).animate(
+      CurvedAnimation(parent: _breatheCtrl, curve: Curves.easeInOutSine),
+    );
+
+    // Ambient glow — card background shifts #FFFFFF ↔ #F4FAF7 over 6s
+    _glowCtrl = AnimationController(
+      duration: const Duration(seconds: 6),
+      vsync: this,
+    )..repeat(reverse: true);
+    _glowAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: _glowCtrl, curve: Curves.easeInOutSine),
+    );
+  }
+
+  @override
+  void dispose() {
+    _breatheCtrl.dispose();
+    _glowCtrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +81,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final query = widget.searchQuery.trim().toLowerCase();
     final hasSearch = query.isNotEmpty;
 
-    // If user is searching, show ALL matching conditions (no categories)
     if (hasSearch) {
       final filtered = illnesses
           .where((i) => i.nameEn.toLowerCase().contains(query))
@@ -57,85 +88,71 @@ class _HomeScreenState extends State<HomeScreen> {
       return _buildSearchView(context, filtered);
     }
 
-    // Normal (non-search) view: top 6 hero cards + category section
     final pinned = illnesses.where((i) => i.displayOrder <= _maxPinnedCards).toList();
     final categories = widget.data.categories;
 
     final screenWidth = MediaQuery.of(context).size.width;
+    const double horizontalPadding = 24;
+    const double maxContentWidth = 600;
 
-    return ListView.builder(
+    return ListView(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: _computeItemCount(pinned, categories),
-      itemBuilder: (context, index) {
-        int i = 0;
+      children: [
+        const SizedBox(height: 8),
 
-        // ── Top spacer ─────────────────────────────────────────
-        if (index == i++) {
-          return const SizedBox(height: 8);
-        }
+        // ── Section: Pinned Conditions (no header) ────────────
+        _SectionContainer(
+          breatheAnim: _breatheAnim,
+          header: null,
+          child: Column(
+            children: [
+              for (int i = 0; i < pinned.length; i++)
+                _ConditionCard(
+                  index: i,
+                  illness: pinned[i],
+                  iconData: ConditionIcons.iconFor(pinned[i].id),
+                  emoji: ConditionIcons.emojiFor(pinned[i].id),
+                  isUrgent: pinned[i].urgentAccent,
+                  screenWidth: screenWidth,
+                  isPinned: true,
+                  glowAnim: _glowAnim,
+                  onTap: () => _onConditionTap(context, pinned[i].id),
+                ),
+            ],
+          ),
+        ),
 
-        // ── Pinned hero cards (display_order 1-6) ────────────
-        for (int pinIdx = 0; pinIdx < pinned.length; pinIdx++) {
-          if (index == i++) {
-            final illness = pinned[pinIdx];
-            return _ConditionCard(
-              index: pinIdx,
-              illness: illness,
-              iconData: ConditionIcons.iconFor(illness.id),
-              isUrgent: illness.urgentAccent,
-              screenWidth: screenWidth,
-              onTap: () => _onConditionTap(context, illness.id),
-            );
-          }
-        }
+        const SizedBox(height: 24),
 
-        // ── Category section divider followed by category cards ──
-        if (categories.isNotEmpty) {
-          if (index == i++) {
-            return _CategoryDivider();
-          }
+        // ── Section: Systems ───────────────────────────────────
+        if (categories.isNotEmpty)
+          _SectionContainer(
+            breatheAnim: _breatheAnim,
+            header: 'Systems',
+            child: Column(
+              children: [
+                for (int i = 0; i < categories.length; i++)
+                  CategoryCard(
+                    category: categories[i],
+                    screenWidth: screenWidth,
+                    onTap: () => _onCategoryTap(context, categories[i]),
+                  ),
+              ],
+            ),
+          ),
 
-          for (int catIdx = 0; catIdx < categories.length; catIdx++) {
-            if (index == i++) {
-              final category = categories[catIdx];
-              return CategoryCard(
-                category: category,
-                screenWidth: screenWidth,
-                onTap: () => _onCategoryTap(context, category),
-              );
-            }
-          }
-        }
-
-        // Fallback (shouldn't be reached)
-        return const SizedBox.shrink();
-      },
+        const SizedBox(height: 32),
+      ],
     );
   }
 
-  int _computeItemCount(
-    List<Illness> pinned,
-    List<Category> categories,
-  ) {
-    // spacer (1) + pinned
-    int count = 1 + pinned.length;
-
-    if (categories.isNotEmpty) {
-      count += 1; // divider
-      count += categories.length; // category cards
-    }
-
-    return count;
-  }
-
-  /// Build a flat list of all matching conditions (search mode).
   Widget _buildSearchView(BuildContext context, List<Illness> filtered) {
     final screenWidth = MediaQuery.of(context).size.width;
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: filtered.length + 1, // +1 for top spacer
+      itemCount: filtered.length + 1,
       itemBuilder: (context, index) {
         if (index == 0) return const SizedBox(height: 8);
         final illness = filtered[index - 1];
@@ -144,8 +161,10 @@ class _HomeScreenState extends State<HomeScreen> {
           index: cardIndex,
           illness: illness,
           iconData: ConditionIcons.iconFor(illness.id),
+          emoji: ConditionIcons.emojiFor(illness.id),
           isUrgent: illness.urgentAccent,
           screenWidth: screenWidth,
+          glowAnim: _glowAnim,
           onTap: () => _onConditionTap(context, illness.id),
         );
       },
@@ -184,50 +203,71 @@ class _HomeScreenState extends State<HomeScreen> {
 }
 
 // ═══════════════════════════════════════════════════════════════════
-// Category Divider
+// Section Container
 // ═══════════════════════════════════════════════════════════════════
-class _CategoryDivider extends StatelessWidget {
+/// A subtle rounded container with a section header label.
+///
+/// The faint [AppTheme.lightSectionBg] background groups related cards
+/// together visually, eliminating the floating whitespace problem.
+class _SectionContainer extends StatelessWidget {
+  final Animation<double> breatheAnim;
+  final String? header;
+  final Widget child;
+
+  const _SectionContainer({
+    required this.breatheAnim,
+    required this.header,
+    required this.child,
+  });
+
   @override
   Widget build(BuildContext context) {
     const double horizontalPadding = 24;
     const double maxCardWidth = 600;
     final screenWidth = MediaQuery.of(context).size.width;
-    final cardWidth = (screenWidth - horizontalPadding * 2)
+    final containerWidth = (screenWidth - horizontalPadding * 2)
         .clamp(0.0, maxCardWidth);
 
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(horizontalPadding, 8, horizontalPadding, 12),
-      child: Center(
-        child: SizedBox(
-          width: cardWidth,
-          child: Row(
-            children: [
-              Expanded(
-                child: Container(
-                  height: 1,
-                  color: const Color(0xFFE8EBE9),
-                ),
-              ),
+    return Center(
+      child: SizedBox(
+        width: containerWidth,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // ── Section header (optional) ───────────────────────
+            if (header != null)
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
+                padding: const EdgeInsets.only(left: 4, bottom: 10),
                 child: Text(
-                  'CATEGORIES',
-                  style: TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: AppTheme.lightInkSubtle.withValues(alpha: 0.8),
-                    letterSpacing: 1.0,
-                  ),
+                  header!.toUpperCase(),
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w600,
+                  color: AppTheme.lightInkSubtle,
+                  letterSpacing: 1.0,
                 ),
               ),
-              Expanded(
-                child: Container(
-                  height: 1,
-                  color: const Color(0xFFE8EBE9),
-                ),
+            ),
+
+            // ── Animated container ──────────────────────────────
+            AnimatedBuilder(
+              animation: breatheAnim,
+              builder: (context, child) => Transform.scale(
+                scale: breatheAnim.value,
+                child: child,
               ),
-            ],
-          ),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppTheme.lightSectionBg,
+                  borderRadius: BorderRadius.circular(AppTheme.radiusSection),
+                ),
+                padding: const EdgeInsets.symmetric(
+                  vertical: 6,
+                ),
+                child: child,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -241,16 +281,22 @@ class _ConditionCard extends StatefulWidget {
   final int index;
   final Illness illness;
   final IconData iconData;
+  final String? emoji;
   final bool isUrgent;
   final double screenWidth;
+  final bool isPinned;
+  final Animation<double>? glowAnim;
   final VoidCallback onTap;
 
   const _ConditionCard({
     required this.index,
     required this.illness,
     required this.iconData,
+    this.emoji,
     required this.isUrgent,
     required this.screenWidth,
+    this.isPinned = false,
+    this.glowAnim,
     required this.onTap,
   });
 
@@ -260,7 +306,7 @@ class _ConditionCard extends StatefulWidget {
 
 class _ConditionCardState extends State<_ConditionCard>
     with TickerProviderStateMixin {
-  // ── Staggered entrance ─────────────────────────────────────────
+  // ── Staggered entrance (fast) ────────────────────────────────────
   late AnimationController _staggerCtrl;
   late Animation<double> _fadeAnim;
   late Animation<Offset> _slideAnim;
@@ -269,7 +315,7 @@ class _ConditionCardState extends State<_ConditionCard>
   late AnimationController _pressCtrl;
   late Animation<double> _scaleAnim;
 
-  // ── Icon entrance pulse ───────────────────────────────────────
+  // ── Icon entrance pulse + heartbeat loop ──────────────────────
   late AnimationController _pulseCtrl;
   late Animation<double> _pulseAnim;
 
@@ -277,9 +323,9 @@ class _ConditionCardState extends State<_ConditionCard>
   void initState() {
     super.initState();
 
-    // Staggered entrance
+    // Staggered entrance — instant (60ms, no delay)
     _staggerCtrl = AnimationController(
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 60),
       vsync: this,
     );
     _fadeAnim = CurvedAnimation(
@@ -287,15 +333,15 @@ class _ConditionCardState extends State<_ConditionCard>
       curve: Curves.easeOutCubic,
     );
     _slideAnim = Tween<Offset>(
-      begin: const Offset(0, 0.08),
+      begin: Offset.zero,
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _staggerCtrl,
       curve: Curves.easeOutCubic,
     ));
 
-    final delay = Duration(milliseconds: 60 * widget.index);
-    Future.delayed(delay, () {
+    // Start immediately — no staggered delay
+    Future.microtask(() {
       if (mounted) {
         _staggerCtrl.forward().then((_) {
           if (mounted) _pulseCtrl.forward();
@@ -312,18 +358,31 @@ class _ConditionCardState extends State<_ConditionCard>
       CurvedAnimation(parent: _pressCtrl, curve: Curves.easeOutCubic),
     );
 
-    // Icon entrance pulse
+    // Icon pulse entrance + continuous soft heartbeat
     _pulseCtrl = AnimationController(
-      duration: const Duration(milliseconds: 350),
+      duration: const Duration(milliseconds: 600),
       vsync: this,
     );
     _pulseAnim = TweenSequence<double>([
-      TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.15), weight: 40),
-      TweenSequenceItem(tween: Tween(begin: 1.15, end: 1.0), weight: 60),
+      // Entrance pulse (plays once)
+      TweenSequenceItem(tween: Tween(begin: 1.0, end: 1.15), weight: 15),
+      TweenSequenceItem(tween: Tween(begin: 1.15, end: 1.04), weight: 20),
+      // Soft continuous heartbeat loop
+      TweenSequenceItem(tween: Tween(begin: 1.04, end: 1.0), weight: 65),
     ]).animate(CurvedAnimation(
       parent: _pulseCtrl,
-      curve: Curves.easeOutCubic,
+      curve: Curves.easeInOutSine,
     ));
+
+    // Repeat the heartbeat indefinitely after entrance
+    _pulseCtrl.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        _pulseCtrl.repeat(
+          period: const Duration(milliseconds: 3000),
+          reverse: true,
+        );
+      }
+    });
   }
 
   @override
@@ -336,46 +395,34 @@ class _ConditionCardState extends State<_ConditionCard>
 
   @override
   Widget build(BuildContext context) {
-    const double horizontalPadding = 24;
-    const double maxCardWidth = 600;
-    final cardWidth = (widget.screenWidth - horizontalPadding * 2).clamp(
-      0.0,
-      maxCardWidth,
-    );
-
     return FadeTransition(
       opacity: _fadeAnim,
       child: SlideTransition(
         position: _slideAnim,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: horizontalPadding,
-          ).copyWith(bottom: 18),
-          child: Center(
-            child: SizedBox(
-              width: cardWidth,
-              child: GestureDetector(
-                onTapDown: (_) => _pressCtrl.forward(),
-                onTapUp: (_) {
-                  _pressCtrl.reverse();
-                  widget.onTap();
-                },
-                onTapCancel: () => _pressCtrl.reverse(),
-                child: AnimatedBuilder(
-                  animation: Listenable.merge([_scaleAnim, _pulseAnim]),
-                  builder: (context, child) => Transform.scale(
-                    scale: _scaleAnim.value,
-                    child: child,
-                  ),
-                  child: _CardContent(
-                    illness: widget.illness,
-                    iconData: widget.iconData,
-                    isUrgent: widget.isUrgent,
-                    pulseAnim: _pulseAnim,
-                  ),
-                ),
+          padding: const EdgeInsets.symmetric(horizontal: 0),
+          child: GestureDetector(
+            onTapDown: (_) => _pressCtrl.forward(),
+            onTapUp: (_) {
+              _pressCtrl.reverse();
+              widget.onTap();
+            },
+            onTapCancel: () => _pressCtrl.reverse(),
+            child: AnimatedBuilder(
+              animation: Listenable.merge([_scaleAnim, _pulseAnim]),
+              builder: (context, child) => Transform.scale(
+                scale: _scaleAnim.value,
+                child: child,
               ),
-            ),
+              child: _CardContent(
+                illness: widget.illness,
+                iconData: widget.iconData,
+                emoji: widget.emoji,
+                isUrgent: widget.isUrgent,
+                pulseAnim: _pulseAnim,
+                glowAnim: widget.glowAnim,
+              ),
+              ),
           ),
         ),
       ),
@@ -389,98 +436,123 @@ class _ConditionCardState extends State<_ConditionCard>
 class _CardContent extends StatelessWidget {
   final Illness illness;
   final IconData iconData;
+  final String? emoji;
   final bool isUrgent;
   final Animation<double> pulseAnim;
+  final Animation<double>? glowAnim;
 
   const _CardContent({
     required this.illness,
     required this.iconData,
+    this.emoji,
     required this.isUrgent,
     required this.pulseAnim,
+    this.glowAnim,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 72,
-      decoration: BoxDecoration(
-        color: AppTheme.lightCardBg,
-        borderRadius: BorderRadius.circular(36),
-        boxShadow: AppTheme.lightShadowCard,
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: Stack(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+    return AnimatedBuilder(
+      animation: glowAnim ?? const AlwaysStoppedAnimation(0.0),
+      builder: (context, child) {
+        final glowValue = glowAnim?.value ?? 0.0;
+        final cardColor = Color.lerp(
+          Colors.white,
+          const Color(0xFFF4FAF7),
+          glowValue,
+        )!;
+        return Container(
+          height: 72,
+          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+          decoration: BoxDecoration(
+            color: cardColor,
+            borderRadius: BorderRadius.circular(36),
+            boxShadow: AppTheme.lightShadowCard,
+          ),
+          clipBehavior: Clip.antiAlias,
+          child: Stack(
             children: [
-              const SizedBox(width: 12),
-              AnimatedBuilder(
-                animation: pulseAnim,
-                builder: (context, child) => Transform.scale(
-                  scale: pulseAnim.value,
-                  child: child,
-                ),
-                child: Container(
-                  width: 48,
-                  height: 48,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: AppTheme.lightShadowIcon,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const SizedBox(width: 12),
+                  AnimatedBuilder(
+                    animation: pulseAnim,
+                    builder: (context, child) => Transform.scale(
+                      scale: pulseAnim.value,
+                      child: child,
+                    ),
+                    child: Container(
+                      width: 48,
+                      height: 48,
+                      decoration: BoxDecoration(
+                        color: emoji != null
+                            ? const Color(0xFFF0FAF5)
+                            : AppTheme.lightSectionBg,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: AppTheme.lightShadowIcon,
+                      ),
+                      child: emoji != null
+                          ? Center(
+                              child: Text(
+                                emoji!,
+                                style: const TextStyle(fontSize: 28),
+                              ),
+                            )
+                          : Icon(
+                              iconData,
+                              color: AppTheme.primary,
+                              size: 30,
+                            ),
+                    ),
                   ),
-                  child: PhosphorIcon(
-                    iconData,
-                    color: AppTheme.primary,
-                    size: 30,
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Text(
+                      illness.nameEn,
+                      style: const TextStyle(
+                        fontSize: 17,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.lightInk,
+                        letterSpacing: 0.2,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 18),
+                    child: Text(
+                      '\u203A',
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w300,
+                        color: AppTheme.lightInkSubtle,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Text(
-                  illness.nameEn,
-                  style: const TextStyle(
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600,
-                    color: AppTheme.lightInk,
-                    letterSpacing: 0.2,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(right: 18),
-                child: Text(
-                  '\u203A',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w300,
-                    color: AppTheme.lightInkSubtle,
+              if (isUrgent)
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  bottom: 0,
+                  child: Container(
+                    width: 3,
+                    decoration: BoxDecoration(
+                      color: AppTheme.lightAccent,
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(36),
+                        bottomLeft: Radius.circular(36),
+                      ),
+                    ),
                   ),
                 ),
-              ),
             ],
           ),
-          if (isUrgent)
-            Positioned(
-              left: 0,
-              top: 0,
-              bottom: 0,
-              child: Container(
-                width: 3,
-                decoration: BoxDecoration(
-                  color: AppTheme.lightAccent,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(36),
-                    bottomLeft: Radius.circular(36),
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

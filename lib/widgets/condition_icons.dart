@@ -1,99 +1,133 @@
+<<<<<<< HEAD
 import 'package:flutter/material.dart';
 import 'package:phosphor_flutter/phosphor_flutter.dart';
+=======
+import 'package:flutter/widgets.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
+>>>>>>> ab7aec0 (UI/UX overhaul: Emerald palette, DoseLogoTile branding, Apple-style animations)
 
-/// Mapping from condition ID to Phosphor duotone icon data.
+/// Mapping from condition/category ID to icons.
 ///
-/// Each icon uses [PhosphorIconsDuotone] so that icons render with a
-/// primary + secondary colour, giving a polished, premium medical-app
-/// look while keeping the code minimal (one line per illness instead of
-/// 30+ lines of CustomPainter paths).
+/// Top 6 pinned conditions use realistic emoji for instant recognition.
+/// All other conditions and categories use Lucide line icons.
 class ConditionIcons {
   const ConditionIcons._();
 
-  /// Returns the duotone icon data for the given [illnessId].
+  /// Returns a realistic emoji for the top pinned conditions.
   ///
-  /// Falls back to [PhosphorIconsDuotone.heartbeat] when no matching
-  /// icon is found.
-  static IconData iconFor(String illnessId) {
+  /// Supports both pediatric and adult condition IDs.
+  /// Returns null for non-pinned conditions (use [iconFor] instead).
+  static String? emojiFor(String illnessId) {
     switch (illnessId) {
+      // Pediatric top 6
       case 'malaria':
-        return PhosphorIconsDuotone.bugBeetle;
+        return '🦟';
       case 'pneumonia':
-        return PhosphorIconsDuotone.stethoscope;
+        return '🫁';
       case 'diarrhea':
-        return PhosphorIconsDuotone.drop;
-      case 'fever':
-        return PhosphorIconsDuotone.thermometerHot;
-      case 'uti':
-        return PhosphorIconsDuotone.dropHalf;
-      case 'tonsillitis':
-        return PhosphorIconsDuotone.microscope;
-      case 'otitis_media':
-        return PhosphorIconsDuotone.ear;
-      case 'asthma':
-        return PhosphorIconsDuotone.syringe;
-      case 'hypertension':
-        return PhosphorIconsDuotone.heartbeat;
-      case 'diabetes':
-        return PhosphorIconsDuotone.dropHalf;
-      case 'dyspepsia':
-        return PhosphorIconsDuotone.pill;
-      case 'typhoid':
-        return PhosphorIconsDuotone.thermometerHot;
+        return '💧';
       case 'fluids':
-        return PhosphorIconsDuotone.drop;
-      case 'giardiasis':
-        return PhosphorIconsDuotone.knife;
-      case 'amebiasis':
-        return PhosphorIconsDuotone.knife;
-      case 'measles':
-        return PhosphorIconsDuotone.thermometerHot;
-      case 'chickenpox':
-        return PhosphorIconsDuotone.scribbleLoop;
-      case 'scabies':
-        return PhosphorIconsDuotone.scribbleLoop;
-      case 'eczema':
-        return PhosphorIconsDuotone.scribbleLoop;
-      case 'tinea':
-        return PhosphorIconsDuotone.scribbleLoop;
-      case 'cellulitis':
-        return PhosphorIconsDuotone.scribbleLoop;
-      case 'sinusitis':
-        return PhosphorIconsDuotone.microscope;
+        return '💉';
+      case 'tonsillitis':
+        return '🩺';
+      case 'asthma':
+        return '🌬️';
+      // Adult top 6
+      case 'hypertension':
+        return '🫀';
+      case 'diabetes':
+        return '💉';
+      case 'uti':
+        return '🫧';
+      case 'dyspepsia':
+        return '🤢';
       case 'hyperemesis':
-        return PhosphorIconsDuotone.knife;
-      case 'renal_stone':
-        return PhosphorIconsDuotone.dropHalf;
+        return '🤰';
       default:
-        return PhosphorIconsDuotone.heartbeat;
+        return null;
     }
   }
 
-  /// Returns the duotone icon data for a category by its [categoryId].
+  /// Returns the Lucide icon for the given [illnessId].
   ///
-  /// Categories are body-system groups (e.g. "respiratory", "git", "cvs")
-  /// that appear as navigation cards on the home screen.
+  /// Falls back to [LucideIcons.heart] when no matching icon is found.
+  static IconData iconFor(String illnessId) {
+    switch (illnessId) {
+      case 'malaria':
+        return LucideIcons.bug;
+      case 'pneumonia':
+        return LucideIcons.stethoscope;
+      case 'diarrhea':
+        return LucideIcons.droplets;
+      case 'fever':
+        return LucideIcons.thermometer;
+      case 'uti':
+        return LucideIcons.ambulance;
+      case 'tonsillitis':
+        return LucideIcons.microscope;
+      case 'otitis_media':
+        return LucideIcons.ear;
+      case 'asthma':
+        return LucideIcons.wind;
+      case 'hypertension':
+        return LucideIcons.heart_pulse;
+      case 'diabetes':
+        return LucideIcons.syringe;
+      case 'dyspepsia':
+        return LucideIcons.pill;
+      case 'typhoid':
+        return LucideIcons.thermometer;
+      case 'fluids':
+        return LucideIcons.droplet;
+      case 'giardiasis':
+        return LucideIcons.bug;
+      case 'amebiasis':
+        return LucideIcons.bug;
+      case 'measles':
+        return LucideIcons.bug;
+      case 'chickenpox':
+        return LucideIcons.circle_alert;
+      case 'scabies':
+        return LucideIcons.scan;
+      case 'eczema':
+        return LucideIcons.scan_line;
+      case 'tinea':
+        return LucideIcons.bug;
+      case 'cellulitis':
+        return LucideIcons.skull;
+      case 'sinusitis':
+        return LucideIcons.microscope;
+      case 'hyperemesis':
+        return LucideIcons.pill;
+      case 'renal_stone':
+        return LucideIcons.ambulance;
+      default:
+        return LucideIcons.heart;
+    }
+  }
+
+  /// Returns the Lucide icon for a body-system [categoryId].
   static IconData categoryIconFor(String categoryId) {
     switch (categoryId) {
       case 'respiratory':
-        return PhosphorIconsDuotone.stethoscope;
+        return LucideIcons.stethoscope;
       case 'git':
-        return PhosphorIconsDuotone.knife;
+        return LucideIcons.pill;
       case 'infectious':
-        return PhosphorIconsDuotone.bugBeetle;
+        return LucideIcons.bug;
       case 'ent':
-        return PhosphorIconsDuotone.ear;
+        return LucideIcons.ear;
       case 'renal':
-        return PhosphorIconsDuotone.dropHalf;
+        return LucideIcons.ambulance;
       case 'dermatology':
       case 'skin':
-        return PhosphorIconsDuotone.scribbleLoop;
+        return LucideIcons.scan_line;
       case 'cardiovascular':
-        return PhosphorIconsDuotone.heartbeat;
+        return LucideIcons.heart_pulse;
       case 'endocrine':
-        return PhosphorIconsDuotone.drop;
+        return LucideIcons.droplets;
       default:
-        return PhosphorIconsDuotone.folder;
+        return LucideIcons.folder_open;
     }
   }
 }
