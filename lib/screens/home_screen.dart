@@ -235,7 +235,7 @@ class _SectionContainer extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 4, bottom: 10),
                 child: Text(
                   header!.toUpperCase(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: AppTheme.lightInkSubtle,
@@ -505,7 +505,7 @@ class _CardContent extends StatelessWidget {
                   Expanded(
                     child: Text(
                       illness.nameEn,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w600,
                         color: AppTheme.lightInk,
