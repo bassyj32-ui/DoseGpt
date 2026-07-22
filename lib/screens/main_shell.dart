@@ -2,7 +2,6 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../widgets/app_theme.dart';
 import '../widgets/widgets.dart';
 import '../services/data_loader.dart';
 import 'home_screen.dart';
@@ -217,9 +216,9 @@ class _MainShellState extends State<MainShell> {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // Floating Bottom Navigation — Apple-inspired glass + emoji
-// ═══════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 /// Apple-style floating bottom nav with:
 ///   - Glass-morphism backdrop (same as app bar)
 ///   - Left/right/bottom margin for floating effect
