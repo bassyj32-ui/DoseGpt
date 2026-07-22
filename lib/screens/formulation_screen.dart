@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import '../widgets/app_theme.dart';
 import '../models/drug.dart';
 import '../models/illness.dart';
@@ -171,24 +172,29 @@ class _FormulationCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        padding: const EdgeInsets.fromLTRB(12, 12, 16, 12),
         decoration: BoxDecoration(
           color: AppTheme.lightCardBg,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(36),
           boxShadow: AppTheme.lightShadowCard,
         ),
         child: Row(
           children: [
-            // Chevron indicator (shows it's tappable)
-            Text(
-              '\u203A',
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.w300,
-                color: AppTheme.lightInkSubtle,
+            // Circle icon
+            Container(
+              width: 40,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: AppTheme.primary,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                LucideIcons.pill,
+                color: Colors.white,
+                size: 20,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 10),
 
             // Type + strength
             Expanded(
@@ -213,6 +219,19 @@ class _FormulationCard extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+            ),
+
+            // Chevron
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                '\u203A',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w300,
+                  color: AppTheme.lightInkSubtle,
+                ),
               ),
             ),
           ],

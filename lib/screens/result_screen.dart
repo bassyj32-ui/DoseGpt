@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../widgets/app_theme.dart';
 import '../widgets/primary_button.dart';
 import '../widgets/disclaimer_line.dart';
@@ -159,7 +160,7 @@ class ResultScreen extends StatelessWidget {
 
         const SizedBox(height: 16),
 
-        // Hero dose result card
+        // Hero dose result card — prescription-ready
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(24),
@@ -170,16 +171,47 @@ class ResultScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Text(
+              // Main prescription — large, copy-paste ready
+              SelectableText(
                 result.prescription ?? '',
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 22,
                   fontWeight: FontWeight.w700,
                   color: AppTheme.lightNavActive,
                   letterSpacing: 0.2,
+                  height: 1.4,
                 ),
                 textAlign: TextAlign.center,
               ),
+              const SizedBox(height: 16),
+
+              // Copy button
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton.icon(
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: result.prescription ?? ''));
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Prescription copied. Ready to paste.'),
+                        duration: Duration(seconds: 2),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.copy, size: 16),
+                  label: const Text('Copy Prescription'),
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: AppTheme.lightNavActive,
+                    side: BorderSide(color: AppTheme.lightNavActive.withValues(alpha: 0.3)),
+                    padding: const EdgeInsets.symmetric(vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+              ),
+
+              // Dose volume bar (non-IV drugs)
               if (result.calculatedMl != null && result.ivReconstitution == null) ...[
                 const SizedBox(height: 12),
                 _DoseVisual(
@@ -199,14 +231,7 @@ class ResultScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(color: AppTheme.lightDivider),
                   ),
-                  child: Text(
-                    result.ivReconstitution!,
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: AppTheme.lightInkMuted,
-                      height: 1.5,
-                    ),
-                  ),
+                  child: _buildIvReconstitutionText(result.ivReconstitution!),
                 ),
               ],
             ],
@@ -276,6 +301,55 @@ class ResultScreen extends StatelessWidget {
     );
   }
 
+  /// Builds IV reconstitution text with bold ml numbers
+  /// Matches patterns like "draw 2.4ml" or "infuse over 30 min"
+  Widget _buildIvReconstitutionText(String ivText) {
+    final mlRegex = RegExp(r'(\d+\.?\d*)\s*(ml|mL)');
+    final spans = <InlineSpan>[];
+    int lastEnd = 0;
+
+    for (final match in mlRegex.allMatches(ivText)) {
+      // Text before the match
+      if (match.start > lastEnd) {
+        spans.add(TextSpan(
+          text: ivText.substring(lastEnd, match.start),
+          style: const TextStyle(
+            fontSize: 13,
+            color: AppTheme.lightInkMuted,
+            height: 1.5,
+          ),
+        ));
+      }
+      // The number + unit — bold
+      spans.add(TextSpan(
+        text: match.group(0),
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w800,
+          color: AppTheme.lightNavActive,
+          height: 1.5,
+        ),
+      ));
+      lastEnd = match.end;
+    }
+
+    // Any remaining text after the last match
+    if (lastEnd < ivText.length) {
+      spans.add(TextSpan(
+        text: ivText.substring(lastEnd),
+        style: const TextStyle(
+          fontSize: 13,
+          color: AppTheme.lightInkMuted,
+          height: 1.5,
+        ),
+      ));
+    }
+
+    return RichText(
+      text: TextSpan(children: spans),
+    );
+  }
+
   double? get _maxSafeMl {
     if (drug.concentrations == null || drug.concentrations!.isEmpty) return null;
     return drug.concentrations!.first.maxSafeMl;
@@ -325,8 +399,8 @@ class _DoseVisual extends StatelessWidget {
         Text(
           'Dose volume: ${calculatedMl.toStringAsFixed(1)} ml',
           style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w500,
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
             color: AppTheme.lightInkMuted,
           ),
         ),

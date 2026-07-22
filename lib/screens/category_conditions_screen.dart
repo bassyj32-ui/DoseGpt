@@ -222,22 +222,22 @@ class _CardContent extends StatelessWidget {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
+                  color: AppTheme.primary,
+                  shape: BoxShape.circle,
                   boxShadow: AppTheme.lightShadowIcon,
                 ),
                 child: Icon(
                   iconData,
-                  color: AppTheme.primary,
-                  size: 30,
+                  color: Colors.white,
+                  size: 26,
                 ),
               ),
-              const SizedBox(width: 14),
+              const SizedBox(width: 8),
               Expanded(
                 child: Text(
                   illness.nameEn,
                   style: const TextStyle(
-                    fontSize: 17,
+                    fontSize: 18,
                     fontWeight: FontWeight.w600,
                     color: AppTheme.lightInk,
                     letterSpacing: 0.2,
@@ -247,7 +247,7 @@ class _CardContent extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 18),
+                padding: const EdgeInsets.only(right: 14),
                 child: Text(
                   '\u203A',
                   style: TextStyle(

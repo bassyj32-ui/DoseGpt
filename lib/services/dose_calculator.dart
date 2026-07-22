@@ -135,6 +135,8 @@ class DoseCalculator {
         return _calculateAgeBand(drug, ageMonths);
       case 'fixed':
         return _calculateFixed(drug);
+      case 'fluids':
+        return _calculateFluids(drug, weightKg, ageMonths);
       default:
         return const DoseResult.outOfRange();
     }
@@ -210,7 +212,8 @@ class DoseCalculator {
 
     if (conc != null && conc.volumeMl != null) {
       // Detect dummy IV concentration (1mg/1ml) — show mg + ml with vial reconstitution
-      if (conc.strengthMg == 1 && conc.volumeMl == 1) {
+      // Only use IV reconstitution text if the drug has ivInfo or it's known IV drug
+      if (conc.strengthMg == 1 && conc.volumeMl == 1 && conc.roundToTablet == null && drug.ivInfo != null) {
         // Parse concentration from ivInfo marker [conc:N] or default to 100mg/ml
         final rawIvInfo = drug.ivInfo ?? '';
         double standardConc = 100;
@@ -463,6 +466,153 @@ class DoseCalculator {
       safetyWarning: drug.safetyWarning,
       durationWarning: drug.durationWarning,
     );
+  }
+
+  /// fluids calculation: handles maintenance, shock, dehydration, burn
+  /// Uses drug.id to identify which formula to apply.
+  /// The drug's dosePerKgMg field is repurposed as the ml/kg rate where applicable.
+  static DoseResult _calculateFluids(
+    Drug drug,
+    double weightKg,
+    int ageMonths,
+  ) {
+    final String resultText;
+    final String formulaText;
+
+    switch (drug.id) {
+      case 'iv_fluids_maintenance':
+        // Holliday-Segar 4-2-1 rule
+        final double hourlyRate;
+        if (weightKg <= 10) {
+          hourlyRate = weightKg * 4;
+        } else if (weightKg <= 20) {
+          hourlyRate = 10 * 4 + (weightKg - 10) * 2;
+        } else {
+          hourlyRate = 10 * 4 + 10 * 2 + (weightKg - 20) * 1;
+        }
+
+        final double dailyVolume = hourlyRate * 24;
+        final double twoThirdsHourly = hourlyRate * 2 / 3;
+        final double twoThirdsDaily = twoThirdsHourly * 24;
+
+        resultText =
+            '${drug.drugNameEn} — ${hourlyRate.toStringAsFixed(0)} ml/hr'
+            '\n(${dailyVolume.toStringAsFixed(0)} ml/day)'
+            '\n\nFluid: D5 0.45% NaCl or isotonic maintenance fluid'
+            '\n\nFor unwell children (SIADH risk): use 2/3 maintenance'
+            '\n  → ${twoThirdsHourly.toStringAsFixed(0)} ml/hr'
+            '\n    (${twoThirdsDaily.toStringAsFixed(0)} ml/day)'
+            '\n\nAdd KCl 20 mEq/L once urine output confirmed.'
+            '\nCheck electrolytes within 24h.';
+
+        formulaText =
+            'HOLLIDAY-SEGAR (4-2-1 RULE)\n'
+            'Weight: ${weightKg.toStringAsFixed(1)}kg\n\n'
+            'Hourly rate:\n'
+            '• First 10kg: 4 ml/kg/hr\n'
+            '• Next 10kg (11-20kg): +2 ml/kg/hr\n'
+            '• >20kg: +1 ml/kg/hr\n\n'
+            'Calculation:\n'
+            '${_maintenanceBreakdown(weightKg, hourlyRate)}';
+        break;
+
+      case 'iv_fluids_shock':
+        {
+        final double totalMl = 20 * weightKg;
+        final double max60Ml = 60 * weightKg;
+        resultText =
+            '${drug.drugNameEn} — give ${totalMl.toStringAsFixed(0)} ml IV bolus'
+            '\n(20 ml/kg × ${weightKg.toStringAsFixed(1)}kg)'
+            '\n\nGive over 15-30 minutes. Reassess.'
+            '\nRepeat up to 3 times (max 60 ml/kg = ${max60Ml.toStringAsFixed(0)} ml total).'
+            '\n\nFluid: Ringer\'s Lactate or Normal Saline.'
+            '\nDo NOT use dextrose-containing fluids as bolus.';
+
+        formulaText =
+            'SHOCK BOLUS\n'
+            '20 ml/kg × ${weightKg.toStringAsFixed(1)}kg'
+            ' = ${totalMl.toStringAsFixed(0)} ml\n'
+            'Max total (3 boluses): 60 ml/kg × ${weightKg.toStringAsFixed(1)}kg'
+            ' = ${max60Ml.toStringAsFixed(0)} ml';
+        }
+        break;
+
+      case 'iv_fluids_dehydration':
+        resultText =
+            '${drug.drugNameEn}\n\n'
+            'DEFICIT REPLACEMENT (after initial bolus)\n\n'
+            'Mild (5%): ${(weightKg * 50).toStringAsFixed(0)} ml total\n'
+            '  → give over 24h + maintenance\n\n'
+            'Moderate (7.5%): ${(weightKg * 75).toStringAsFixed(0)} ml total\n'
+            '  → give over 24h + maintenance\n\n'
+            'Severe (10%): ${(weightKg * 100).toStringAsFixed(0)} ml total\n'
+            '  → give over 24h + maintenance\n\n'
+            'Dosing: Give 50% in first 8 hours, '
+            'remaining 50% over next 16 hours.\n'
+            'Fluid: D5 0.45% NaCl + 20 mEq KCl/L.\n'
+            'Replace ongoing losses mL-for-mL.';
+
+        formulaText =
+            'DEFICIT REPLACEMENT\n'
+            'Weight: ${weightKg.toStringAsFixed(1)}kg\n'
+            'Deficit = weight × %dehydration × 10\n'
+            'Mild: ${weightKg.toStringAsFixed(1)} × 50 = ${(weightKg * 50).toStringAsFixed(0)} ml\n'
+            'Moderate: ${weightKg.toStringAsFixed(1)} × 75 = ${(weightKg * 75).toStringAsFixed(0)} ml\n'
+            'Severe: ${weightKg.toStringAsFixed(1)} × 100 = ${(weightKg * 100).toStringAsFixed(0)} ml\n'
+            'Add maintenance (4-2-1) over 24h.';
+        break;
+
+      case 'iv_fluids_burn':
+        resultText =
+            '${drug.drugNameEn}\n\n'
+            'PARKLAND FORMULA (4 ml/kg/%burn)\n\n'
+            'Requires % total body surface area (TBSA) burn estimate.\n'
+            'Fluid for first 24h = 4ml × ${weightKg.toStringAsFixed(1)}kg × %TBSA\n\n'
+            'Give 50% in first 8 hours, 50% over next 16 hours.\n'
+            'Fluid: Ringer\'s Lactate (most commonly used).\n\n'
+            'Example: 20kg child, 30% TBSA burn\n'
+            '= 4 × 20 × 30 = 2400 ml in 24h\n'
+            '→ 1200 ml over 8h (150 ml/hr)\n'
+            '→ 1200 ml over 16h (75 ml/hr)';
+
+        formulaText =
+            'PARKLAND FORMULA\n'
+            '4 ml/kg/%TBSA over 24h\n'
+            '50% in 8h, 50% in 16h\n'
+            'Weight: ${weightKg.toStringAsFixed(1)}kg\n'
+            'Example at 30% TBSA: '
+            '4 × ${weightKg.toStringAsFixed(0)} × 30 = ${(4 * weightKg * 30).toStringAsFixed(0)} ml';
+        break;
+
+      default:
+        return const DoseResult.outOfRange();
+    }
+
+    return DoseResult(
+      prescription: resultText,
+      formula: formulaText,
+      safetyWarning: drug.safetyWarning,
+      durationWarning: drug.durationWarning,
+    );
+  }
+
+  /// Build a breakdown string for the 4-2-1 rule.
+  static String _maintenanceBreakdown(double weightKg, double hourlyRate) {
+    final parts = <String>[];
+    if (weightKg <= 10) {
+      parts.add('${weightKg.toStringAsFixed(1)} × 4 = ${hourlyRate.toStringAsFixed(0)} ml/hr');
+    } else if (weightKg <= 20) {
+      parts.add('First 10kg: 10 × 4 = 40 ml/hr');
+      parts.add('Next ${(weightKg - 10).toStringAsFixed(1)}kg: ${(weightKg - 10).toStringAsFixed(1)} × 2 = ${((weightKg - 10) * 2).toStringAsFixed(0)} ml/hr');
+      parts.add('Total: 40 + ${((weightKg - 10) * 2).toStringAsFixed(0)} = ${hourlyRate.toStringAsFixed(0)} ml/hr');
+    } else {
+      parts.add('First 10kg: 10 × 4 = 40 ml/hr');
+      parts.add('Next 10kg: 10 × 2 = 20 ml/hr');
+      parts.add('Remaining ${(weightKg - 20).toStringAsFixed(1)}kg: ${(weightKg - 20).toStringAsFixed(1)} × 1 = ${(weightKg - 20).toStringAsFixed(0)} ml/hr');
+      parts.add('Total: 40 + 20 + ${(weightKg - 20).toStringAsFixed(0)} = ${hourlyRate.toStringAsFixed(0)} ml/hr');
+    }
+    parts.add('Daily total: ${hourlyRate.toStringAsFixed(0)} × 24 = ${(hourlyRate * 24).toStringAsFixed(0)} ml/day');
+    return parts.join('\n');
   }
 
   /// Builds the duration part of the prescription string.

@@ -67,6 +67,10 @@ class _MainShellState extends State<MainShell> {
       _ => widget.pediatricData,
     };
 
+    final topPadding = MediaQuery.of(context).padding.top;
+    const barHeight = 60;
+    final totalBarHeight = barHeight + topPadding;
+
     return Theme(
       data: AppTheme.lightTheme,
       child: Scaffold(
@@ -75,7 +79,7 @@ class _MainShellState extends State<MainShell> {
           children: [
             // ── Scrollable content (no cross-fade) ──────────
             Padding(
-              padding: const EdgeInsets.only(top: 60, bottom: 0),
+              padding: EdgeInsets.only(top: totalBarHeight, bottom: 0),
               child: HomeScreen(
                 key: ValueKey(_currentIndex),
                 data: currentData,
@@ -93,7 +97,7 @@ class _MainShellState extends State<MainShell> {
                   filter: ui.ImageFilter.blur(sigmaX: 18, sigmaY: 18),
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 200),
-                    height: 60,
+                    height: totalBarHeight,
                     decoration: BoxDecoration(
                       color: Colors.white.withValues(alpha: 0.72),
                       border: Border(
@@ -103,7 +107,11 @@ class _MainShellState extends State<MainShell> {
                         ),
                       ),
                     ),
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.only(
+                      top: topPadding,
+                      left: 16,
+                      right: 16,
+                    ),
                     child: _isSearching
                         ? _buildSearchField()
                         : _buildTitleBar(),

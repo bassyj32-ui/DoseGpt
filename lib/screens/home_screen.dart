@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/app_theme.dart';
 import '../widgets/condition_icons.dart';
 import '../widgets/category_card.dart';
-import '../widgets/app_theme.dart';
+import '../widgets/vitals_reference_card.dart';
 import '../models/category.dart';
 import '../models/illness.dart';
 import '../services/data_loader.dart';
@@ -120,6 +121,11 @@ class _HomeScreenState extends State<HomeScreen>
         ),
 
         const SizedBox(height: 24),
+
+        // ── Section: Vital Signs Reference (collapsible) ──
+        const VitalsReferenceCard(),
+
+        const SizedBox(height: 4),
 
         // ── Section: Systems ───────────────────────────────────
         if (categories.isNotEmpty)
@@ -458,8 +464,8 @@ class _CardContent extends StatelessWidget {
           glowValue,
         )!;
         return Container(
-          height: 72,
-          margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+          height: 68,
+          margin: const EdgeInsets.symmetric(horizontal: 4, vertical: 4),
           decoration: BoxDecoration(
             color: cardColor,
             borderRadius: BorderRadius.circular(36),
@@ -471,7 +477,7 @@ class _CardContent extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(width: 12),
+                  const SizedBox(width: 8),
                   AnimatedBuilder(
                     animation: pulseAnim,
                     builder: (context, child) => Transform.scale(
@@ -484,30 +490,30 @@ class _CardContent extends StatelessWidget {
                       decoration: BoxDecoration(
                         color: emoji != null
                             ? const Color(0xFFF0FAF5)
-                            : AppTheme.lightSectionBg,
-                        borderRadius: BorderRadius.circular(12),
+                            : AppTheme.primary,
+                        shape: BoxShape.circle,
                         boxShadow: AppTheme.lightShadowIcon,
                       ),
                       child: emoji != null
                           ? Center(
                               child: Text(
                                 emoji!,
-                                style: const TextStyle(fontSize: 28),
+                                style: const TextStyle(fontSize: 30),
                               ),
                             )
                           : Icon(
                               iconData,
-                              color: AppTheme.primary,
-                              size: 30,
+                              color: Colors.white,
+                              size: 26,
                             ),
                     ),
                   ),
-                  const SizedBox(width: 14),
+                  const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       illness.nameEn,
                       style: TextStyle(
-                        fontSize: 17,
+                        fontSize: 18,
                         fontWeight: FontWeight.w600,
                         color: AppTheme.lightInk,
                         letterSpacing: 0.2,
@@ -517,7 +523,7 @@ class _CardContent extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 18),
+                    padding: const EdgeInsets.only(right: 14),
                     child: Text(
                       '\u203A',
                       style: TextStyle(

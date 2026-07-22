@@ -8,7 +8,7 @@ import '../services/dose_calculator.dart';
 import 'result_screen.dart';
 
 /// Screen 4 of the dosing flow.
-/// Weight on top, Age as simple text fields with quick-preset chips.
+/// Weight on top (optional for fixed-dose drugs), Age with quick-preset chips.
 class PatientDetailsScreen extends StatefulWidget {
   final ClinicalData data;
   final Drug drug;
@@ -43,6 +43,12 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
     ('10 yr', 10, 0),
   ];
 
+  /// Fixed-dose drugs don't need weight at all.
+  /// For ORS (diarrhea), both weight and age are needed for Plan A/B/C.
+  bool get _needsWeight => widget.drug.illnessId == 'diarrhea'
+      ? true
+      : (widget.drug.dosingShape != 'fixed');
+
   int get _years {
     final text = _yearsController.text.trim();
     return int.tryParse(text) ?? 0;
@@ -68,6 +74,7 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
   }
 
   String? _validateWeight(String? value) {
+    if (!_needsWeight) return null; // weight not required
     if (value == null || value.trim().isEmpty) return 'Enter weight';
     final kg = double.tryParse(value.trim());
     if (kg == null || kg <= 0) return 'Enter a valid weight';
@@ -75,13 +82,30 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
     return null;
   }
 
+  String? _validateAge(String? value) {
+    // Age is always required for all drugs
+    if (value == null || value.trim().isEmpty) return 'Required';
+    final num = int.tryParse(value.trim());
+    if (num == null || num < 0) return 'Enter a valid number';
+    return null;
+  }
+
   Future<void> _calculate() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final weight = _weightKg;
-    if (weight == null) return;
-
     final totalMonths = _totalMonths;
+
+    // For fixed-dose drugs, we don't strictly need weight
+    // But for ORS (diarrhea), both weight and age are essential
+    if (_needsWeight) {
+      final weight = _weightKg;
+      if (weight == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Please enter the patient\'s weight')),
+        );
+        return;
+      }
+    }
 
     // Neonatal check
     if (totalMonths > 0 && DoseCalculator.isNeonate(totalMonths)) {
@@ -102,8 +126,9 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
       return;
     }
 
-    // Weight range check
-    if (!DoseCalculator.isWeightInRange(widget.drug, weight)) {
+    // Weight range check (skip for fixed-dose drugs without weight range)
+    final hasWeight = _weightKg != null;
+    if (hasWeight && !DoseCalculator.isWeightInRange(widget.drug, _weightKg!)) {
       final msg = widget.drug.referralTriggerText ??
           'This weight is outside the safe range. Please verify or refer.';
       _showResult(DoseResult.outOfRange(msg));
@@ -114,7 +139,7 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
 
     final result = DoseCalculator.calculate(
       drug: widget.drug,
-      weightKg: weight,
+      weightKg: _weightKg ?? 10, // fallback weight for fixed drugs
       ageMonths: totalMonths,
       concentrationIndex: widget.concentrationIndex,
     );
@@ -170,67 +195,70 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
           key: _formKey,
           child: ListView(
             physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.all(24),
+            padding: EdgeInsets.fromLTRB(
+              24, 24, 24, 24 + MediaQuery.of(context).viewInsets.bottom,
+            ),
             children: [
-              // ── Weight section (top) ──────────────────────────
-              const Text(
-                'Weight',
-                style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w600,
-                  color: AppTheme.lightInkMuted,
+              // ── Weight section (only if needed) ────────────────
+              if (_needsWeight) ...[
+                const Text(
+                  'Weight',
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w600,
+                    color: AppTheme.lightInkMuted,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
+                const SizedBox(height: 12),
 
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(14),
-                  border: Border.all(color: AppTheme.lightDivider),
-                ),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextFormField(
-                        controller: _weightController,
-                        keyboardType: const TextInputType.numberWithOptions(
-                          decimal: true,
-                        ),
-                        style: const TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w600,
-                          color: AppTheme.lightInk,
-                        ),
-                        decoration: const InputDecoration(
-                          hintText: 'e.g. 12.5',
-                          hintStyle: TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w400,
-                            color: AppTheme.lightInkSubtle,
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: AppTheme.lightDivider),
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: _weightController,
+                          keyboardType: const TextInputType.numberWithOptions(
+                            decimal: true,
                           ),
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(vertical: 16),
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                            color: AppTheme.lightInk,
+                          ),
+                          decoration: const InputDecoration(
+                            hintText: 'e.g. 12.5',
+                            hintStyle: TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w400,
+                              color: AppTheme.lightInkSubtle,
+                            ),
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.symmetric(vertical: 16),
+                          ),
+                          validator: _validateWeight,
                         ),
-                        validator: _validateWeight,
                       ),
-                    ),
-                    const Text(
-                      'kg',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: AppTheme.lightInkMuted,
+                      const Text(
+                        'kg',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: AppTheme.lightInkMuted,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+                const SizedBox(height: 32),
+              ],
 
-              const SizedBox(height: 32),
-
-              // ── Age section (bottom) ──────────────────────────
+              // ── Age section (always shown) ──────────────────────
               const Text(
                 'Age',
                 style: TextStyle(
@@ -248,6 +276,7 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                       controller: _yearsController,
                       label: 'years',
                       hint: '0',
+                      validator: _validateAge,
                     ),
                   ),
                   const SizedBox(width: 12),
@@ -256,6 +285,7 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
                       controller: _monthsController,
                       label: 'months',
                       hint: '0',
+                      validator: _validateAge,
                     ),
                   ),
                 ],
@@ -329,11 +359,13 @@ class _AgeField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
   final String hint;
+  final String? Function(String?)? validator;
 
   const _AgeField({
     required this.controller,
     required this.label,
     required this.hint,
+    this.validator,
   });
 
   @override
@@ -366,6 +398,7 @@ class _AgeField extends StatelessWidget {
                 border: InputBorder.none,
                 contentPadding: const EdgeInsets.symmetric(vertical: 16),
               ),
+              validator: validator,
             ),
           ),
           Text(

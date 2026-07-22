@@ -8,7 +8,7 @@
       "icon": "icon_heart",
       "display_order": 1,
       "urgent_accent": false,
-      "drug_ids": ["adult_hctz_htn", "adult_amlodipine_htn", "adult_enalapril_htn", "adult_methyldopa_htn"]
+      "drug_ids": ["adult_amlodipine_htn", "adult_hctz_htn", "adult_enalapril_htn", "adult_nifedipine_htn"]
     },
     {
       "id": "diabetes",
@@ -17,16 +17,16 @@
       "icon": "icon_droplet",
       "display_order": 2,
       "urgent_accent": false,
-      "drug_ids": ["adult_metformin_dm", "adult_gliclazide_dm", "adult_insulin_dm"]
+      "drug_ids": ["adult_metformin_dm", "adult_gliclazide_dm", "adult_insulin_dm", "adult_insulin_reg_dm"]
     },
     {
-      "id": "pneumonia",
-      "name_en": "Pneumonia / LRTI",
-      "name_am": "የሳምባ ምች",
-      "icon": "icon_lungs",
+      "id": "dka",
+      "name_en": "DKA / Hyperglycemic Emergency",
+      "name_am": "የስኳር በሽታ ድንገተኛ ሕክምና",
+      "icon": "icon_droplet",
       "display_order": 3,
       "urgent_accent": true,
-      "drug_ids": ["adult_amoxicillin_pneumonia", "adult_azithromycin_pneumonia", "adult_augmentin_pneumonia", "adult_ceftriaxone_iv_pneumonia"]
+      "drug_ids": ["adult_dka_protocol"]
     },
     {
       "id": "uti",
@@ -35,7 +35,7 @@
       "icon": "icon_kidney",
       "display_order": 4,
       "urgent_accent": false,
-      "drug_ids": ["adult_cotrimoxazole_uti", "adult_amoxicillin_uti"]
+      "drug_ids": ["adult_cotrimoxazole_uti", "adult_amoxicillin_uti", "adult_ciprofloxacin_uti"]
     },
     {
       "id": "dyspepsia",
@@ -44,7 +44,7 @@
       "icon": "icon_stomach",
       "display_order": 5,
       "urgent_accent": false,
-      "drug_ids": ["adult_omeprazole_dyspepsia", "adult_ranitidine_dyspepsia", "adult_antacid_dyspepsia"]
+      "drug_ids": ["adult_omeprazole_dyspepsia", "adult_pantoprazole_dyspepsia", "adult_ranitidine_dyspepsia", "adult_antacid_dyspepsia"]
     },
     {
       "id": "hyperemesis",
@@ -71,7 +71,7 @@
       "icon": "icon_inhaler",
       "display_order": 8,
       "urgent_accent": false,
-      "drug_ids": ["adult_salbutamol_asthma", "adult_prednisolone_asthma"]
+      "drug_ids": ["adult_salbutamol_asthma", "adult_prednisolone_asthma", "adult_hydrocortisone_asthma", "adult_aminophylline_asthma"]
     },
     {
       "id": "malaria",
@@ -107,7 +107,7 @@
       "icon": "icon_throat",
       "display_order": 12,
       "urgent_accent": false,
-      "drug_ids": ["adult_amoxicillin_tonsillitis", "adult_azithromycin_tonsillitis"]
+      "drug_ids": ["adult_amoxicillin_tonsillitis", "adult_azithromycin_tonsillitis", "adult_augmentin_tonsillitis"]
     },
     {
       "id": "sinusitis",
@@ -116,7 +116,7 @@
       "icon": "icon_throat",
       "display_order": 13,
       "urgent_accent": false,
-      "drug_ids": ["adult_amoxicillin_sinusitis", "adult_azithromycin_sinusitis"]
+      "drug_ids": ["adult_amoxicillin_sinusitis", "adult_azithromycin_sinusitis", "adult_augmentin_sinusitis"]
     },
     {
       "id": "otitis_media",
@@ -125,7 +125,7 @@
       "icon": "icon_ear",
       "display_order": 14,
       "urgent_accent": false,
-      "drug_ids": ["adult_amoxicillin_otitis", "adult_azithromycin_otitis"]
+      "drug_ids": ["adult_amoxicillin_otitis", "adult_azithromycin_otitis", "adult_augmentin_otitis"]
     },
     {
       "id": "cellulitis",

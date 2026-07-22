@@ -26,7 +26,7 @@
       "icon": "icon_droplet",
       "display_order": 3,
       "urgent_accent": false,
-      "drug_ids": ["zinc_diarrhea", "ors_diarrhea", "plan_c_fluids_diarrhea", "ceftazidime_diarrhea"]
+      "drug_ids": ["ors_diarrhea", "zinc_diarrhea", "plan_c_fluids_diarrhea"]
     },
     {
       "id": "fluids",
@@ -35,7 +35,7 @@
       "icon": "icon_droplet",
       "display_order": 4,
       "urgent_accent": false,
-      "drug_ids": ["iv_fluids_maintenance", "iv_fluids_shock", "iv_fluids_dehydration"]
+      "drug_ids": ["iv_fluids_maintenance", "iv_fluids_shock", "iv_fluids_dehydration", "iv_fluids_burn"]
     },
     {
       "id": "tonsillitis",
@@ -44,7 +44,7 @@
       "icon": "icon_throat",
       "display_order": 5,
       "urgent_accent": false,
-      "drug_ids": ["penicillin_v_tonsillitis", "amoxicillin_tonsillitis", "azithromycin_tonsillitis"]
+      "drug_ids": ["amoxicillin_tonsillitis", "azithromycin_tonsillitis", "ceftriaxone_tonsillitis", "penicillin_v_tonsillitis"]
     },
     {
       "id": "otitis_media",
@@ -75,12 +75,12 @@
     },
     {
       "id": "worms",
-      "name_en": "Intestinal Worms",
-      "name_am": "የሆድ ትል",
+      "name_en": "Intestinal Parasites",
+      "name_am": "የሆድ ተውሳኮች",
       "icon": "icon_worm",
       "display_order": 9,
       "urgent_accent": false,
-      "drug_ids": ["albendazole_worms", "mebendazole_worms"]
+      "drug_ids": ["albendazole_worms", "mebendazole_worms", "metronidazole_giardiasis", "metronidazole_amebiasis", "tinidazole_amebiasis"]
     },
     {
       "id": "fever",
@@ -101,31 +101,13 @@
       "drug_ids": ["cotrimoxazole_uti", "amoxicillin_uti"]
     },
     {
-      "id": "giardiasis",
-      "name_en": "Giardiasis",
-      "name_am": "ጃርዲያ",
-      "icon": "icon_stomach",
-      "display_order": 12,
-      "urgent_accent": false,
-      "drug_ids": ["metronidazole_giardiasis"]
-    },
-    {
-      "id": "amebiasis",
-      "name_en": "Amebiasis",
-      "name_am": "አሜባ",
-      "icon": "icon_stomach",
-      "display_order": 13,
-      "urgent_accent": false,
-      "drug_ids": ["metronidazole_amebiasis", "tinidazole_amebiasis"]
-    },
-    {
       "id": "measles",
       "name_en": "Measles",
       "name_am": "ኩፍኝ",
       "icon": "icon_mosquito",
       "display_order": 14,
       "urgent_accent": false,
-      "drug_ids": ["vitamin_a_measles"]
+      "drug_ids": ["vitamin_a_measles", "acyclovir_measles"]
     },
     {
       "id": "chickenpox",

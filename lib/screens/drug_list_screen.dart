@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_lucide/flutter_lucide.dart';
 import '../widgets/app_theme.dart';
 import '../models/drug.dart';
 import '../models/illness.dart';
@@ -100,23 +101,23 @@ class _DrugCard extends StatelessWidget {
 
   const _DrugCard({required this.drug, required this.onTap});
 
-  /// Extract a short display name (brand) and a subtitle (generic).
+  /// Extract a short display name and a subtitle.
   /// Priority: drugSynonyms > parentheses in drugNameEn > plain drugNameEn.
   ({String display, String? subtitle}) _names() {
-    // Check synonyms
+    // Check synonyms — use first synonym as display, drugNameEn as subtitle
     if (drug.drugSynonyms.isNotEmpty) {
       final brand = drug.drugSynonyms.first;
-      // Use drugNameEn as subtitle after cleaning up parentheses
       final generic = drug.drugNameEn.replaceAll(RegExp(r'\s*\([^)]*\)'), '').trim();
       return (display: brand, subtitle: generic);
     }
 
-    // Check parentheses in drugNameEn, e.g. "Generic (Brand)"
+    // Check parentheses in drugNameEn, e.g. "ORS (Oral Rehydration Solution)"
+    // — show "ORS" as display and "(Oral Rehydration Solution)" as subtitle
     final parenMatch = RegExp(r'^(.+?)\s*\(([^)]+)\)$').firstMatch(drug.drugNameEn);
     if (parenMatch != null) {
-      final generic = parenMatch.group(1)!.trim();
-      final brand = parenMatch.group(2)!.trim();
-      return (display: brand, subtitle: generic);
+      final mainName = parenMatch.group(1)!.trim();
+      final description = parenMatch.group(2)!.trim();
+      return (display: mainName, subtitle: description);
     }
 
     // Fallback: just the name, no subtitle
@@ -129,24 +130,29 @@ class _DrugCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: const EdgeInsets.fromLTRB(12, 12, 16, 12),
         decoration: BoxDecoration(
           color: AppTheme.lightCardBg,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(36),
           boxShadow: AppTheme.lightShadowCard,
         ),
         child: Row(
           children: [
-            // Chevron
-            Text(
-              '\u203A',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w300,
-                color: AppTheme.lightInkSubtle,
+            // Circle icon
+            Container(
+              width: 40,
+              height: 40,
+              decoration: const BoxDecoration(
+                color: AppTheme.primary,
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(
+                LucideIcons.pill,
+                color: Colors.white,
+                size: 20,
               ),
             ),
-            const SizedBox(width: 12),
+            const SizedBox(width: 10),
 
             // Drug names
             Expanded(
@@ -178,6 +184,19 @@ class _DrugCard extends StatelessWidget {
                       ),
                     ),
                 ],
+              ),
+            ),
+
+            // Chevron
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                '\u203A',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w300,
+                  color: AppTheme.lightInkSubtle,
+                ),
               ),
             ),
           ],
