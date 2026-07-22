@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../widgets/condition_icons.dart';
 import '../widgets/category_card.dart';
+import '../widgets/app_theme.dart';
 import '../models/category.dart';
 import '../models/illness.dart';
 import '../services/data_loader.dart';
