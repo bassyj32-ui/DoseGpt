@@ -44,21 +44,21 @@ class DoseLogoTile extends StatelessWidget {
         boxShadow: isSmall
             ? [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.08),
+                  color: Colors.black.withValues(alpha: 0.08),
                   blurRadius: 4,
                   offset: const Offset(0, 2),
                 ),
               ]
             : [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.5),
+                  color: Colors.black.withValues(alpha: 0.5),
                   blurRadius: 25,
                   spreadRadius: 2,
                   offset: const Offset(0, 10),
                 ),
               ],
         border: Border.all(
-          color: Colors.white.withOpacity(isSmall ? 0.08 : 0.12),
+          color: Colors.white.withValues(alpha: isSmall ? 0.08 : 0.12),
           width: isSmall ? 0.8 : 1.5,
         ),
       ),
