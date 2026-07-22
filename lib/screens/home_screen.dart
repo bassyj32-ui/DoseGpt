@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/app_theme.dart';
 import '../widgets/condition_icons.dart';
 import '../widgets/category_card.dart';
 import '../models/category.dart';
@@ -91,10 +90,6 @@ class _HomeScreenState extends State<HomeScreen>
     final pinned = illnesses.where((i) => i.displayOrder <= _maxPinnedCards).toList();
     final categories = widget.data.categories;
 
-    final screenWidth = MediaQuery.of(context).size.width;
-    const double horizontalPadding = 24;
-    const double maxContentWidth = 600;
-
     return ListView(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
@@ -114,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen>
                   iconData: ConditionIcons.iconFor(pinned[i].id),
                   emoji: ConditionIcons.emojiFor(pinned[i].id),
                   isUrgent: pinned[i].urgentAccent,
-                  screenWidth: screenWidth,
+                  screenWidth: MediaQuery.of(context).size.width,
                   isPinned: true,
                   glowAnim: _glowAnim,
                   onTap: () => _onConditionTap(context, pinned[i].id),
@@ -135,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen>
                 for (int i = 0; i < categories.length; i++)
                   CategoryCard(
                     category: categories[i],
-                    screenWidth: screenWidth,
+                    screenWidth: MediaQuery.of(context).size.width,
                     onTap: () => _onCategoryTap(context, categories[i]),
                   ),
               ],
@@ -202,9 +197,9 @@ class _HomeScreenState extends State<HomeScreen>
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // Section Container
-// ═══════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 /// A subtle rounded container with a section header label.
 ///
 /// The faint [AppTheme.lightSectionBg] background groups related cards
@@ -274,9 +269,9 @@ class _SectionContainer extends StatelessWidget {
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // Condition Card
-// ═══════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 class _ConditionCard extends StatefulWidget {
   final int index;
   final Illness illness;
@@ -430,9 +425,9 @@ class _ConditionCardState extends State<_ConditionCard>
   }
 }
 
-// ═══════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 // Card Content
-// ═══════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════[...]
 class _CardContent extends StatelessWidget {
   final Illness illness;
   final IconData iconData;
