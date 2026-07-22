@@ -1,10 +1,5 @@
-<<<<<<< HEAD
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-=======
-import 'package:flutter/widgets.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
->>>>>>> ab7aec0 (UI/UX overhaul: Emerald palette, DoseLogoTile branding, Apple-style animations)
 
 /// Mapping from condition/category ID to icons.
 ///
