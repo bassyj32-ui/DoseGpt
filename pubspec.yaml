@@ -32,4 +32,3 @@ flutter:
     - lib/data/adult_drugs.json
     - lib/data/adult_categories.json
     - assets/images/background/
-    - assets/images/conditions/

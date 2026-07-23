@@ -1,5 +1,5 @@
-{
-  "_status": "DRAFT — CLINICALLY UNVERIFIED. Every entry requires sign-off by a licensed clinician before use in a shipped app. Do not treat any value here as final.",
+﻿{
+  "_status": "DRAFT â€” CLINICALLY UNVERIFIED. Every entry requires sign-off by a licensed clinician before use in a shipped app. Do not treat any value here as final.",
   "drugs": [
     {
       "id": "adult_al_malaria",
@@ -23,9 +23,7 @@
       ],
       "safety_warning": null,
       "source_name": "WHO Malaria Treatment Guidelines / Ethiopia National Malaria Guideline",
-      "source_detail": "Standard 6-dose regimen over 3 days. Adult weight bands same as pediatric for this drug.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Standard 6-dose regimen over 3 days. Adult weight bands same as pediatric for this drug."
     },
     {
       "id": "adult_artesunate_iv_malaria",
@@ -39,19 +37,17 @@
       "dose_per_kg_mg": 2.4,
       "frequency_en": "IV at 0h, 12h, 24h, then daily",
       "duration_days": null,
-      "notes": "IV artesunate for severe malaria. Give IV (preferred) or IM. Always follow with full 3-day oral ACT once patient can tolerate oral.\n\nWeight-based dosing:\n• <20kg: 3.0 mg/kg per dose\n• ≥20kg: 2.4 mg/kg per dose\n\nVials needed per dose:\n• ≤25kg: 1 vial\n• 26-50kg: 2 vials\n• 51-75kg: 3 vials\n• 76-100kg: 4 vials",
+      "notes": "IV artesunate for severe malaria. Give IV (preferred) or IM. Always follow with full 3-day oral ACT once patient can tolerate oral.\n\nWeight-based dosing:\nâ€¢ <20kg: 3.0 mg/kg per dose\nâ€¢ â‰¥20kg: 2.4 mg/kg per dose\n\nVials needed per dose:\nâ€¢ â‰¤25kg: 1 vial\nâ€¢ 26-50kg: 2 vials\nâ€¢ 51-75kg: 3 vials\nâ€¢ 76-100kg: 4 vials",
       "max_daily_dose_mg": null,
       "valid_weight_range": { "min_kg": 5, "max_kg": null },
       "referral_trigger_text": "Below 5kg: refer immediately for specialist care.",
       "concentrations": [
         { "label_en": "Severe malaria (weight-based dosing)", "strength_mg": 1, "volume_ml": 1, "round_to_ml": 0.5 }
       ],
-      "iv_info": "[conc:20]Reconstitute:\n1. Add 3ml of provided arginine/NaHCO₃ solvent to 60mg artesunate vial\n2. Shake gently until clear (~1 min)\n3. Final concentration = 20mg/ml → draw [ml]ml\n\nGive slow IV over 1-2 min (do NOT further dilute for IV push).\nUse within 1 hour of reconstitution.\n\nAlways follow with full 3-day oral ACT once patient can swallow.\nMonitor Hb weekly for 4 weeks for post-artesunate delayed hemolysis (PADH).",
-      "safety_warning": "Monitor for post-artesunate delayed hemolysis (PADH) — check Hb weekly for 4 weeks after treatment.",
+      "iv_info": "[conc:20]Reconstitute:\n1. Add 3ml of provided arginine/NaHCOâ‚ƒ solvent to 60mg artesunate vial\n2. Shake gently until clear (~1 min)\n3. Final concentration = 20mg/ml â†’ draw [ml]ml\n\nGive slow IV over 1-2 min (do NOT further dilute for IV push).\nUse within 1 hour of reconstitution.\n\nAlways follow with full 3-day oral ACT once patient can swallow.\nMonitor Hb weekly for 4 weeks for post-artesunate delayed hemolysis (PADH).",
+      "safety_warning": "Monitor for post-artesunate delayed hemolysis (PADH) â€” check Hb weekly for 4 weeks after treatment.",
       "source_name": "WHO Severe Malaria Guidelines",
-      "source_detail": "≥20kg: 2.4mg/kg at 0, 12, 24h. Reconstitute with 3ml solvent = 20mg/ml.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "â‰¥20kg: 2.4mg/kg at 0, 12, 24h. Reconstitute with 3ml solvent = 20mg/ml."
     },
     {
       "id": "adult_chloroquine_malaria",
@@ -77,9 +73,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": null,
       "source_name": "Ethiopian National Malaria Guideline",
-      "source_detail": "25mg base/kg total over 3 days (10/10/5mg/kg). Adult max 600mg base per dose on days 1-2.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "25mg base/kg total over 3 days (10/10/5mg/kg). Adult max 600mg base per dose on days 1-2."
     },
     {
       "id": "adult_primaquine_malaria",
@@ -105,9 +99,7 @@
       "valid_weight_range": { "min_kg": 8, "max_kg": null },
       "safety_warning": "Primaquine can cause dangerous hemolysis in patients with G6PD deficiency. VERIFY current Ethiopian protocol on G6PD testing requirement before dosing at this facility level.",
       "source_name": "Ethiopia national low-dose radical cure protocol (rolled out nationally 2018)",
-      "source_detail": "0.25mg/kg/day for 14 days. Adult dosing same as pediatric.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "0.25mg/kg/day for 14 days. Adult dosing same as pediatric."
     },
     {
       "id": "adult_amoxicillin_pneumonia",
@@ -131,9 +123,7 @@
       "penicillin_allergy_alternative": ["adult_azithromycin_pneumonia"],
       "safety_warning": null,
       "source_name": "WHO pneumonia treatment guideline / Ethiopia STG",
-      "source_detail": "40mg/kg/dose BID for adults. Max 3g/day. Capsule formulations available for adult patients.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "40mg/kg/dose BID for adults. Max 3g/day. Capsule formulations available for adult patients."
     },
     {
       "id": "adult_ceftriaxone_iv_pneumonia",
@@ -152,14 +142,12 @@
       "valid_weight_range": { "min_kg": 30, "max_kg": null },
       "referral_trigger_text": "Signs of severe respiratory distress: refer for higher-level care.",
       "concentrations": [
-        { "label_en": "1g vial — standard adult dose", "strength_mg": 1000, "volume_ml": 10, "round_to_ml": 0.5 }
+        { "label_en": "1g vial â€” standard adult dose", "strength_mg": 1000, "volume_ml": 10, "round_to_ml": 0.5 }
       ],
-      "iv_info": "Reconstitute:\n• 1g vial + 9.6ml sterile water = 100mg/ml → draw [ml]ml\n\nInfuse over 30 min.\nDo NOT use calcium-containing fluids (Ringer's, Hartmann's).",
+      "iv_info": "Reconstitute:\nâ€¢ 1g vial + 9.6ml sterile water = 100mg/ml â†’ draw [ml]ml\n\nInfuse over 30 min.\nDo NOT use calcium-containing fluids (Ringer's, Hartmann's).",
       "safety_warning": null,
       "source_name": "WHO/AAP ceftriaxone dosing guidelines",
-      "source_detail": "50-100mg/kg/day divided q12h. Max 4g/day.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "50-100mg/kg/day divided q12h. Max 4g/day."
     },
     {
       "id": "adult_azithromycin_pneumonia",
@@ -184,9 +172,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": null,
       "source_name": "Standard adult CAP guidance",
-      "source_detail": "500mg day 1, 250mg days 2-5. Tablet formulation for adults.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg day 1, 250mg days 2-5. Tablet formulation for adults."
     },
     {
       "id": "adult_augmentin_pneumonia",
@@ -209,9 +195,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": null,
       "source_name": "Standard adult dosing",
-      "source_detail": "625mg PO BID for moderate, 1g PO BID for severe infections.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "625mg PO BID for moderate, 1g PO BID for severe infections."
     },
     {
       "id": "adult_augmentin_tonsillitis",
@@ -222,7 +206,7 @@
       "is_recommended": false,
       "combination_drug": true,
       "dosing_shape": "fixed",
-      "dose_display_en": "Augmentin 625mg (500mg/125mg) PO twice daily for 7-10 days\n\nFor severe tonsillitis or penicillin-allergy non-responders:\n  Augmentin 625mg PO BID × 10 days\n\nFor peritonsillar abscess or severe infection:\n  Augmentin 1g (875mg/125mg) PO BID × 10 days\n\nSecond-line after amoxicillin or in treatment failure.",
+      "dose_display_en": "Augmentin 625mg (500mg/125mg) PO twice daily for 7-10 days\n\nFor severe tonsillitis or penicillin-allergy non-responders:\n  Augmentin 625mg PO BID Ã— 10 days\n\nFor peritonsillar abscess or severe infection:\n  Augmentin 1g (875mg/125mg) PO BID Ã— 10 days\n\nSecond-line after amoxicillin or in treatment failure.",
       "frequency_en": "twice daily",
       "duration_days": null,
       "notes": "Augmentin for GAS tonsillitis when amoxicillin fails or for peritonsillar abscess. 10-day course needed for GAS eradication.",
@@ -232,9 +216,7 @@
       ],
       "safety_warning": "Take with food to reduce GI upset. Diarrhea common with higher doses. Use 10-day course for GAS eradication.",
       "source_name": "IDSA tonsillopharyngitis guidelines",
-      "source_detail": "625mg PO BID or 1g PO BID for severe cases. 10-day course for GAS.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "625mg PO BID or 1g PO BID for severe cases. 10-day course for GAS."
     },
     {
       "id": "adult_augmentin_sinusitis",
@@ -245,7 +227,7 @@
       "is_recommended": false,
       "combination_drug": true,
       "dosing_shape": "fixed",
-      "dose_display_en": "Augmentin 625mg (500mg/125mg) PO twice daily for 5-7 days\n\nFor severe sinusitis or amoxicillin failure:\n  Augmentin 1g (875mg/125mg) PO BID × 7-10 days\n\nFirst-line when: penicillin failure, daycare attendance, recent antibiotic use, severe symptoms.\n\nDuration: 5-7 days for uncomplicated, 7-10 days for severe/recurrent.",
+      "dose_display_en": "Augmentin 625mg (500mg/125mg) PO twice daily for 5-7 days\n\nFor severe sinusitis or amoxicillin failure:\n  Augmentin 1g (875mg/125mg) PO BID Ã— 7-10 days\n\nFirst-line when: penicillin failure, daycare attendance, recent antibiotic use, severe symptoms.\n\nDuration: 5-7 days for uncomplicated, 7-10 days for severe/recurrent.",
       "frequency_en": "twice daily",
       "duration_days": null,
       "notes": "Augmentin for sinusitis when amoxicillin is inadequate (treatment failure, severe presentation, or recent abx use).",
@@ -255,9 +237,7 @@
       ],
       "safety_warning": "Augmentin preferred over amoxicillin alone for: treatment failure after 3 days, recent abx use, severe presentation, daycare attendance.",
       "source_name": "IDSA sinusitis guidelines / AAO-HNS",
-      "source_detail": "625mg PO BID or 1g PO BID. Duration 5-10 days per severity.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "625mg PO BID or 1g PO BID. Duration 5-10 days per severity."
     },
     {
       "id": "adult_augmentin_otitis",
@@ -268,7 +248,7 @@
       "is_recommended": false,
       "combination_drug": true,
       "dosing_shape": "fixed",
-      "dose_display_en": "Augmentin 625mg (500mg/125mg) PO twice daily for 5-7 days\n\nFor severe or refractory acute otitis media:\n  Augmentin 1g (875mg/125mg) PO BID × 7-10 days\n\nUse when: amoxicillin failure after 48-72h, severe AOM, recent antibiotic use, or recurrent infections.",
+      "dose_display_en": "Augmentin 625mg (500mg/125mg) PO twice daily for 5-7 days\n\nFor severe or refractory acute otitis media:\n  Augmentin 1g (875mg/125mg) PO BID Ã— 7-10 days\n\nUse when: amoxicillin failure after 48-72h, severe AOM, recent antibiotic use, or recurrent infections.",
       "frequency_en": "twice daily",
       "duration_days": null,
       "notes": "Augmentin for otitis media when amoxicillin fails or for severe presentation. Effective against beta-lactamase-producing organisms.",
@@ -278,9 +258,7 @@
       ],
       "safety_warning": "Take with food. Use high dose (90mg/kg/day amoxicillin component) for resistant organisms.",
       "source_name": "AAO-HNS otitis media guidelines / IDSA",
-      "source_detail": "625mg PO BID or 1g PO BID. Second-line after amoxicillin monotherapy failure.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "625mg PO BID or 1g PO BID. Second-line after amoxicillin monotherapy failure."
     },
     {
       "id": "adult_ors_diarrhea",
@@ -291,16 +269,14 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "WHO PLAN A — Some Dehydration:\nGive ORS based on dehydration status (not weight alone)\n\nMild dehydration: 50ml/kg over 4 hours\nModerate dehydration: 75-100ml/kg over 4 hours\n\nSevere dehydration → IV therapy (PLAN C)\n\nEncourage additional ORS as patient desires.\nContinue breastfeeding/feeding.\nReassess after 4 hours.\n\nIf no signs of dehydration: give ORS to replace ongoing losses (10ml/kg per loose stool).",
+      "dose_display_en": "WHO PLAN A â€” Some Dehydration:\nGive ORS based on dehydration status (not weight alone)\n\nMild dehydration: 50ml/kg over 4 hours\nModerate dehydration: 75-100ml/kg over 4 hours\n\nSevere dehydration â†’ IV therapy (PLAN C)\n\nEncourage additional ORS as patient desires.\nContinue breastfeeding/feeding.\nReassess after 4 hours.\n\nIf no signs of dehydration: give ORS to replace ongoing losses (10ml/kg per loose stool).",
       "frequency_en": null,
       "duration_days": null,
-      "notes": "ORS volume depends on dehydration status. For adults, encourage drinking freely — aim for 200-400ml per loose stool.",
+      "notes": "ORS volume depends on dehydration status. For adults, encourage drinking freely â€” aim for 200-400ml per loose stool.",
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": null,
       "source_name": "WHO/UNICEF diarrhea management guideline",
-      "source_detail": "Adult ORS: same formulation as pediatric. Volume based on dehydration assessment.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Adult ORS: same formulation as pediatric. Volume based on dehydration assessment."
     },
     {
       "id": "adult_zinc_diarrhea",
@@ -317,29 +293,25 @@
       "max_daily_dose_mg": null,
       "safety_warning": null,
       "source_name": "WHO diarrhea management guideline",
-      "source_detail": "Adult dose 20mg daily for 14 days. Evidence strongest in malnourished populations.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Adult dose 20mg daily for 14 days. Evidence strongest in malnourished populations."
     },
     {
       "id": "adult_plan_c_fluids_diarrhea",
       "illness_id": "diarrhea",
-      "drug_name_en": "Ringer's Lactate IV (Plan C — severe dehydration)",
+      "drug_name_en": "Ringer's Lactate IV (Plan C â€” severe dehydration)",
       "drug_name_am": "",
       "drug_synonyms": ["Ringer's Lactate", "Hartmann's", "Normal Saline"],
       "is_recommended": false,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "WHO PLAN C — Severe Dehydration (Adult)\nTotal: 100 ml/kg IV Ringer's Lactate\n\nStep 1: 30 ml/kg IV over 30 minutes\nStep 2: 70 ml/kg IV over 2.5 hours\n\nReassess every 15-30 minutes.\nGive ORS 5ml/kg/hour once patient can drink.\nOR: 1-2L NS/RL rapid IV then 200ml/hr until rehydrated.",
+      "dose_display_en": "WHO PLAN C â€” Severe Dehydration (Adult)\nTotal: 100 ml/kg IV Ringer's Lactate\n\nStep 1: 30 ml/kg IV over 30 minutes\nStep 2: 70 ml/kg IV over 2.5 hours\n\nReassess every 15-30 minutes.\nGive ORS 5ml/kg/hour once patient can drink.\nOR: 1-2L NS/RL rapid IV then 200ml/hr until rehydrated.",
       "frequency_en": null,
       "duration_days": null,
       "notes": "WHO Plan C for severe dehydration with diarrhea. Use Ringer's Lactate first line. Normal Saline if RL unavailable.",
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": "Reassess every 15-30 minutes during IV therapy. Monitor for signs of fluid overload (crackles, raised JVP).",
-      "source_name": "WHO diarrhea management guidelines — Adult",
-      "source_detail": "100ml/kg total. Adult: 30ml/kg over 30min + 70ml/kg over 2.5hrs.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_name": "WHO diarrhea management guidelines â€” Adult",
+      "source_detail": "100ml/kg total. Adult: 30ml/kg over 30min + 70ml/kg over 2.5hrs."
     },
     {
       "id": "adult_ceftriaxone_diarrhea",
@@ -361,9 +333,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": null,
       "source_name": "WHO/CDC guidelines for bacterial diarrhea",
-      "source_detail": "1-2g IV daily for severe dysentery.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "1-2g IV daily for severe dysentery."
     },
     {
       "id": "adult_paracetamol_fever",
@@ -386,9 +356,7 @@
       "valid_weight_range": { "min_kg": 30, "max_kg": null },
       "safety_warning": "Do not exceed 4g per 24 hours. Risk of hepatotoxicity at higher doses. Avoid in severe liver disease.",
       "source_name": "WHO / standard adult reference",
-      "source_detail": "500mg-1g PO q4-6h PRN. Max 4g/day.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg-1g PO q4-6h PRN. Max 4g/day."
     },
     {
       "id": "adult_ibuprofen_fever",
@@ -411,9 +379,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": "Avoid in dehydration, active peptic ulcer, renal impairment, or aspirin allergy. Caution in elderly.",
       "source_name": "WHO / standard adult reference",
-      "source_detail": "400mg PO q6-8h PRN. Max 2.4g/day.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "400mg PO q6-8h PRN. Max 2.4g/day."
     },
     {
       "id": "adult_cotrimoxazole_uti",
@@ -427,7 +393,7 @@
       "dose_display_en": "Cotrimoxazole 960mg (800mg/160mg) PO twice daily for 3-5 days\n\nOr 2 tablets of 400mg/80mg strength twice daily\n\nDuration: 3 days for uncomplicated, 5-7 days for complicated UTI.",
       "frequency_en": "twice daily",
       "duration_days": null,
-      "notes": "Check local resistance patterns. Cotrimoxazole resistance is rising — consider alternatives if no improvement in 48 hours.",
+      "notes": "Check local resistance patterns. Cotrimoxazole resistance is rising â€” consider alternatives if no improvement in 48 hours.",
       "concentrations": [
         { "label_en": "960mg tablet (800mg/160mg DS)", "strength_mg": 960, "volume_ml": null, "round_to_tablet": 0.5 },
         { "label_en": "480mg tablet (400mg/80mg SS)", "strength_mg": 480, "volume_ml": null, "round_to_tablet": 0.5 }
@@ -435,9 +401,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": "Caution in G6PD deficiency, renal impairment, elderly, and sulfonamide allergy.",
       "source_name": "Ethiopia STG / WHO EML",
-      "source_detail": "960mg (DS) PO BID. Duration 3-7 days per local guidelines.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "960mg (DS) PO BID. Duration 3-7 days per local guidelines."
     },
     {
       "id": "adult_amoxicillin_uti",
@@ -458,9 +422,7 @@
       ],
       "safety_warning": null,
       "source_name": "Standard adult UTI guidelines",
-      "source_detail": "500mg PO TID or 1g PO BID for 5-7 days.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg PO TID or 1g PO BID for 5-7 days."
     },
     {
       "id": "adult_ciprofloxacin_uti",
@@ -471,7 +433,7 @@
       "is_recommended": false,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Ciprofloxacin 250-500mg PO twice daily for 3-7 days\n\nUncomplicated UTI: 250mg PO BID × 3 days\nComplicated UTI: 500mg PO BID × 7-14 days\n\nRESISTANCE WARNING: Increasing E. coli resistance to fluoroquinolones in Ethiopia. Use only if:\n  - Local susceptibility confirmed (antibiotic sensitivity testing done)\n  - Patient did not respond to first-line options (cotrimoxazole)\n  - Pyelonephritis requiring broader gram-negative coverage\n\nNot first-line for uncomplicated UTI due to resistance concerns.\nAvoid in pregnancy.",
+      "dose_display_en": "Ciprofloxacin 250-500mg PO twice daily for 3-7 days\n\nUncomplicated UTI: 250mg PO BID Ã— 3 days\nComplicated UTI: 500mg PO BID Ã— 7-14 days\n\nRESISTANCE WARNING: Increasing E. coli resistance to fluoroquinolones in Ethiopia. Use only if:\n  - Local susceptibility confirmed (antibiotic sensitivity testing done)\n  - Patient did not respond to first-line options (cotrimoxazole)\n  - Pyelonephritis requiring broader gram-negative coverage\n\nNot first-line for uncomplicated UTI due to resistance concerns.\nAvoid in pregnancy.",
       "frequency_en": "twice daily",
       "duration_days": null,
       "notes": "Fluoroquinolone for UTI. Resistance is rising significantly in Ethiopia. Reserve for confirmed sensitivity or pyelonephritis. Do NOT use as first-line.",
@@ -480,10 +442,8 @@
         { "label_en": "500mg tablet", "strength_mg": 500, "volume_ml": null, "round_to_tablet": 0.5 }
       ],
       "safety_warning": "RESISTANCE WARNING: Not first-line due to increasing E. coli resistance. Avoid in pregnancy and breastfeeding. Caution in elderly (tendon rupture risk, QT prolongation, CNS effects including confusion). Avoid with NSAIDs (CNS excitation risk).",
-      "source_name": "WHO EML / Ethiopia STG — resistance advisory",
-      "source_detail": "250-500mg PO BID × 3-14 days depending on severity. Do NOT use first-line. Reserve for confirmed sensitivity.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_name": "WHO EML / Ethiopia STG â€” resistance advisory",
+      "source_detail": "250-500mg PO BID Ã— 3-14 days depending on severity. Do NOT use first-line. Reserve for confirmed sensitivity."
     },
     {
       "id": "adult_ceftriaxone_uti",
@@ -500,12 +460,10 @@
       "concentrations": [
         { "label_en": "1g vial", "strength_mg": 1000, "volume_ml": 10, "round_to_ml": 0.5 }
       ],
-      "iv_info": "Reconstitute:\n• 1g vial + 3.6ml sterile water for IM = 250mg/ml\n• 1g vial + 9.6ml sterile water for IV = 100mg/ml\n\nInject IM deep in gluteal muscle.\nInfuse IV over 2-4 minutes or 30 min infusion.",
+      "iv_info": "Reconstitute:\nâ€¢ 1g vial + 3.6ml sterile water for IM = 250mg/ml\nâ€¢ 1g vial + 9.6ml sterile water for IV = 100mg/ml\n\nInject IM deep in gluteal muscle.\nInfuse IV over 2-4 minutes or 30 min infusion.",
       "safety_warning": null,
       "source_name": "WHO/CDC UTI treatment guidelines",
-      "source_detail": "1g IV/IM daily. 1-2g daily for severe infections.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "1g IV/IM daily. 1-2g daily for severe infections."
     },
     {
       "id": "adult_amoxicillin_tonsillitis",
@@ -519,7 +477,7 @@
       "dose_display_en": "Amoxicillin 500mg PO three times daily for 7-10 days\n\nOr 1g PO twice daily.\n\nImportant: 10-day course for confirmed Group A Strep to prevent rheumatic fever.",
       "frequency_en": "three times daily",
       "duration_days": 10,
-      "duration_warning": "IMPORTANT: 10-day duration for strep eradication — do NOT default to 5 days.",
+      "duration_warning": "IMPORTANT: 10-day duration for strep eradication â€” do NOT default to 5 days.",
       "concentrations": [
         { "label_en": "500mg capsule", "strength_mg": 500, "volume_ml": null, "round_to_tablet": 0.5 },
         { "label_en": "250mg capsule", "strength_mg": 250, "volume_ml": null, "round_to_tablet": 0.5 }
@@ -527,9 +485,7 @@
       "penicillin_allergy_alternative": ["adult_azithromycin_tonsillitis"],
       "safety_warning": null,
       "source_name": "IDSA tonsillopharyngitis guidelines / Ethiopia STG",
-      "source_detail": "500mg PO TID × 10 days for strep pharyngitis. 10 days critical for rheumatic fever prevention.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg PO TID Ã— 10 days for strep pharyngitis. 10 days critical for rheumatic fever prevention."
     },
     {
       "id": "adult_azithromycin_tonsillitis",
@@ -550,9 +506,7 @@
       ],
       "safety_warning": null,
       "source_name": "Standard adult guidance",
-      "source_detail": "500mg day 1, 250mg days 2-5 for tonsillopharyngitis.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg day 1, 250mg days 2-5 for tonsillopharyngitis."
     },
     {
       "id": "adult_salbutamol_asthma",
@@ -563,17 +517,15 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Acute asthma exacerbation:\n\nInhaler (MDI) with spacer:\n  2-4 puffs (100mcg each) every 20 min for 1st hour\n  Then 2-4 puffs every 3-4 hours as needed\n\nNebulized:\n  5mg (1mL of 0.5% solution) in 3mL NS every 20 min × 3 doses\n  Then 5mg every 4-6 hours as needed\n\nFor COPD:\n  Inhaler: 2 puffs (100-200mcg) q4-6h PRN",
+      "dose_display_en": "Acute asthma exacerbation:\n\nInhaler (MDI) with spacer:\n  2-4 puffs (100mcg each) every 20 min for 1st hour\n  Then 2-4 puffs every 3-4 hours as needed\n\nNebulized:\n  5mg (1mL of 0.5% solution) in 3mL NS every 20 min Ã— 3 doses\n  Then 5mg every 4-6 hours as needed\n\nFor COPD:\n  Inhaler: 2 puffs (100-200mcg) q4-6h PRN",
       "frequency_en": "as needed for symptoms",
       "duration_days": null,
       "notes": "First-line rescue bronchodilator for acute asthma and COPD exacerbations.",
       "valid_weight_range": { "min_kg": null, "max_kg": null },
-      "referral_trigger_text": "Acute severe asthma: unable to speak in sentences, RR >30, SpO2 <90%, use of accessory muscles — refer urgently.",
+      "referral_trigger_text": "Acute severe asthma: unable to speak in sentences, RR >30, SpO2 <90%, use of accessory muscles â€” refer urgently.",
       "safety_warning": "Tremor, tachycardia, and palpitations are common side effects. Use with caution in ischemic heart disease.",
       "source_name": "GINA Guidelines / Ethiopia STG for Asthma",
-      "source_detail": "Adult: 2-4 puffs MDI via spacer PRN. Nebulized 5mg per dose for acute exacerbations.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Adult: 2-4 puffs MDI via spacer PRN. Nebulized 5mg per dose for acute exacerbations."
     },
     {
       "id": "adult_prednisolone_asthma",
@@ -591,12 +543,10 @@
       "concentrations": [
         { "label_en": "5mg tablet", "strength_mg": 5, "volume_ml": null, "round_to_tablet": 1 }
       ],
-      "referral_trigger_text": "Life-threatening asthma: silent chest, cyanosis, exhaustion, altered consciousness — refer immediately.",
+      "referral_trigger_text": "Life-threatening asthma: silent chest, cyanosis, exhaustion, altered consciousness â€” refer immediately.",
       "safety_warning": "Short-term use generally safe. Monitor for hyperglycemia, especially in diabetic patients.",
       "source_name": "GINA Guidelines",
-      "source_detail": "40-50mg PO daily × 5-7 days for acute exacerbations. 1mg/kg/day commonly used.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "40-50mg PO daily Ã— 5-7 days for acute exacerbations. 1mg/kg/day commonly used."
     },
     {
       "id": "adult_aminophylline_asthma",
@@ -607,16 +557,14 @@
       "is_recommended": false,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Aminophylline IV (second-line — only if inadequate response to salbutamol + steroids):\n\nLoading dose: 5mg/kg IV over 30 min (if not on oral theophylline)\nMaintenance: 0.5-0.7 mg/kg/hour IV infusion\n\nMonitoring required: Check pulse, BP, and signs of toxicity.\n\nTherapeutic range: 10-20 mcg/mL (theophylline level).",
+      "dose_display_en": "Aminophylline IV (second-line â€” only if inadequate response to salbutamol + steroids):\n\nLoading dose: 5mg/kg IV over 30 min (if not on oral theophylline)\nMaintenance: 0.5-0.7 mg/kg/hour IV infusion\n\nMonitoring required: Check pulse, BP, and signs of toxicity.\n\nTherapeutic range: 10-20 mcg/mL (theophylline level).",
       "frequency_en": "IV infusion",
       "duration_days": null,
-      "notes": "Second-line for severe refractory asthma. Narrow therapeutic window — toxicity risk is significant. Only use if salbutamol + prednisolone inadequate and referral not possible.",
+      "notes": "Second-line for severe refractory asthma. Narrow therapeutic window â€” toxicity risk is significant. Only use if salbutamol + prednisolone inadequate and referral not possible.",
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": "Narrow therapeutic window. Toxicity: tachyarrhythmias, seizures, vomiting. Reduce dose in heart failure, liver disease, and elderly. Monitor theophylline levels if available. Avoid with ciprofloxacin, cimetidine, and macrolides (increase levels).",
-      "source_name": "GINA / BTS Guidelines — second-line acute asthma",
-      "source_detail": "5mg/kg loading (if no recent theophylline), then 0.5-0.7mg/kg/hr. Use only in severe refractory cases.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_name": "GINA / BTS Guidelines â€” second-line acute asthma",
+      "source_detail": "5mg/kg loading (if no recent theophylline), then 0.5-0.7mg/kg/hr. Use only in severe refractory cases."
     },
     {
       "id": "adult_hydrocortisone_asthma",
@@ -630,12 +578,10 @@
       "dose_display_en": "Hydrocortisone 100-200mg IV STAT (for acute severe asthma)\n\nDosing:\n  Adults: 100mg IV stat, then 100mg IV q6h\n  Or: 200mg IV stat for life-threatening asthma\n\nDuration: 3-5 days (no taper needed for short courses)\n\nAlternative if IV access problematic: hydrocortisone 100mg IM\n\nWhen to use: acute severe/life-threatening asthma where PO prednisolone not possible (vomiting, unable to swallow, unconscious, ventilated).\n\nSwitch to oral prednisolone once patient can swallow.\n\nOnset: 2-4 hours (IV). Equivalent to prednisolone 25mg = hydrocortisone 100mg.",
       "frequency_en": "IV/IM stat, then q6h PRN",
       "duration_days": null,
-      "notes": "IV steroid for acute severe asthma exacerbation when oral prednisolone is not feasible. Not first-line — give PO prednisolone whenever possible (less invasive, similar efficacy). GINA 2024: PO prednisolone is as effective as IV hydrocortisone in most cases.",
-      "safety_warning": "Short courses (≤7 days) do not require taper. Monitor blood glucose in diabetic patients. May cause fluid retention, hyperglycemia, hypokalemia with prolonged use.",
-      "source_name": "GINA 2024 / BTS/SIGN 2023 — acute severe asthma",
-      "source_detail": "100-200mg IV stat then q6h. For acute severe asthma when PO route unavailable. Switch to PO prednisolone ASAP.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "notes": "IV steroid for acute severe asthma exacerbation when oral prednisolone is not feasible. Not first-line â€” give PO prednisolone whenever possible (less invasive, similar efficacy). GINA 2024: PO prednisolone is as effective as IV hydrocortisone in most cases.",
+      "safety_warning": "Short courses (â‰¤7 days) do not require taper. Monitor blood glucose in diabetic patients. May cause fluid retention, hyperglycemia, hypokalemia with prolonged use.",
+      "source_name": "GINA 2024 / BTS/SIGN 2023 â€” acute severe asthma",
+      "source_detail": "100-200mg IV stat then q6h. For acute severe asthma when PO route unavailable. Switch to PO prednisolone ASAP."
     },
     {
       "id": "adult_hctz_htn",
@@ -655,9 +601,7 @@
       ],
       "safety_warning": "Monitor K+ and Na+ levels (risk of hypokalemia, hyponatremia). Caution in gout (raises uric acid), diabetes (may raise glucose), and renal impairment.",
       "source_name": "WHO PEN protocol / Ethiopian HTN guideline / JNC 8",
-      "source_detail": "First-line: 12.5-25mg daily. Max 50mg/day. Check electrolytes at follow-up.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "First-line: 12.5-25mg daily. Max 50mg/day. Check electrolytes at follow-up."
     },
     {
       "id": "adult_amlodipine_htn",
@@ -668,7 +612,7 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Amlodipine 5 mg PO once daily\n\nStart: 5 mg once daily\nMax: 10 mg once daily\n\nTitrate: increase from 5mg to 10mg after 2-4 weeks if BP not at target.\n\nFirst-line CCB for hypertension — especially effective in African patients.\nNo lab monitoring required.\nMay be combined with HCTZ, ACE inhibitors, or ARBs.",
+      "dose_display_en": "Amlodipine 5 mg PO once daily\n\nStart: 5 mg once daily\nMax: 10 mg once daily\n\nTitrate: increase from 5mg to 10mg after 2-4 weeks if BP not at target.\n\nFirst-line CCB for hypertension â€” especially effective in African patients.\nNo lab monitoring required.\nMay be combined with HCTZ, ACE inhibitors, or ARBs.",
       "frequency_en": "once daily",
       "duration_days": null,
       "notes": "Calcium channel blocker. Well tolerated. No lab monitoring needed. Effective in African patients per ALLHAT trial.",
@@ -678,9 +622,7 @@
       ],
       "safety_warning": "Common: ankle edema, headache, flushing. Caution in heart failure with reduced EF. Avoid grapefruit juice.",
       "source_name": "WHO PEN protocol / Ethiopian HTN guideline / JNC 8 / ESC 2024",
-      "source_detail": "First-line: 5-10mg daily. Amlodipine 5mg is starting dose; titrate to 10mg. First-line CCB for African patients per ALLHAT trial evidence.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "First-line: 5-10mg daily. Amlodipine 5mg is starting dose; titrate to 10mg. First-line CCB for African patients per ALLHAT trial evidence."
     },
     {
       "id": "adult_enalapril_htn",
@@ -701,9 +643,7 @@
       ],
       "safety_warning": "Check K+ and creatinine before starting and after 1-2 weeks. Contraindicated in pregnancy (do not use if pregnancy possible). Common: dry cough, angioedema (rare but serious). Avoid or reduce dose in renal impairment.",
       "source_name": "WHO PEN protocol / Ethiopian HTN guideline / JNC 8",
-      "source_detail": "5-20mg daily. First-line in diabetic patients. Check renal function before start and 1-2 weeks after.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "5-20mg daily. First-line in diabetic patients. Check renal function before start and 1-2 weeks after."
     },
     {
       "id": "adult_methyldopa_htn",
@@ -723,9 +663,7 @@
       ],
       "safety_warning": "Sedation, dizziness, dry mouth, depression, orthostatic hypotension. May cause hemolytic anemia (rare). Monitor LFTs.",
       "source_name": "Ethiopian HTN guideline / WHO PEN",
-      "source_detail": "250-500mg PO BID. Preferred agent in pregnancy. Max 2g/day.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "250-500mg PO BID. Preferred agent in pregnancy. Max 2g/day."
     },
     {
       "id": "adult_nifedipine_htn",
@@ -736,19 +674,17 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Nifedipine ER (extended-release) 20-30mg PO once daily\n\nStart: 20mg ER once daily\nTitrate: increase by 10mg every 2-4 weeks\n\nTarget: 30-60mg ER once daily\nMax: 90mg ER once daily\n\nTake at same time each day, do NOT crush or chew ER tablets.\n\nDihydropyridine CCB — alternative to amlodipine.\nParticularly useful in patients with peripheral edema on amlodipine.",
+      "dose_display_en": "Nifedipine ER (extended-release) 20-30mg PO once daily\n\nStart: 20mg ER once daily\nTitrate: increase by 10mg every 2-4 weeks\n\nTarget: 30-60mg ER once daily\nMax: 90mg ER once daily\n\nTake at same time each day, do NOT crush or chew ER tablets.\n\nDihydropyridine CCB â€” alternative to amlodipine.\nParticularly useful in patients with peripheral edema on amlodipine.",
       "frequency_en": "once daily",
       "duration_days": null,
-      "notes": "Calcium channel blocker. Alternative to amlodipine for African patients. ER formulation is preferred — avoids rapid vasodilation/side effects of immediate-release.",
+      "notes": "Calcium channel blocker. Alternative to amlodipine for African patients. ER formulation is preferred â€” avoids rapid vasodilation/side effects of immediate-release.",
       "concentrations": [
         { "label_en": "30mg ER tablet", "strength_mg": 30, "volume_ml": null, "round_to_tablet": 0.5 },
         { "label_en": "20mg ER tablet", "strength_mg": 20, "volume_ml": null, "round_to_tablet": 0.5 }
       ],
-      "safety_warning": "Common: ankle edema, headache, dizziness, flushing. Only use ER (extended-release) formulations for routine HTN — immediate-release may cause reflex tachycardia. Caution in heart failure with reduced EF.",
+      "safety_warning": "Common: ankle edema, headache, dizziness, flushing. Only use ER (extended-release) formulations for routine HTN â€” immediate-release may cause reflex tachycardia. Caution in heart failure with reduced EF.",
       "source_name": "WHO PEN / Ethiopian HTN guideline / JNC 8",
-      "source_detail": "20-30mg ER PO once daily. Max 90mg/day. Alternative CCB for hypertension.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "20-30mg ER PO once daily. Max 90mg/day. Alternative CCB for hypertension."
     },
     {
       "id": "adult_metformin_dm",
@@ -767,11 +703,9 @@
         { "label_en": "500mg tablet", "strength_mg": 500, "volume_ml": null, "round_to_tablet": 0.5 },
         { "label_en": "850mg tablet", "strength_mg": 850, "volume_ml": null, "round_to_tablet": 0.5 }
       ],
-      "safety_warning": "Contraindicated in eGFR <30 (risk of lactic acidosis). Stop if: severe infection, dehydration, surgery, contrast dye (hold 48h post). GI side effects (diarrhea, nausea) common — start low, go slow. Monitor B12 with long-term use.",
+      "safety_warning": "Contraindicated in eGFR <30 (risk of lactic acidosis). Stop if: severe infection, dehydration, surgery, contrast dye (hold 48h post). GI side effects (diarrhea, nausea) common â€” start low, go slow. Monitor B12 with long-term use.",
       "source_name": "WHO PEN protocol / Ethiopian DM guideline / ADA 2025",
-      "source_detail": "First-line for T2DM. 500mg BID, titrate to 1g BID. Max 2.55g/day.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "First-line for T2DM. 500mg BID, titrate to 1g BID. Max 2.55g/day."
     },
     {
       "id": "adult_gliclazide_dm",
@@ -792,9 +726,7 @@
       ],
       "safety_warning": "CAUTION: Can cause hypoglycemia, especially in elderly, renal impairment, or missed meals. Educate patient on hypoglycemia symptoms. Weight gain possible.",
       "source_name": "WHO EML / Ethiopian DM guideline",
-      "source_detail": "80-320mg daily IR or 30-120mg MR daily. Second-line after metformin.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "80-320mg daily IR or 30-120mg MR daily. Second-line after metformin."
     },
     {
       "id": "adult_insulin_reg_dm",
@@ -808,15 +740,13 @@
       "dose_display_en": "REGULAR INSULIN (SHORT-ACTING)\n\nUsed for: acute hyperglycemia, DKA (with IV fluids), pre-meal bolus coverage, pregnancy.\n\nSC dosing:\n  Starting dose: 0.1-0.2 units/kg before meals\n  If on NPH + Regular regimen: 2/3 NPH + 1/3 Regular per dose\n\nIV dosing (acute settings):\n  Initial bolus: 0.1 units/kg IV\n  Infusion: 0.05-0.1 units/kg/hr in NS\n  Rate: 50 units Regular in 50mL NS = 1 unit/mL\n\nOnset: 30 min (SC), Peak: 2-3 hours, Duration: 5-8 hours\n\nMonitor glucose hourly when IV insulin running.\n\nMust be given 30 min before meals when used for prandial coverage.",
       "frequency_en": "as prescribed (IV or SC)",
       "duration_days": null,
-      "notes": "Short-acting insulin. Clear solution (vs NPH which is cloudy). Used for DKA, pre-meal coverage, and acute glucose control. Can be given IV (only Regular insulin — never NPH).",
+      "notes": "Short-acting insulin. Clear solution (vs NPH which is cloudy). Used for DKA, pre-meal coverage, and acute glucose control. Can be given IV (only Regular insulin â€” never NPH).",
       "concentrations": [
-        { "label_en": "100 IU/mL — 10mL vial", "strength_mg": 100, "volume_ml": 1, "round_to_ml": 0.01 }
+        { "label_en": "100 IU/mL â€” 10mL vial", "strength_mg": 100, "volume_ml": 1, "round_to_ml": 0.01 }
       ],
       "safety_warning": "HIGH-ALERT MEDICATION. Hypoglycemia risk. Only Regular insulin can be given IV. Verify insulin type before administration. Use insulin syringe (NOT TB syringe). Discard opened vial after 28 days.",
       "source_name": "WHO PEN / Ethiopian DM guideline / ADA 2025",
-      "source_detail": "Short-acting regular insulin. Requires correct type identification. IV protocol: 0.1 units/kg bolus + 0.1 units/kg/hr infusion for DKA.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Short-acting regular insulin. Requires correct type identification. IV protocol: 0.1 units/kg bolus + 0.1 units/kg/hr infusion for DKA."
     },
     {
       "id": "adult_insulin_dm",
@@ -827,18 +757,16 @@
       "is_recommended": false,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Insulin NPH — Starting regimen:\n\nTotal daily dose: 0.2-0.3 units/kg/day (T2DM)\n\nOnce-daily regimen:\n  NPH 10 units SC at bedtime (or morning)\n  Increase by 2 units every 3 days until fasting glucose <130mg/dL\n\nTwice-daily regimen:\n  2/3 dose AM, 1/3 dose PM\n\nAssess: Fasting glucose to titrate. Check for hypoglycemia.",
+      "dose_display_en": "Insulin NPH â€” Starting regimen:\n\nTotal daily dose: 0.2-0.3 units/kg/day (T2DM)\n\nOnce-daily regimen:\n  NPH 10 units SC at bedtime (or morning)\n  Increase by 2 units every 3 days until fasting glucose <130mg/dL\n\nTwice-daily regimen:\n  2/3 dose AM, 1/3 dose PM\n\nAssess: Fasting glucose to titrate. Check for hypoglycemia.",
       "frequency_en": "once or twice daily SC",
       "duration_days": null,
       "notes": "Insulin for T2DM: when oral agents fail (HbA1c >9% or symptomatic hyperglycemia). NPH insulin is the most available in Ethiopian public sector.",
       "concentrations": [
-        { "label_en": "100 IU/mL — 10mL vial", "strength_mg": 100, "volume_ml": 1, "round_to_ml": 0.01 }
+        { "label_en": "100 IU/mL â€” 10mL vial", "strength_mg": 100, "volume_ml": 1, "round_to_ml": 0.01 }
       ],
-      "safety_warning": "HIGH-ALERT MEDICATION. Hypoglycemia risk. Patient must have glucometer and hypoglycemia education. Store in refrigerator (2-8°C). Do NOT freeze. Reduce dose in renal impairment.",
+      "safety_warning": "HIGH-ALERT MEDICATION. Hypoglycemia risk. Patient must have glucometer and hypoglycemia education. Store in refrigerator (2-8Â°C). Do NOT freeze. Reduce dose in renal impairment.",
       "source_name": "WHO PEN protocol / Ethiopian DM guideline / ADA 2025",
-      "source_detail": "Start with 0.2-0.3 IU/kg/day NPH. Tirate to fasting glucose target. NPH most available in Ethiopia.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Start with 0.2-0.3 IU/kg/day NPH. Tirate to fasting glucose target. NPH most available in Ethiopia."
     },
     {
       "id": "adult_omeprazole_dyspepsia",
@@ -849,7 +777,7 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Omeprazole 20mg PO once daily\n\nFor dyspepsia/GERD:\n  20mg once daily before breakfast × 4-8 weeks\n\nFor H. pylori eradication (triple therapy):\n  20mg BID + amoxicillin 1g BID + clarithromycin 500mg BID × 14 days\n\nFor gastric ulcer:\n  20-40mg once daily × 4-8 weeks",
+      "dose_display_en": "Omeprazole 20mg PO once daily\n\nFor dyspepsia/GERD:\n  20mg once daily before breakfast Ã— 4-8 weeks\n\nFor H. pylori eradication (triple therapy):\n  20mg BID + amoxicillin 1g BID + clarithromycin 500mg BID Ã— 14 days\n\nFor gastric ulcer:\n  20-40mg once daily Ã— 4-8 weeks",
       "frequency_en": "once daily (before breakfast)",
       "duration_days": null,
       "notes": "Proton Pump Inhibitor (PPI). First-line for dyspepsia, GERD, and peptic ulcer disease.",
@@ -858,9 +786,7 @@
       ],
       "safety_warning": "Long-term use (>1 year) associated with B12 deficiency, osteoporosis risk, GI infections (C. diff), hypomagnesemia. Use lowest effective dose for shortest duration.",
       "source_name": "Ethiopia STG / WHO EML / ACG guidelines",
-      "source_detail": "20mg daily for dyspepsia. 40mg for severe esophagitis or H. pylori therapy component.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "20mg daily for dyspepsia. 40mg for severe esophagitis or H. pylori therapy component."
     },
     {
       "id": "adult_pantoprazole_dyspepsia",
@@ -871,18 +797,16 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Pantoprazole 40mg PO once daily\n\nFor dyspepsia/GERD:\n  40mg once daily before breakfast × 4-8 weeks\n\nFor severe GERD/esophagitis:\n  40mg BID × 8 weeks, then 40mg daily maintenance\n\nIV option (when patient NPO):\n  40mg IV once daily over 2-15 min\n\nAlternative PPI to omeprazole. May have fewer drug interactions than omeprazole.",
+      "dose_display_en": "Pantoprazole 40mg PO once daily\n\nFor dyspepsia/GERD:\n  40mg once daily before breakfast Ã— 4-8 weeks\n\nFor severe GERD/esophagitis:\n  40mg BID Ã— 8 weeks, then 40mg daily maintenance\n\nIV option (when patient NPO):\n  40mg IV once daily over 2-15 min\n\nAlternative PPI to omeprazole. May have fewer drug interactions than omeprazole.",
       "frequency_en": "once daily (before breakfast)",
       "duration_days": null,
-      "notes": "Proton Pump Inhibitor (PPI). Alternative to omeprazole. Fewer CYP450 interactions than omeprazole — preferred when patient is on multiple meds (clopidogrel, warfarin, etc.).",
+      "notes": "Proton Pump Inhibitor (PPI). Alternative to omeprazole. Fewer CYP450 interactions than omeprazole â€” preferred when patient is on multiple meds (clopidogrel, warfarin, etc.).",
       "concentrations": [
         { "label_en": "40mg tablet", "strength_mg": 40, "volume_ml": null, "round_to_tablet": 0.5 }
       ],
       "safety_warning": "Long-term use (>1 year) associated with B12 deficiency, osteoporosis risk, GI infections, hypomagnesemia. Use lowest effective dose for shortest duration.",
       "source_name": "Ethiopia STG / WHO EML / ACG guidelines",
-      "source_detail": "40mg PO once daily for dyspepsia/GERD. Alternative PPI with fewer drug interactions.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "40mg PO once daily for dyspepsia/GERD. Alternative PPI with fewer drug interactions."
     },
     {
       "id": "adult_ranitidine_dyspepsia",
@@ -893,7 +817,7 @@
       "is_recommended": false,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Ranitidine 150mg PO twice daily\n\nFor dyspepsia/GERD:\n  150mg BID × 4-8 weeks\n\nFor maintenance:\n  150mg once daily at bedtime",
+      "dose_display_en": "Ranitidine 150mg PO twice daily\n\nFor dyspepsia/GERD:\n  150mg BID Ã— 4-8 weeks\n\nFor maintenance:\n  150mg once daily at bedtime",
       "frequency_en": "twice daily",
       "duration_days": null,
       "notes": "H2 receptor antagonist. Second-line after PPIs. Now less preferred due to NDMA impurity concerns in some formulations.",
@@ -902,9 +826,7 @@
       ],
       "safety_warning": "Less effective than PPIs. May cause confusion in elderly. Check for drug interactions (warfarin, theophylline, phenytoin).",
       "source_name": "Ethiopia STG / WHO EML",
-      "source_detail": "150mg PO BID or 300mg at bedtime.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "150mg PO BID or 300mg at bedtime."
     },
     {
       "id": "adult_antacid_dyspepsia",
@@ -920,13 +842,11 @@
       "duration_days": null,
       "notes": "Over-the-counter option for mild intermittent symptoms. Provides rapid but short-lived relief.",
       "concentrations": [
-        { "label_en": "Suspension — typical strength 200-400mg/5ml", "strength_mg": 1, "volume_ml": 1, "round_to_ml": 5 }
+        { "label_en": "Suspension â€” typical strength 200-400mg/5ml", "strength_mg": 1, "volume_ml": 1, "round_to_ml": 5 }
       ],
       "safety_warning": "May interfere with absorption of other drugs (tetracyclines, iron, digoxin, thyroxine, fluoroquinolones). Take 2 hours apart from other medications. Caution in renal impairment (magnesium toxicity).",
       "source_name": "Ethiopia STG / standard adult reference",
-      "source_detail": "Symptom relief only. Not for long-term management of dyspepsia or GERD.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Symptom relief only. Not for long-term management of dyspepsia or GERD."
     },
     {
       "id": "adult_cloxacillin_skin",
@@ -937,7 +857,7 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Cloxacillin 500mg PO four times daily (6-hourly) for 5-7 days\n\nFor cellulitis: 500mg-1g PO QID × 5-7 days.\n\nMax: 4g/day.\n\nTake on empty stomach (1 hour before or 2 hours after meals).",
+      "dose_display_en": "Cloxacillin 500mg PO four times daily (6-hourly) for 5-7 days\n\nFor cellulitis: 500mg-1g PO QID Ã— 5-7 days.\n\nMax: 4g/day.\n\nTake on empty stomach (1 hour before or 2 hours after meals).",
       "frequency_en": "four times daily",
       "duration_days": null,
       "notes": "Antistaphylococcal penicillin. First-line for skin infections (impetigo, cellulitis, abscess).",
@@ -947,9 +867,7 @@
       ],
       "safety_warning": null,
       "source_name": "Ethiopia STG / standard adult reference",
-      "source_detail": "500mg PO QID for skin/soft tissue infections. 1g PO QID for severe cellulitis.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg PO QID for skin/soft tissue infections. 1g PO QID for severe cellulitis."
     },
     {
       "id": "adult_amoxicillin_skin",
@@ -968,9 +886,7 @@
       ],
       "safety_warning": null,
       "source_name": "Standard adult reference",
-      "source_detail": "500mg PO TID. Second-line for skin infections.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg PO TID. Second-line for skin infections."
     },
     {
       "id": "adult_ceftriaxone_typhoid",
@@ -988,12 +904,10 @@
       "concentrations": [
         { "label_en": "1g vial", "strength_mg": 1000, "volume_ml": 10, "round_to_ml": 0.5 }
       ],
-      "iv_info": "Reconstitute:\n• 1g vial + 9.6ml sterile water = 100mg/ml\n\nInfuse over 30 minutes.\nFor IM: 1g + 3.6ml lidocaine 1% or sterile water.",
+      "iv_info": "Reconstitute:\nâ€¢ 1g vial + 9.6ml sterile water = 100mg/ml\n\nInfuse over 30 minutes.\nFor IM: 1g + 3.6ml lidocaine 1% or sterile water.",
       "safety_warning": null,
       "source_name": "WHO Guidelines for Typhoid Fever / Ethiopia STG",
-      "source_detail": "2g IV daily × 7-14 days. First-line for severe typhoid due to resistance patterns.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "2g IV daily Ã— 7-14 days. First-line for severe typhoid due to resistance patterns."
     },
     {
       "id": "adult_azithromycin_typhoid",
@@ -1014,9 +928,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": null,
       "source_name": "WHO Guidelines for Typhoid Fever",
-      "source_detail": "500mg PO daily × 7 days for uncomplicated typhoid. Alternative if ceftriaxone not available.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg PO daily Ã— 7 days for uncomplicated typhoid. Alternative if ceftriaxone not available."
     },
     {
       "id": "adult_ciprofloxacin_typhoid",
@@ -1027,7 +939,7 @@
       "is_recommended": false,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Ciprofloxacin 500mg PO twice daily for 7-10 days\n\nOr 400mg IV twice daily for severe cases.\n\nNote: Increasing resistance — use only if susceptibility confirmed.\n\nDuration: 7-10 days for uncomplicated, 10-14 days for severe.",
+      "dose_display_en": "Ciprofloxacin 500mg PO twice daily for 7-10 days\n\nOr 400mg IV twice daily for severe cases.\n\nNote: Increasing resistance â€” use only if susceptibility confirmed.\n\nDuration: 7-10 days for uncomplicated, 10-14 days for severe.",
       "frequency_en": "twice daily",
       "duration_days": null,
       "notes": "Fluoroquinolone. Once first-line for typhoid but now limited by increasing resistance in Ethiopia and globally. Use only when susceptibility confirmed.",
@@ -1035,10 +947,8 @@
         { "label_en": "500mg tablet", "strength_mg": 500, "volume_ml": null, "round_to_tablet": 0.5 }
       ],
       "safety_warning": "NOT first-line due to resistance. Avoid in pregnancy and children (tendon damage risk). Caution in epilepsy, elderly, and with NSAIDs (CNS side effects). May prolong QT interval.",
-      "source_name": "WHO Guidelines for Typhoid Fever — resistance warning",
-      "source_detail": "500mg PO BID × 7-10 days. Resistance increasing — use with caution.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_name": "WHO Guidelines for Typhoid Fever â€” resistance warning",
+      "source_detail": "500mg PO BID Ã— 7-10 days. Resistance increasing â€” use with caution."
     },
     {
       "id": "adult_amoxicillin_sinusitis",
@@ -1049,7 +959,7 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Amoxicillin 500mg PO three times daily for 5-7 days\n\nOr 1g PO twice daily.\n\nFor acute bacterial sinusitis: 500mg TID or 875mg BID × 5-7 days.\n\nDuration: 5-7 days (prolonged courses offer no additional benefit).",
+      "dose_display_en": "Amoxicillin 500mg PO three times daily for 5-7 days\n\nOr 1g PO twice daily.\n\nFor acute bacterial sinusitis: 500mg TID or 875mg BID Ã— 5-7 days.\n\nDuration: 5-7 days (prolonged courses offer no additional benefit).",
       "frequency_en": "three times daily",
       "duration_days": null,
       "penicillin_allergy_alternative": ["adult_azithromycin_sinusitis"],
@@ -1059,9 +969,7 @@
       ],
       "safety_warning": null,
       "source_name": "IDSA sinusitis guidelines / adult standard reference",
-      "source_detail": "500mg PO TID or 875mg PO BID × 5-7 days for acute bacterial sinusitis.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg PO TID or 875mg PO BID Ã— 5-7 days for acute bacterial sinusitis."
     },
     {
       "id": "adult_azithromycin_sinusitis",
@@ -1081,9 +989,7 @@
       ],
       "safety_warning": null,
       "source_name": "Standard adult guidance",
-      "source_detail": "500mg daily × 3-5 days. Alternative for penicillin allergy.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg daily Ã— 3-5 days. Alternative for penicillin allergy."
     },
     {
       "id": "adult_amoxicillin_otitis",
@@ -1103,9 +1009,7 @@
       ],
       "safety_warning": null,
       "source_name": "AAO-HNS otitis media guidelines / standard adult reference",
-      "source_detail": "500mg PO TID or 875mg PO BID × 5-7 days for AOM in adults.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg PO TID or 875mg PO BID Ã— 5-7 days for AOM in adults."
     },
     {
       "id": "adult_azithromycin_otitis",
@@ -1125,9 +1029,7 @@
       ],
       "safety_warning": null,
       "source_name": "Standard adult guidance",
-      "source_detail": "500mg daily × 3-5 days. Alternative for penicillin allergy.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg daily Ã— 3-5 days. Alternative for penicillin allergy."
     },
     {
       "id": "adult_cloxacillin_cellulitis",
@@ -1146,9 +1048,7 @@
       ],
       "safety_warning": "Take on empty stomach (1h before or 2h after meals). Monitor for rash, diarrhea.",
       "source_name": "Ethiopia STG / standard adult reference",
-      "source_detail": "500mg-1g PO QID × 5-7 days. Antistaphylococcal coverage for cellulitis.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg-1g PO QID Ã— 5-7 days. Antistaphylococcal coverage for cellulitis."
     },
     {
       "id": "adult_amoxicillin_cellulitis",
@@ -1167,9 +1067,7 @@
       ],
       "safety_warning": "Cloxacillin preferred if Staph suspected. Amoxicillin covers Strep only.",
       "source_name": "Standard adult reference",
-      "source_detail": "500mg PO TID. Second-line for skin/soft tissue infections.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg PO TID. Second-line for skin/soft tissue infections."
     },
     {
       "id": "adult_permethrin_scabies",
@@ -1180,15 +1078,13 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Permethrin 5% cream — 2 applications (day 0 and day 7)\n\nApply to entire body from neck down.\nLeave on for 8-14 hours (overnight), then wash off.\n\nRepeat once after 7 days.\n\nTREAT ALL HOUSEHOLD/SKIN CONTACTS simultaneously.\nWash bedding and clothing in hot water.\n\nItch may persist 4-6 weeks after successful treatment.",
+      "dose_display_en": "Permethrin 5% cream â€” 2 applications (day 0 and day 7)\n\nApply to entire body from neck down.\nLeave on for 8-14 hours (overnight), then wash off.\n\nRepeat once after 7 days.\n\nTREAT ALL HOUSEHOLD/SKIN CONTACTS simultaneously.\nWash bedding and clothing in hot water.\n\nItch may persist 4-6 weeks after successful treatment.",
       "frequency_en": "2 applications (day 0 and day 7)",
       "duration_days": 7,
-      "notes": "First-line for scabies. Safe in adults including pregnant and lactating women. Oral ivermectin 200μg/kg is alternative (repeat in 2 weeks).",
+      "notes": "First-line for scabies. Safe in adults including pregnant and lactating women. Oral ivermectin 200Î¼g/kg is alternative (repeat in 2 weeks).",
       "safety_warning": "Skin irritation common. Distinguish treatment irritation vs active scabies. Itch persisting >6 weeks suggests re-infestation.",
       "source_name": "WHO scabies guidelines / CDC",
-      "source_detail": "Permethrin 5% first-line. Apply overnight, repeat day 7. Treat all contacts.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Permethrin 5% first-line. Apply overnight, repeat day 7. Treat all contacts."
     },
     {
       "id": "adult_hydrocortisone_eczema",
@@ -1199,15 +1095,13 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Hydrocortisone 1% cream — apply BID to affected areas for 7-14 days\n\nUse mild potency for face, neck, flexures.\nFor body/trunk: hydrocortisone 1% BID.\n\nThin layer only. Limit face use to 7 days.\n\nEmollients are the foundation: prescribe 500g weekly minimum.\n\nApply steroid FIRST, wait 15 min, then emollient.",
+      "dose_display_en": "Hydrocortisone 1% cream â€” apply BID to affected areas for 7-14 days\n\nUse mild potency for face, neck, flexures.\nFor body/trunk: hydrocortisone 1% BID.\n\nThin layer only. Limit face use to 7 days.\n\nEmollients are the foundation: prescribe 500g weekly minimum.\n\nApply steroid FIRST, wait 15 min, then emollient.",
       "frequency_en": "twice daily for flares",
       "duration_days": null,
       "notes": "Emollients are mainstay. Topical steroids for flares only.",
       "safety_warning": "Avoid prolonged use on face (skin thinning risk). Use lowest potency for shortest duration.",
       "source_name": "NICE / AAP / WHO EML",
-      "source_detail": "Hydrocortisone 1% BID for flares. Emollients daily for maintenance.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Hydrocortisone 1% BID for flares. Emollients daily for maintenance."
     },
     {
       "id": "adult_emollient_eczema",
@@ -1224,9 +1118,7 @@
       "notes": "Cornerstone of eczema care. Use even when skin is clear.",
       "safety_warning": "Paraffin-based emollients are flammable. Avoid aqueous cream as leave-on.",
       "source_name": "NICE / AAP guidelines",
-      "source_detail": "Emollients are foundation of eczema management. Apply liberally and frequently.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Emollients are foundation of eczema management. Apply liberally and frequently."
     },
     {
       "id": "adult_clotrimazole_tinea",
@@ -1237,15 +1129,13 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Clotrimazole 1% cream — apply BID for 2-4 weeks\n\nTinea corporis: BID × 2-4 weeks\nTinea cruris: BID × 2 weeks\nTinea pedis: BID × 4 weeks\n\nAlternative: terbinafine 1% cream once daily × 1 week.",
+      "dose_display_en": "Clotrimazole 1% cream â€” apply BID for 2-4 weeks\n\nTinea corporis: BID Ã— 2-4 weeks\nTinea cruris: BID Ã— 2 weeks\nTinea pedis: BID Ã— 4 weeks\n\nAlternative: terbinafine 1% cream once daily Ã— 1 week.",
       "frequency_en": "twice daily",
       "duration_days": null,
       "notes": "First-line topical for localized dermatophyte infections.",
       "safety_warning": "Avoid combination steroid-antifungal creams. For scalp involvement, requires oral therapy.",
       "source_name": "AAD guidelines / WHO EML",
-      "source_detail": "Clotrimazole 1% BID × 2-4 weeks. Terbinafine 1% daily × 1 week is alternative.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Clotrimazole 1% BID Ã— 2-4 weeks. Terbinafine 1% daily Ã— 1 week is alternative."
     },
     {
       "id": "adult_griseofulvin_tinea",
@@ -1265,9 +1155,7 @@
       ],
       "safety_warning": "Contraindicated in liver failure, porphyria, pregnancy. Photosensitivity risk.",
       "source_name": "WHO EML / AAD guidelines",
-      "source_detail": "500mg-1g daily PO. Tinea capitis: 4-6 weeks. Tinea corporis: 2-4 weeks.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "500mg-1g daily PO. Tinea capitis: 4-6 weeks. Tinea corporis: 2-4 weeks."
     },
     {
       "id": "adult_metoclopramide_hyperemesis",
@@ -1286,11 +1174,9 @@
         { "label_en": "10mg tablet", "strength_mg": 10, "volume_ml": null, "round_to_tablet": 0.5 },
         { "label_en": "5mg/5ml oral solution", "strength_mg": 5, "volume_ml": 5, "round_to_ml": 1 }
       ],
-      "safety_warning": "Risk of extrapyramidal side effects (dystonia, akathisia) — especially in young women and elderly. Maximum 5-day course. Dystonia treat with diphenhydramine. Avoid in GI obstruction, pheochromocytoma.",
+      "safety_warning": "Risk of extrapyramidal side effects (dystonia, akathisia) â€” especially in young women and elderly. Maximum 5-day course. Dystonia treat with diphenhydramine. Avoid in GI obstruction, pheochromocytoma.",
       "source_name": "ACOG / RCOG hyperemesis guidelines / WHO EML",
-      "source_detail": "10mg PO/IM/IV TID. First-line for hyperemesis gravidarum. Use shortest duration. Monitor for EPS.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "10mg PO/IM/IV TID. First-line for hyperemesis gravidarum. Use shortest duration. Monitor for EPS."
     },
     {
       "id": "adult_ondansetron_hyperemesis",
@@ -1309,11 +1195,9 @@
         { "label_en": "4mg tablet/wafer", "strength_mg": 4, "volume_ml": null, "round_to_tablet": 0.5 },
         { "label_en": "8mg tablet/wafer", "strength_mg": 8, "volume_ml": null, "round_to_tablet": 0.5 }
       ],
-      "safety_warning": "Can prolong QT interval — avoid if other QT-prolonging drugs or electrolyte abnormalities. Constipation common. Headache. Rare serotonin syndrome risk.",
+      "safety_warning": "Can prolong QT interval â€” avoid if other QT-prolonging drugs or electrolyte abnormalities. Constipation common. Headache. Rare serotonin syndrome risk.",
       "source_name": "ACOG / RCOG hyperemesis guidelines",
-      "source_detail": "4-8mg PO/IV q8h PRN. Second-line after metoclopramide. Max 24mg/day.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "4-8mg PO/IV q8h PRN. Second-line after metoclopramide. Max 24mg/day."
     },
     {
       "id": "adult_iv_fluids_hyperemesis",
@@ -1330,9 +1214,7 @@
       "notes": "IV fluids are the cornerstone of hyperemesis management. Correct dehydration BEFORE giving antiemetics. ALWAYS give thiamine before dextrose-containing fluids.",
       "safety_warning": "Give IV thiamine 100mg BEFORE any dextrose-containing fluids (risk of Wernicke's encephalopathy). Monitor for fluid overload. Check electrolytes daily.",
       "source_name": "ACOG / RCOG hyperemesis guidelines",
-      "source_detail": "NS or RL for rehydration. Add thiamine before dextrose. Monitor electrolytes and urine output.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "NS or RL for rehydration. Add thiamine before dextrose. Monitor electrolytes and urine output."
     },
     {
       "id": "adult_diclofenac_colic",
@@ -1349,9 +1231,7 @@
       "notes": "First-line for acute renal colic. NSAIDs reduce ureteral smooth muscle spasm and renal capsular tension. More effective than morphine for renal colic.",
       "safety_warning": "Contraindicated in: active peptic ulcer, severe renal impairment (CrCl <30), bleeding risk, NSAID allergy. Caution in elderly, dehydrated, and asthmatics. Avoid if hypovolemic.",
       "source_name": "EAU / AUA renal stone guidelines",
-      "source_detail": "75mg IM/IV single dose. NSAIDs are first-line for acute renal colic.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "75mg IM/IV single dose. NSAIDs are first-line for acute renal colic."
     },
     {
       "id": "adult_hyoscine_colic",
@@ -1362,15 +1242,13 @@
       "is_recommended": false,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Hyoscine Butylbromide 20mg IM/IV\n\nOr 10-20mg PO three times daily.\n\nAntispasmodic — relaxes ureteral smooth muscle.\n\nMay be combined with diclofenac for added effect.\n\nNote: evidence less robust than NSAIDs for renal colic.",
+      "dose_display_en": "Hyoscine Butylbromide 20mg IM/IV\n\nOr 10-20mg PO three times daily.\n\nAntispasmodic â€” relaxes ureteral smooth muscle.\n\nMay be combined with diclofenac for added effect.\n\nNote: evidence less robust than NSAIDs for renal colic.",
       "frequency_en": "as needed",
       "duration_days": null,
       "notes": "Second-line or adjunct to NSAIDs. Limited evidence for monotherapy in renal colic.",
       "safety_warning": "Caution in: glaucoma, tachycardia, myasthenia gravis, GI obstruction, prostatic hypertrophy. Causes dry mouth, blurred vision, urinary retention.",
       "source_name": "Standard adult reference / BNF",
-      "source_detail": "20mg IM/IV or 10-20mg PO TID. Adjunctive therapy for renal colic. Less effective than NSAIDs as monotherapy.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "20mg IM/IV or 10-20mg PO TID. Adjunctive therapy for renal colic. Less effective than NSAIDs as monotherapy."
     },
     {
       "id": "adult_dka_protocol",
@@ -1381,16 +1259,15 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "DIABETIC KETOACIDOSIS — MANAGEMENT PROTOCOL\n\n1. IV FLUIDS (CORRECT DEFICIT FIRST)\n   • NS 1L over 1 hour (first hour)\n   • NS 1L over 2 hours (second hour)\n   • NS 1L over 4 hours (hours 3-6)\n   • NS 1L over 6 hours (hours 7-12)\n   Total: ~4-6L deficit in first 24h\n\n   When glucose <250 mg/dL (14 mmol/L): switch to D5 0.45% NaCl\n\n2. INSULIN (REGULAR IV ONLY — never NPH)\n   • Bolus: 0.1 units/kg Regular IV (optional; many protocols skip bolus)\n   • Infusion: 0.1 units/kg/hr Regular IV (50 units in 50mL NS = 1 unit/mL)\n   • Target: decrease glucose by 50-75 mg/dL/hr\n   • When glucose <250 mg/dL: decrease insulin to 0.05 units/kg/hr\n     and add dextrose to fluids\n\n3. POTASSIUM\n   • If K+ <3.3 mEq/L: hold insulin, give 20-30 mEq K+/hr\n   • If K+ 3.3-5.3 mEq/L: give 20-30 mEq K+/L in IV fluids\n   • If K+ >5.3 mEq/L: hold K+, recheck in 2h\n\n4. BICARBONATE\n   • NOT routinely recommended\n   • Consider only if pH <6.9 (give 50-100 mEq NaHCO₃ in 200mL D5W over 1h)\n\n5. MONITORING (hourly until stable)\n   • Glucose (at bedside)\n   • Electrolytes (K+, Na+) every 2-4 hours\n   • Venous pH / bicarbonate every 4 hours\n   • I/O chart — target urine output >0.5 mL/kg/hr\n\n6. TRANSITION TO SC INSULIN\n   • When: glucose <200 mg/dL, pH ≥7.3, bicarbonate ≥15, patient tolerating oral\n   • Overlap: start SC insulin 1-2 hours BEFORE stopping IV insulin\n   • SC regimen: calculate total daily dose (0.5-0.6 units/kg), give 2/3 in AM, 1/3 in PM\n\nCALL FOR HELP IF:\n  • Glucose not decreasing after 4 hours\n  • K+ <3.0 or >6.0 mEq/L\n  • pH remains <7.0 after 6 hours\n  • Altered consciousness or hypotension",
+      "dose_display_en": "DIABETIC KETOACIDOSIS â€” MANAGEMENT PROTOCOL\n\n1. IV FLUIDS (CORRECT DEFICIT FIRST)\n   â€¢ NS 1L over 1 hour (first hour)\n   â€¢ NS 1L over 2 hours (second hour)\n   â€¢ NS 1L over 4 hours (hours 3-6)\n   â€¢ NS 1L over 6 hours (hours 7-12)\n   Total: ~4-6L deficit in first 24h\n\n   When glucose <250 mg/dL (14 mmol/L): switch to D5 0.45% NaCl\n\n2. INSULIN (REGULAR IV ONLY â€” never NPH)\n   â€¢ Bolus: 0.1 units/kg Regular IV (optional; many protocols skip bolus)\n   â€¢ Infusion: 0.1 units/kg/hr Regular IV (50 units in 50mL NS = 1 unit/mL)\n   â€¢ Target: decrease glucose by 50-75 mg/dL/hr\n   â€¢ When glucose <250 mg/dL: decrease insulin to 0.05 units/kg/hr\n     and add dextrose to fluids\n\n3. POTASSIUM\n   â€¢ If K+ <3.3 mEq/L: hold insulin, give 20-30 mEq K+/hr\n   â€¢ If K+ 3.3-5.3 mEq/L: give 20-30 mEq K+/L in IV fluids\n   â€¢ If K+ >5.3 mEq/L: hold K+, recheck in 2h\n\n4. BICARBONATE\n   â€¢ NOT routinely recommended\n   â€¢ Consider only if pH <6.9 (give 50-100 mEq NaHCOâ‚ƒ in 200mL D5W over 1h)\n\n5. MONITORING (hourly until stable)\n   â€¢ Glucose (at bedside)\n   â€¢ Electrolytes (K+, Na+) every 2-4 hours\n   â€¢ Venous pH / bicarbonate every 4 hours\n   â€¢ I/O chart â€” target urine output >0.5 mL/kg/hr\n\n6. TRANSITION TO SC INSULIN\n   â€¢ When: glucose <200 mg/dL, pH â‰¥7.3, bicarbonate â‰¥15, patient tolerating oral\n   â€¢ Overlap: start SC insulin 1-2 hours BEFORE stopping IV insulin\n   â€¢ SC regimen: calculate total daily dose (0.5-0.6 units/kg), give 2/3 in AM, 1/3 in PM\n\nCALL FOR HELP IF:\n  â€¢ Glucose not decreasing after 4 hours\n  â€¢ K+ <3.0 or >6.0 mEq/L\n  â€¢ pH remains <7.0 after 6 hours\n  â€¢ Altered consciousness or hypotension",
       "frequency_en": "IV protocol (see protocol for details)",
       "duration_days": null,
       "notes": "DKA is a MEDICAL EMERGENCY. This protocol assumes adult DKA. For children, use pediatric-specific DKA protocol. CBC, BMP, VBG, and urine ketones should be sent stat upon presentation.",
       "valid_weight_range": { "min_kg": 30, "max_kg": null },
-      "safety_warning": "Do NOT use NPH insulin IV. Only Regular insulin can be given IV. Monitor glucose hourly — risk of hypoglycemia if IV fluids changed without adjusting insulin rate. Cerebral edema (rare in adults, more common in children). Watch for hypokalemia when insulin is started.",
+      "safety_warning": "Do NOT use NPH insulin IV. Only Regular insulin can be given IV. Monitor glucose hourly â€” risk of hypoglycemia if IV fluids changed without adjusting insulin rate. Cerebral edema (rare in adults, more common in children). Watch for hypokalemia when insulin is started.",
       "source_name": "ADA / Joint British Diabetes Societies (JBDS) / Ethiopian DM guideline",
-      "source_detail": "Comprehensive DKA protocol: Fluids → Insulin → K+ → Bicarb. Regular insulin IV only. Transition protocol included.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Comprehensive DKA protocol: Fluids â†’ Insulin â†’ K+ â†’ Bicarb. Regular insulin IV only. Transition protocol included."
     }
   ]
 }
+

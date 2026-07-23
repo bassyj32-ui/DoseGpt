@@ -24,8 +24,7 @@
       "safety_warning": null,
       "source_name": "WHO Malaria Treatment Guidelines",
       "source_detail": "VERIFY against current Ethiopia National Malaria Guideline edition",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "food_requirement": "Take each dose with food or a milky drink — fat increases lumefantrine absorption 2-16x and is essential for cure. If patient cannot tolerate food, give dose anyway but efficacy may be reduced."
     },
     {
       "id": "artesunate_iv_malaria",
@@ -49,9 +48,7 @@
       "iv_info": "[conc:20]Reconstitute:\n1. Add 3ml of provided arginine/NaHCO₃ solvent to 60mg artesunate vial\n2. Shake gently until clear (~1 min)\n3. Final concentration = 20mg/ml → draw [ml]ml\n• ≤25kg child: use 1 vial per dose (round up to 2ml minimum)\n\nGive slow IV over 1-2 min (do NOT further dilute for IV push).\nUse within 1 hour of reconstitution.\nDiscard if solution is not clear.\n\nAlways follow with full 3-day oral ACT (Coartem) once patient can swallow.\nMonitor Hb weekly for 4 weeks for post-artesunate delayed hemolysis (PADH).",
       "safety_warning": "Monitor for post-artesunate delayed hemolysis (PADH) — check Hb weekly for 4 weeks after treatment.",
       "source_name": "WHO Severe Malaria Guidelines + MMV Injectable Artesunate Toolkit (WHO PQ MA168)",
-      "source_detail": "WHO: 3mg/kg <20kg, 2.4mg/kg ≥20kg at 0, 12, 24h. Reconstitute with 3ml solvent = 20mg/ml. CDC confirms same regimen.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "WHO: 3mg/kg <20kg, 2.4mg/kg ≥20kg at 0, 12, 24h. Reconstitute with 3ml solvent = 20mg/ml. CDC confirms same regimen."
     },
     {
       "id": "chloroquine_malaria",
@@ -77,14 +74,12 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": null,
       "source_name": "Confirmed against Ethiopian National Malaria Guideline (Northwest Ethiopia therapeutic efficacy study)",
-      "source_detail": "25mg base/kg total over 3 days (10/10/5mg/kg)",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "25mg base/kg total over 3 days (10/10/5mg/kg)"
     },
     {
       "id": "primaquine_malaria",
       "illness_id": "malaria",
-      "drug_name_en": "Primaquine",
+      "drug_name_en": "Primaquine (Radical Cure)",
       "drug_name_am": "",
       "drug_synonyms": [],
       "is_recommended": false,
@@ -93,7 +88,7 @@
       "frequency_en": "once daily",
       "duration_days": 14,
       "max_daily_dose_mg": null,
-      "notes": "Low-dose radical cure for P. vivax: 0.25mg/kg/day × 14 days. Practical weight-band table derived from 7.5mg and 15mg tablet strengths.\n\nVery few children under 8kg qualify for primaquine radical cure at health centre level (referral only).\n\nG6PD testing recommended before treatment per Ethiopia national guidelines.",
+      "notes": "Low-dose radical cure for P. vivax: 0.25mg/kg/day × 14 days. Practical weight-band table derived from 7.5mg and 15mg tablet strengths.\n\nIMPORTANT: Distinguish two uses of primaquine:\n  1) Radical cure (P. vivax): 0.25mg/kg/day × 14 days — G6PD testing required\n  2) Transmission-blocking single dose (P. falciparum): 0.25mg/kg single dose — safe without G6PD testing\n\nIf G6PD deficient: use 0.75mg/kg once weekly × 8 weeks instead of daily dosing.\n\nVery few children under 8kg qualify for primaquine radical cure at health centre level (referral only).\n\nG6PD testing recommended before treatment per Ethiopia national guidelines.",
       "concentrations": [
         { "label_en": "7.5mg tablet", "strength_mg": 7.5, "round_to_tablet": 0.5, "volume_ml": null },
         { "label_en": "15mg tablet", "strength_mg": 15, "round_to_tablet": 0.25, "volume_ml": null }
@@ -108,11 +103,9 @@
       "valid_weight_range": { "min_kg": 5, "max_kg": null },
       "valid_age_range": { "min_months": 6, "max_months": null },
       "referral_trigger_text": "Under 8kg or under 6 months: primaquine radical cure not recommended at this level. Refer to higher facility for management.",
-      "safety_warning": "Contraindicated in G6PD deficiency (risk of potentially severe hemolysis). G6PD testing is recommended before starting treatment per Ethiopia national guidelines. If testing unavailable, discuss risk with supervising physician.",
+      "safety_warning": "Contraindicated in G6PD deficiency (risk of potentially severe hemolysis). G6PD testing is recommended before starting treatment per Ethiopia national guidelines. If G6PD deficient: use 0.75mg/kg once weekly × 8 weeks instead of daily dosing. Single low dose (0.25mg/kg) for P. falciparum transmission blocking is safe without G6PD testing. Contraindicated in pregnancy and breastfeeding.",
       "source_name": "Ethiopia FMOH National Malaria Guidelines — low-dose radical cure (0.25mg/kg/day × 14 days)",
-      "source_detail": "Weight-band table derived from the 0.25mg/kg/day × 14d regimen using 7.5mg and 15mg tablets. Bands: 5-10kg (1/4 × 7.5mg), 11-20kg (1/2 × 7.5mg), 21-40kg (1 × 7.5mg), 41-60kg (1 × 15mg), >60kg (1.5 × 15mg).",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Weight-band table derived from the 0.25mg/kg/day × 14d regimen using 7.5mg and 15mg tablets. Bands: 5-10kg (1/4 × 7.5mg), 11-20kg (1/2 × 7.5mg), 21-40kg (1 × 7.5mg), 41-60kg (1 × 15mg), >60kg (1.5 × 15mg)."
     },
     {
       "id": "amoxicillin_pneumonia",
@@ -135,9 +128,7 @@
       "penicillin_allergy_alternative": ["azithromycin_pneumonia"],
       "safety_warning": null,
       "source_name": "WHO pneumonia treatment guideline (recent revision)",
-      "source_detail": "This dose (40mg/kg/dose) is HIGHER than older references (25mg/kg) still in circulation. VERIFY current Ethiopia STG reflects the updated figure, and VERIFY duration (5 vs 3 days per local HIV prevalence guidance).",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "This dose (40mg/kg/dose) is HIGHER than older references (25mg/kg) still in circulation. VERIFY current Ethiopia STG reflects the updated figure, and VERIFY duration (5 vs 3 days per local HIV prevalence guidance)."
     },
     {
       "id": "ceftriaxone_iv_pneumonia",
@@ -163,9 +154,7 @@
       "iv_info": "Reconstitute:\n• 1g vial + 9.6ml sterile water = 100mg/ml → draw [ml]ml (most common)\n• 500mg vial + 4.8ml sterile water = 100mg/ml → draw [ml]ml\n• 250mg vial + 2.4ml sterile water = 100mg/ml → draw [ml]ml\n\nInfuse over 30 min (60 min in neonates).\nDo NOT use calcium-containing fluids (Ringer's, Hartmann's).",
       "safety_warning": "Contraindicated in hyperbilirubinemic neonates (risk of bilirubin encephalopathy). Administer IV over 30-60 minutes.",
       "source_name": "WHO/AAP ceftriaxone pediatric dosing guidelines",
-      "source_detail": "50-100mg/kg/day divided q12h. Max 4g/day.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "50-100mg/kg/day divided q12h. Max 4g/day."
     },
     {
       "id": "azithromycin_pneumonia",
@@ -194,9 +183,7 @@
       "penicillin_allergy_alternative": [],
       "safety_warning": "See also tonsillitis/otitis entries which may have different age minimums.",
       "source_name": "AAP Red Book 2024 / UpToDate Pediatric CAP",
-      "source_detail": "10/5 mg/kg/day for 5 days. Syrup 200mg/5ml standard. Minimum age for CAP: 6 months.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "10/5 mg/kg/day for 5 days. Syrup 200mg/5ml standard. Minimum age for CAP: 6 months."
     },
     {
       "id": "augmentin_pneumonia",
@@ -223,9 +210,7 @@
       "valid_age_range": { "min_months": 2, "max_months": null },
       "safety_warning": "Weight-based: 25mg/kg/dose of amoxicillin component BID for standard dose, up to 45mg/kg/dose BID for high dose (severe infections, treatment failure, or areas with high penicillin resistance). Clarithromycin ratio varies — always verify the specific product available.",
       "source_name": "Stanford Medicine Augmentin Dosing / AAP Red Book / UpToDate",
-      "source_detail": "25-45 mg/kg/dose of amoxicillin component twice daily. Mild-moderate: lowest effective dose. Severe: high dose (45 mg/kg/dose, up to 1.5g per dose).",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "25-45 mg/kg/dose of amoxicillin component twice daily. Mild-moderate: lowest effective dose. Severe: high dose (45 mg/kg/dose, up to 1.5g per dose)."
     },
     {
       "id": "plan_c_fluids_diarrhea",
@@ -243,9 +228,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": "Reassess the child every 15-30 minutes during IV therapy. If child has severe acute malnutrition (SAM), do NOT use standard Plan C — use ReSoMal or special SAM protocol instead.",
       "source_name": "WHO IMCI Guidelines — Plan C for Severe Dehydration",
-      "source_detail": "100ml/kg total. Age-dependent timing: <12mo: 30ml/kg/1hr + 70ml/kg/5hrs. ≥12mo: 30ml/kg/30min + 70ml/kg/2.5hrs.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "100ml/kg total. Age-dependent timing: <12mo: 30ml/kg/1hr + 70ml/kg/5hrs. ≥12mo: 30ml/kg/30min + 70ml/kg/2.5hrs."
     },
     {
       "id": "ceftazidime_diarrhea",
@@ -267,9 +250,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": "Adjust dose in renal impairment. Monitor for C. difficile diarrhea.",
       "source_name": "WHO pediatric ceftazidime dosing guidelines",
-      "source_detail": "150mg/kg/day IV divided q8h for bacterial gastroenteritis. Good gram-negative coverage including Pseudomonas.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "150mg/kg/day IV divided q8h for bacterial gastroenteritis. Good gram-negative coverage including Pseudomonas."
     },
     {
       "id": "zinc_diarrhea",
@@ -288,9 +269,7 @@
       "referral_trigger_text": "Under 2 months: zinc not recommended. Refer for diarrhea management.",
       "safety_warning": "Zinc may cause mild gastric irritation — give with food. Persistent vomiting may require dose adjustment.",
       "source_name": "WHO/UNICEF diarrhea management guideline (2024 update)",
-      "source_detail": "Zinc 20mg/day (10mg if <6 months) for 14 days for all children with acute diarrhea. Not weight-dependent.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Zinc 20mg/day (10mg if <6 months) for 14 days for all children with acute diarrhea. Not weight-dependent."
     },
     {
       "id": "ors_diarrhea",
@@ -310,9 +289,7 @@
       "referral_trigger_text": "Unable to drink or keep down ORS, signs of severe dehydration, or blood in stool (possible dysentery): refer to higher level.",
       "safety_warning": "If child vomits ORS, wait 10 minutes then try again more slowly (spoon or dropper, 1-2ml every 2-3 minutes). If persistent vomiting, consider IV fluids. Monitor for stool output to adjust ORS intake mL-for-mL for ongoing losses.",
       "source_name": "WHO IMCI / UNICEF Diarrhea Treatment Guidelines",
-      "source_detail": "ORS is the core treatment for diarrhea. Plan A (home), Plan B (facility, 75ml/kg over 4h), Plan C (IV, severe dehydration). Weight and age both required.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "ORS is the core treatment for diarrhea. Plan A (home), Plan B (facility, 75ml/kg over 4h), Plan C (IV, severe dehydration). Weight and age both required."
     },
     {
       "id": "paracetamol_fever",
@@ -334,9 +311,7 @@
       "valid_weight_range": { "min_kg": 2, "max_kg": null },
       "safety_warning": null,
       "source_name": "WHO / standard pediatric reference",
-      "source_detail": "VERIFY max daily dose cap (commonly ~60mg/kg/day)",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "VERIFY max daily dose cap (commonly ~60mg/kg/day)"
     },
     {
       "id": "ibuprofen_fever",
@@ -360,9 +335,7 @@
       "referral_trigger_text": "Under 3 months old: do not use ibuprofen.",
       "safety_warning": "Avoid in dehydration, suspected bleeding risk, or known kidney problems.",
       "source_name": "MSF pediatric guideline",
-      "source_detail": null,
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": null
     },
     {
       "id": "cotrimoxazole_uti",
@@ -384,9 +357,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": null,
       "source_name": "VERIFY — this entry needs direct clinical input more than most",
-      "source_detail": "Duration commonly 5-7 days for uncomplicated UTI at this level of care — VERIFY",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Duration commonly 5-7 days for uncomplicated UTI at this level of care — VERIFY"
     },
     {
       "id": "amoxicillin_uti",
@@ -407,9 +378,7 @@
       ],
       "safety_warning": null,
       "source_name": "VERIFY",
-      "source_detail": null,
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": null
     },
     {
       "id": "ceftriaxone_tonsillitis",
@@ -434,9 +403,7 @@
       "valid_age_range": { "min_months": 1, "max_months": null },
       "safety_warning": "For severe/complicated tonsillitis only. Give IV over 15-30 min. Monitor for allergic reaction. Avoid in neonates with hyperbilirubinemia (displaces bilirubin).",
       "source_name": "IDSA / AAP Red Book — severe/refractory tonsillitis",
-      "source_detail": "50-100mg/kg IV once daily. For severe/complicated tonsillitis where oral not possible. Step down to oral amoxicillin after 3-5 days.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "50-100mg/kg IV once daily. For severe/complicated tonsillitis where oral not possible. Step down to oral amoxicillin after 3-5 days."
     },
     {
       "id": "penicillin_v_tonsillitis",
@@ -458,9 +425,7 @@
       "penicillin_allergy_alternative": ["azithromycin_tonsillitis"],
       "safety_warning": null,
       "source_name": "VERIFY",
-      "source_detail": null,
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": null
     },
     {
       "id": "amoxicillin_tonsillitis",
@@ -486,9 +451,7 @@
       "valid_age_range": { "min_months": 3, "max_months": null },
       "safety_warning": "Complete 10-day course for GAS eradication — incomplete treatment risks acute rheumatic fever. 50mg/kg/day divided BID (max 1g/day).",
       "source_name": "IDSA GAS Pharyngitis Guideline / AAP Red Book",
-      "source_detail": "50mg/kg/day divided BID × 10 days (max 1g/day). First-line for tonsillitis.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "50mg/kg/day divided BID × 10 days (max 1g/day). First-line for tonsillitis."
     },
     {
       "id": "azithromycin_tonsillitis",
@@ -516,9 +479,7 @@
       "referral_trigger_text": "Under 2 years: tonsillitis due to Group A Strep is uncommon in this age group. Consider viral etiology or seek guidance.",
       "safety_warning": null,
       "source_name": "FDA/UK SPC Pediatrics / IDSA Strep Pharyngitis Guideline",
-      "source_detail": "Azithromycin 10/5 mg/kg × 5 days. Minimum age 2 years for tonsillitis indication. Penicillin-allergy alternative only.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Azithromycin 10/5 mg/kg × 5 days. Minimum age 2 years for tonsillitis indication. Penicillin-allergy alternative only."
     },
     {
       "id": "amoxicillin_otitis",
@@ -541,9 +502,7 @@
       "penicillin_allergy_alternative": ["azithromycin_otitis", "augmentin_otitis"],
       "safety_warning": null,
       "source_name": "VERIFY",
-      "source_detail": null,
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": null
     },
     {
       "id": "azithromycin_otitis",
@@ -570,9 +529,7 @@
       "valid_age_range": { "min_months": 6, "max_months": null },
       "safety_warning": "Azithromycin resistance is increasing for S. pneumoniae — reserve for penicillin allergy or treatment failure.",
       "source_name": "AAP Red Book 2024 / IDSA Otitis Media Guideline",
-      "source_detail": "Alternative for penicillin-allergic children. Age ≥6 months. 10/5 mg/kg × 5 days.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Alternative for penicillin-allergic children. Age ≥6 months. 10/5 mg/kg × 5 days."
     },
     {
       "id": "augmentin_otitis",
@@ -596,9 +553,7 @@
       ],
       "safety_warning": "Weight-based: 25mg/kg/dose of amoxicillin component BID for acute otitis media. High dose (45mg/kg/dose) for treatment failure or recent antibiotic use.",
       "source_name": "AAP Red Book 2024 / Stanford Pediatrics",
-      "source_detail": "Standard dose for AOM: 25mg/kg/dose amoxicillin component of Augmentin BID. First-line when amoxicillin alone fails.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Standard dose for AOM: 25mg/kg/dose amoxicillin component of Augmentin BID. First-line when amoxicillin alone fails."
     },
     {
       "id": "salbutamol_asthma",
@@ -620,9 +575,7 @@
       "referral_trigger_text": "ACUTE SEVERE ASTHMA: unable to speak, severe chest indrawing, cyanosis, silent chest, exhaustion. Give first dose (inhaled salbutamol + prednisolone) and REFER URGENTLY. This is a medical emergency.",
       "safety_warning": "Inhaled via spacer is preferred over nebulized (equally effective, less side effects). Salbutamol may cause tachycardia, tremor, hypokalemia with high doses. Monitor for signs of severe exacerbation — silent chest is a life-threatening sign.",
       "source_name": "GINA 2024 / BTS/SIGN 2023 / WHO IMCI acute asthma",
-      "source_detail": "Age-based inhaler puff dosing via spacer. First-line acute bronchodilator. Inhaled route preferred over oral. Nebulized as alternative.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Age-based inhaler puff dosing via spacer. First-line acute bronchodilator. Inhaled route preferred over oral. Nebulized as alternative."
     },
     {
       "id": "hydrocortisone_iv_asthma",
@@ -640,9 +593,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": "Monitor for hypernatremia if therapy extends beyond 48 hours. No advantage exists for higher corticosteroid doses in severe asthma exacerbations.",
       "source_name": "WHO/BTS GINA guidelines for acute asthma",
-      "source_detail": "Age-based dosing per UK NHS guidelines. 4mg/kg/dose IV q6h alternative from BTS/SIGN.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Age-based dosing per UK NHS guidelines. 4mg/kg/dose IV q6h alternative from BTS/SIGN."
     },
     {
       "id": "dexamethasone_stat_asthma",
@@ -662,9 +613,7 @@
       "referral_trigger_text": "Not studied in children under 2 years. Evidence limited below this age.",
       "safety_warning": "Slightly higher ED return visits reported vs prednisolone (OR 1.07) but lower hospitalization rates (OR 0.90). Monitor for vomiting and mood changes.",
       "source_name": "Multiple RCTs + AAP/ACEP guidelines",
-      "source_detail": "0.6mg/kg single dose non-inferior to 5-day prednisolone. Standardized weight-band dosing validated in multiple pediatric ED studies.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "0.6mg/kg single dose non-inferior to 5-day prednisolone. Standardized weight-band dosing validated in multiple pediatric ED studies."
     },
     {
       "id": "prednisolone_asthma",
@@ -689,9 +638,7 @@
       "referral_trigger_text": "Acute severe asthma (silent chest, cyanosis, exhaustion, altered consciousness): give first dose and refer URGENTLY.",
       "safety_warning": "Short courses (≤7 days) are safe. No taper needed. Monitor for hyperglycemia in diabetic patients.",
       "source_name": "GINA 2024 / NAEPP / UK NHS",
-      "source_detail": "1-2 mg/kg/day PO once daily for 3-5 days. Max 60mg/day. Lower dose (1mg/kg) non-inferior to 2mg/kg with less vomiting (RCT evidence).",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "1-2 mg/kg/day PO once daily for 3-5 days. Max 60mg/day. Lower dose (1mg/kg) non-inferior to 2mg/kg with less vomiting (RCT evidence)."
     },
     {
       "id": "cloxacillin_impetigo",
@@ -717,9 +664,7 @@
       "referral_trigger_text": "Bullous impetigo with fever, extensive lesions, or suspected cellulitis: consider IV cloxacillin or referral.",
       "safety_warning": "First-line: topical mupirocin for localized impetigo. Oral cloxacillin for extensive or moderate-severe cases. 50mg/kg/day divided QID (max 2g/day). Complete 7-day course.",
       "source_name": "AAP Red Book / IDSA SSTI Guideline / MOH Malaysia",
-      "source_detail": "12.5-25 mg/kg/dose QID (50 mg/kg/day). Syrup 125mg/5ml. Capsules 250mg/500mg for older children. First-line for extensive impetigo.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "12.5-25 mg/kg/dose QID (50 mg/kg/day). Syrup 125mg/5ml. Capsules 250mg/500mg for older children. First-line for extensive impetigo."
     },
     {
       "id": "albendazole_worms",
@@ -738,9 +683,7 @@
       ],
       "safety_warning": null,
       "source_name": "VERIFY against Ethiopia's specific national deworming program schedule",
-      "source_detail": "Do not assume generic WHO bands match the Ethiopian program exactly — check directly.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Do not assume generic WHO bands match the Ethiopian program exactly — check directly."
     },
     {
       "id": "mebendazole_worms",
@@ -758,9 +701,7 @@
       ],
       "safety_warning": null,
       "source_name": "VERIFY against Ethiopia's specific national deworming program schedule",
-      "source_detail": null,
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": null
     },
     {
       "id": "metronidazole_giardiasis",
@@ -782,9 +723,7 @@
       "valid_weight_range": { "min_kg": 5, "max_kg": null },
       "safety_warning": "Metallic taste common. Avoid alcohol during treatment and for 24hr after last dose (disulfiram-like reaction).",
       "source_name": "WHO EMLc / Ethiopia STG",
-      "source_detail": "15mg/kg/dose PO TID × 7 days for giardiasis. 7-day course yields >90% cure rate.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "15mg/kg/dose PO TID × 7 days for giardiasis. 7-day course yields >90% cure rate."
     },
     {
       "id": "metronidazole_amebiasis",
@@ -806,9 +745,7 @@
       "valid_weight_range": { "min_kg": 5, "max_kg": null },
       "safety_warning": "Must be followed by a luminal amebicide (paromomycin) to prevent relapse. Avoid alcohol.",
       "source_name": "WHO / Ethiopia STG",
-      "source_detail": "15mg/kg/dose PO TID × 10 days for intestinal amebiasis. Follow with paromomycin.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "15mg/kg/dose PO TID × 10 days for intestinal amebiasis. Follow with paromomycin."
     },
     {
       "id": "tinidazole_amebiasis",
@@ -830,9 +767,7 @@
       "valid_weight_range": { "min_kg": 15, "max_kg": null },
       "safety_warning": "Avoid alcohol during and 72hr after treatment. Not for children <3 years.",
       "source_name": "WHO EMLc / standard pediatric reference",
-      "source_detail": "50mg/kg once daily × 3 days (max 2g/day). Alternative to metronidazole with better tolerability.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "50mg/kg once daily × 3 days (max 2g/day). Alternative to metronidazole with better tolerability."
     },
     {
       "id": "vitamin_a_measles",
@@ -853,9 +788,7 @@
       "valid_age_range": { "min_months": 0, "max_months": 60 },
       "safety_warning": "Do NOT exceed age-specific doses — hypervitaminosis A risk. Does NOT cure measles; reduces complications and mortality by ~50%.",
       "source_name": "WHO / CDC — Measles & Vitamin A guidelines (2025)",
-      "source_detail": "WHO: all children with acute measles get Vitamin A regardless of residence. <6mo: 50,000 IU × 2 days. 6-11mo: 100,000 IU × 2 days. ≥12mo: 200,000 IU × 2 days.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "WHO: all children with acute measles get Vitamin A regardless of residence. <6mo: 50,000 IU × 2 days. 6-11mo: 100,000 IU × 2 days. ≥12mo: 200,000 IU × 2 days."
     },
     {
       "id": "acyclovir_measles",
@@ -877,9 +810,7 @@
       "valid_age_range": { "min_months": 1, "max_months": null },
       "safety_warning": "For complicated measles ONLY (encephalitis, severe pneumonia). NOT for routine measles. Monitor renal function and ensure adequate hydration. Give Vitamin A first. Acyclovir does NOT treat measles virus directly — use for secondary viral complications.",
       "source_name": "WHO Measles Management / AAP Red Book 2024",
-      "source_detail": "10 mg/kg/dose IV q8h for measles encephalitis/pneumonia. Duration 7-14 days. Always give Vitamin A first.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "10 mg/kg/dose IV q8h for measles encephalitis/pneumonia. Duration 7-14 days. Always give Vitamin A first."
     },
     {
       "id": "calamine_chickenpox",
@@ -897,9 +828,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": "DO NOT USE ASPIRIN in children with chickenpox — risk of Reye syndrome. Use paracetamol for fever.",
       "source_name": "WHO / CDC — chickenpox management",
-      "source_detail": "Supportive care: calamine for itching, paracetamol for fever. Disease is self-limiting in immunocompetent children.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Supportive care: calamine for itching, paracetamol for fever. Disease is self-limiting in immunocompetent children."
     },
     {
       "id": "paracetamol_chickenpox",
@@ -922,9 +851,7 @@
       "valid_weight_range": { "min_kg": 3, "max_kg": null },
       "safety_warning": "Do NOT use ibuprofen in chickenpox (increased risk of secondary bacterial skin infections). Paracetamol only for fever.",
       "source_name": "WHO / standard pediatric fever reference",
-      "source_detail": "15mg/kg/dose q4-6h PRN fever. Max 60mg/kg/day. Ibuprofen NOT recommended in varicella.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "15mg/kg/dose q4-6h PRN fever. Max 60mg/kg/day. Ibuprofen NOT recommended in varicella."
     },
     {
       "id": "permethrin_scabies",
@@ -943,9 +870,7 @@
       "valid_age_range": { "min_months": 2, "max_months": null },
       "safety_warning": "Skin irritation common — do NOT re-apply for irritation alone. Distinguish treatment irritation vs active scabies. Itch persisting >6 weeks suggests re-infestation.",
       "source_name": "WHO scabies guidelines / CDC / MSD Manual",
-      "source_detail": "WHO: 5% permethrin first-line. Apply overnight, repeat day 7. Treat contacts. Oral ivermectin 200μg/kg is alternative.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "WHO: 5% permethrin first-line. Apply overnight, repeat day 7. Treat contacts. Oral ivermectin 200μg/kg is alternative."
     },
     {
       "id": "hydrocortisone_eczema",
@@ -964,9 +889,7 @@
       "valid_age_range": { "min_months": 3, "max_months": null },
       "safety_warning": "Use lowest potency for shortest duration. On face: mild potency only (hydrocortisone 1%). Avoid prolonged use on face (risk of skin thinning, perioral dermatitis).",
       "source_name": "NICE guidelines / AAP / WHO EML",
-      "source_detail": "Lowest potency (class VII) for children. 1% BID × 7-14 days for flares. Emollients are cornerstone of daily management.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Lowest potency (class VII) for children. 1% BID × 7-14 days for flares. Emollients are cornerstone of daily management."
     },
     {
       "id": "emollient_eczema",
@@ -984,9 +907,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": "Aqueous cream should NOT be used as leave-on moisturizer (causes skin irritation). Use as wash-off soap substitute only. Warn about flammability of paraffin-based emollients.",
       "source_name": "NICE CG57 / AAP atopic dermatitis guidelines",
-      "source_detail": "Emollients are the foundation of eczema management. Prescribe 250-500g weekly. Apply liberally, frequently, continuously.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Emollients are the foundation of eczema management. Prescribe 250-500g weekly. Apply liberally, frequently, continuously."
     },
     {
       "id": "clotrimazole_tinea",
@@ -1004,9 +925,7 @@
       "valid_weight_range": { "min_kg": null, "max_kg": null },
       "safety_warning": "For tinea capitis (scalp ringworm), topical therapy alone is INSUFFICIENT — requires oral griseofulvin. Avoid combination steroid-antifungal creams (tinea incognito risk).",
       "source_name": "WHO EMLc / AAD guidelines / standard pediatric reference",
-      "source_detail": "First-line topical: clotrimazole 1% BID × 2-4 weeks or terbinafine 1% once daily × 1 week. Oral therapy needed for scalp or extensive disease.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "First-line topical: clotrimazole 1% BID × 2-4 weeks or terbinafine 1% once daily × 1 week. Oral therapy needed for scalp or extensive disease."
     },
     {
       "id": "griseofulvin_tinea",
@@ -1029,9 +948,7 @@
       "valid_weight_range": { "min_kg": 5, "max_kg": null },
       "safety_warning": "Contraindicated in liver failure, porphyria, pregnancy. Causes photosensitivity — avoid sun. Reduces OCP efficacy. Take with fatty meal.",
       "source_name": "WHO EMLc / AAP / Perth Children's Hospital ChAMP monograph",
-      "source_detail": "Microsize: 20-25mg/kg/day PO once daily. Tinea capitis: 6-12 weeks. Tinea corporis: 2-4 weeks. Preferable for Microsporum species.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Microsize: 20-25mg/kg/day PO once daily. Tinea capitis: 6-12 weeks. Tinea corporis: 2-4 weeks. Preferable for Microsporum species."
     },
     {
       "id": "cloxacillin_cellulitis",
@@ -1052,9 +969,7 @@
       "valid_weight_range": { "min_kg": 3, "max_kg": null },
       "safety_warning": "Take on empty stomach (1h before or 2h after meals). Monitor for rash, diarrhea.",
       "source_name": "WHO EMLc / standard pediatric reference",
-      "source_detail": "25-50mg/kg/day divided QID. Duration 5-7 days for uncomplicated cellulitis. Use higher end of range for severe cases.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "25-50mg/kg/day divided QID. Duration 5-7 days for uncomplicated cellulitis. Use higher end of range for severe cases."
     },
     {
       "id": "amoxicillin_cellulitis",
@@ -1078,9 +993,7 @@
       "penicillin_allergy_alternative": ["cloxacillin_cellulitis"],
       "safety_warning": "Cloxacillin preferred if Staph suspected (most common cause of cellulitis). Amoxicillin covers Strep only.",
       "source_name": "Standard pediatric reference",
-      "source_detail": "40mg/kg/dose PO TID. Second-line for cellulitis. Cloxacillin preferred for antistaphylococcal coverage.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "40mg/kg/dose PO TID. Second-line for cellulitis. Cloxacillin preferred for antistaphylococcal coverage."
     },
     {
       "id": "iv_fluids_maintenance",
@@ -1099,9 +1012,7 @@
       "valid_age_range": { "min_months": 1, "max_months": null },
       "safety_warning": "Monitor for fluid overload (edema, crackles, raised JVP). Check electrolytes within 24h. Do NOT use hypotonic fluids — risk of hyponatremia (AAP 2018). Two-thirds maintenance for unwell children with SIADH risk.",
       "source_name": "AAP 2018 / NICE NG29 / Holliday-Segar 1957",
-      "source_detail": "4-2-1 rule for maintenance (first 10kg: 4ml/kg/hr, 11-20kg: +2ml/kg/hr, >20kg: +1ml/kg/hr). Use isotonic fluids per AAP 2018 recommendation.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "4-2-1 rule for maintenance (first 10kg: 4ml/kg/hr, 11-20kg: +2ml/kg/hr, >20kg: +1ml/kg/hr). Use isotonic fluids per AAP 2018 recommendation."
     },
     {
       "id": "iv_fluids_shock",
@@ -1120,9 +1031,7 @@
       "valid_age_range": { "min_months": 1, "max_months": null },
       "safety_warning": "Reassess after EVERY bolus. If >40 mL/kg given without improvement, consider blood, inotropes, or referral. Do NOT give dextrose-containing fluids as rapid bolus (risk of hyperglycemia).",
       "source_name": "WHO IMCI / AAP PALS / NICE guidelines",
-      "source_detail": "20 mL/kg isotonic crystalloid bolus. Repeat as needed. Max 60 mL/kg before considering other interventions.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "20 mL/kg isotonic crystalloid bolus. Repeat as needed. Max 60 mL/kg before considering other interventions."
     },
     {
       "id": "iv_fluids_dehydration",
@@ -1141,9 +1050,7 @@
       "valid_age_range": { "min_months": 1, "max_months": null },
       "safety_warning": "Replace deficit SLOWLY — rapid correction risks fluid overload. In hypernatremic dehydration, correct more slowly (over 48h). Monitor electrolytes, urine output, weight daily.",
       "source_name": "WHO IMCI / AAP / NICE NG29",
-      "source_detail": "Deficit + maintenance over 24h: 50% in first 8h, 50% over next 16h. Deficit = weight(kg) × %dehydration × 10.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Deficit + maintenance over 24h: 50% in first 8h, 50% over next 16h. Deficit = weight(kg) × %dehydration × 10."
     },
     {
       "id": "iv_fluids_burn",
@@ -1162,9 +1069,7 @@
       "valid_age_range": { "min_months": 1, "max_months": null },
       "safety_warning": "Monitor urine output (target 1-2 ml/kg/hr). Watch for fluid overload. Burn patients require particularly careful fluid management. Always consult a burn protocol for severe burns.",
       "source_name": "WHO Emergency Triage Assessment and Treatment / ATLS / Parkland formula",
-      "source_detail": "Parkland: 4 ml/kg/%TBSA in 24h. Half in first 8h, half in next 16h. Common choice: Ringer's Lactate.",
-      "last_verified": null,
-      "verified_by": "PENDING — Dr. Basliel review required"
+      "source_detail": "Parkland: 4 ml/kg/%TBSA in 24h. Half in first 8h, half in next 16h. Common choice: Ringer's Lactate."
     }
   ]
-}
+    }

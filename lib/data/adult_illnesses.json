@@ -71,7 +71,7 @@
       "icon": "icon_inhaler",
       "display_order": 8,
       "urgent_accent": false,
-      "drug_ids": ["adult_salbutamol_asthma", "adult_prednisolone_asthma", "adult_hydrocortisone_asthma", "adult_aminophylline_asthma"]
+      "drug_ids": ["adult_salbutamol_asthma", "adult_prednisolone_asthma", "adult_hydrocortisone_asthma"]
     },
     {
       "id": "malaria",
@@ -98,7 +98,7 @@
       "icon": "icon_thermometer",
       "display_order": 11,
       "urgent_accent": false,
-      "drug_ids": ["adult_paracetamol_fever", "adult_ibuprofen_fever"]
+      "drug_ids": ["adult_paracetamol_fever", "adult_ibuprofen_fever", "adult_diclofenac_colic"]
     },
     {
       "id": "tonsillitis",
