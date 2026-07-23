@@ -5,11 +5,13 @@ import '../models/drug.dart';
 import '../models/illness.dart';
 import '../services/data_loader.dart';
 import 'patient_details_screen.dart';
+import 'weight_band_screen.dart';
 
 /// Screen 3 of the dosing flow.
 /// Shows available formulations (syrup/tablet strengths) for the selected drug.
-/// Tapping a formulation instantly navigates to PatientDetailsScreen.
+/// Tapping a formulation instantly navigates to the next screen.
 /// If only 1 formulation, auto-navigates.
+/// For weight_band drugs, skips straight to WeightBandScreen instead of PatientDetails.
 class FormulationScreen extends StatefulWidget {
   final ClinicalData data;
   final Drug drug;
@@ -46,6 +48,20 @@ class _FormulationScreenState extends State<FormulationScreen> {
   }
 
   void _navigateToPatientDetails(int concentrationIndex) {
+    // For weight_band drugs, skip straight to the weight band display
+    if (widget.drug.dosingShape == 'weight_band') {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => WeightBandScreen(
+            drug: widget.drug,
+            illness: widget.illness,
+            weightKg: null,
+            ageMonths: null,
+          ),
+        ),
+      );
+      return;
+    }
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => PatientDetailsScreen(
