@@ -214,6 +214,75 @@
       "verified_by": "PENDING — Dr. Basliel review required"
     },
     {
+      "id": "adult_augmentin_tonsillitis",
+      "illness_id": "tonsillitis",
+      "drug_name_en": "Amoxicillin-Clavulanate (Augmentin)",
+      "drug_name_am": "",
+      "drug_synonyms": ["Augmentin", "Co-amoxiclav"],
+      "is_recommended": false,
+      "combination_drug": true,
+      "dosing_shape": "fixed",
+      "dose_display_en": "Augmentin 625mg (500mg/125mg) PO twice daily for 7-10 days\n\nFor severe tonsillitis or penicillin-allergy non-responders:\n  Augmentin 625mg PO BID × 10 days\n\nFor peritonsillar abscess or severe infection:\n  Augmentin 1g (875mg/125mg) PO BID × 10 days\n\nSecond-line after amoxicillin or in treatment failure.",
+      "frequency_en": "twice daily",
+      "duration_days": null,
+      "notes": "Augmentin for GAS tonsillitis when amoxicillin fails or for peritonsillar abscess. 10-day course needed for GAS eradication.",
+      "concentrations": [
+        { "label_en": "625mg tablet (500mg/125mg)", "strength_mg": 625, "volume_ml": null, "round_to_tablet": 0.5 },
+        { "label_en": "1g tablet (875mg/125mg)", "strength_mg": 1000, "volume_ml": null, "round_to_tablet": 0.5 }
+      ],
+      "safety_warning": "Take with food to reduce GI upset. Diarrhea common with higher doses. Use 10-day course for GAS eradication.",
+      "source_name": "IDSA tonsillopharyngitis guidelines",
+      "source_detail": "625mg PO BID or 1g PO BID for severe cases. 10-day course for GAS.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
+      "id": "adult_augmentin_sinusitis",
+      "illness_id": "sinusitis",
+      "drug_name_en": "Amoxicillin-Clavulanate (Augmentin)",
+      "drug_name_am": "",
+      "drug_synonyms": ["Augmentin", "Co-amoxiclav"],
+      "is_recommended": false,
+      "combination_drug": true,
+      "dosing_shape": "fixed",
+      "dose_display_en": "Augmentin 625mg (500mg/125mg) PO twice daily for 5-7 days\n\nFor severe sinusitis or amoxicillin failure:\n  Augmentin 1g (875mg/125mg) PO BID × 7-10 days\n\nFirst-line when: penicillin failure, daycare attendance, recent antibiotic use, severe symptoms.\n\nDuration: 5-7 days for uncomplicated, 7-10 days for severe/recurrent.",
+      "frequency_en": "twice daily",
+      "duration_days": null,
+      "notes": "Augmentin for sinusitis when amoxicillin is inadequate (treatment failure, severe presentation, or recent abx use).",
+      "concentrations": [
+        { "label_en": "625mg tablet (500mg/125mg)", "strength_mg": 625, "volume_ml": null, "round_to_tablet": 0.5 },
+        { "label_en": "1g tablet (875mg/125mg)", "strength_mg": 1000, "volume_ml": null, "round_to_tablet": 0.5 }
+      ],
+      "safety_warning": "Augmentin preferred over amoxicillin alone for: treatment failure after 3 days, recent abx use, severe presentation, daycare attendance.",
+      "source_name": "IDSA sinusitis guidelines / AAO-HNS",
+      "source_detail": "625mg PO BID or 1g PO BID. Duration 5-10 days per severity.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
+      "id": "adult_augmentin_otitis",
+      "illness_id": "otitis_media",
+      "drug_name_en": "Amoxicillin-Clavulanate (Augmentin)",
+      "drug_name_am": "",
+      "drug_synonyms": ["Augmentin", "Co-amoxiclav"],
+      "is_recommended": false,
+      "combination_drug": true,
+      "dosing_shape": "fixed",
+      "dose_display_en": "Augmentin 625mg (500mg/125mg) PO twice daily for 5-7 days\n\nFor severe or refractory acute otitis media:\n  Augmentin 1g (875mg/125mg) PO BID × 7-10 days\n\nUse when: amoxicillin failure after 48-72h, severe AOM, recent antibiotic use, or recurrent infections.",
+      "frequency_en": "twice daily",
+      "duration_days": null,
+      "notes": "Augmentin for otitis media when amoxicillin fails or for severe presentation. Effective against beta-lactamase-producing organisms.",
+      "concentrations": [
+        { "label_en": "625mg tablet (500mg/125mg)", "strength_mg": 625, "volume_ml": null, "round_to_tablet": 0.5 },
+        { "label_en": "1g tablet (875mg/125mg)", "strength_mg": 1000, "volume_ml": null, "round_to_tablet": 0.5 }
+      ],
+      "safety_warning": "Take with food. Use high dose (90mg/kg/day amoxicillin component) for resistant organisms.",
+      "source_name": "AAO-HNS otitis media guidelines / IDSA",
+      "source_detail": "625mg PO BID or 1g PO BID. Second-line after amoxicillin monotherapy failure.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
       "id": "adult_ors_diarrhea",
       "illness_id": "diarrhea",
       "drug_name_en": "ORS (Oral Rehydration Solution)",
@@ -394,6 +463,29 @@
       "verified_by": "PENDING — Dr. Basliel review required"
     },
     {
+      "id": "adult_ciprofloxacin_uti",
+      "illness_id": "uti",
+      "drug_name_en": "Ciprofloxacin",
+      "drug_name_am": "",
+      "drug_synonyms": ["Ciproxin", "Cipro"],
+      "is_recommended": false,
+      "combination_drug": false,
+      "dosing_shape": "fixed",
+      "dose_display_en": "Ciprofloxacin 250-500mg PO twice daily for 3-7 days\n\nUncomplicated UTI: 250mg PO BID × 3 days\nComplicated UTI: 500mg PO BID × 7-14 days\n\nRESISTANCE WARNING: Increasing E. coli resistance to fluoroquinolones in Ethiopia. Use only if:\n  - Local susceptibility confirmed (antibiotic sensitivity testing done)\n  - Patient did not respond to first-line options (cotrimoxazole)\n  - Pyelonephritis requiring broader gram-negative coverage\n\nNot first-line for uncomplicated UTI due to resistance concerns.\nAvoid in pregnancy.",
+      "frequency_en": "twice daily",
+      "duration_days": null,
+      "notes": "Fluoroquinolone for UTI. Resistance is rising significantly in Ethiopia. Reserve for confirmed sensitivity or pyelonephritis. Do NOT use as first-line.",
+      "concentrations": [
+        { "label_en": "250mg tablet", "strength_mg": 250, "volume_ml": null, "round_to_tablet": 0.5 },
+        { "label_en": "500mg tablet", "strength_mg": 500, "volume_ml": null, "round_to_tablet": 0.5 }
+      ],
+      "safety_warning": "RESISTANCE WARNING: Not first-line due to increasing E. coli resistance. Avoid in pregnancy and breastfeeding. Caution in elderly (tendon rupture risk, QT prolongation, CNS effects including confusion). Avoid with NSAIDs (CNS excitation risk).",
+      "source_name": "WHO EML / Ethiopia STG — resistance advisory",
+      "source_detail": "250-500mg PO BID × 3-14 days depending on severity. Do NOT use first-line. Reserve for confirmed sensitivity.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
       "id": "adult_ceftriaxone_uti",
       "illness_id": "uti",
       "drug_name_en": "Ceftriaxone IV/IM",
@@ -527,6 +619,25 @@
       "verified_by": "PENDING — Dr. Basliel review required"
     },
     {
+      "id": "adult_hydrocortisone_asthma",
+      "illness_id": "asthma",
+      "drug_name_en": "Hydrocortisone IV",
+      "drug_name_am": "",
+      "drug_synonyms": ["Solu-Cortef", "HC"],
+      "is_recommended": false,
+      "combination_drug": false,
+      "dosing_shape": "fixed",
+      "dose_display_en": "Hydrocortisone 100-200mg IV STAT (for acute severe asthma)\n\nDosing:\n  Adults: 100mg IV stat, then 100mg IV q6h\n  Or: 200mg IV stat for life-threatening asthma\n\nDuration: 3-5 days (no taper needed for short courses)\n\nAlternative if IV access problematic: hydrocortisone 100mg IM\n\nWhen to use: acute severe/life-threatening asthma where PO prednisolone not possible (vomiting, unable to swallow, unconscious, ventilated).\n\nSwitch to oral prednisolone once patient can swallow.\n\nOnset: 2-4 hours (IV). Equivalent to prednisolone 25mg = hydrocortisone 100mg.",
+      "frequency_en": "IV/IM stat, then q6h PRN",
+      "duration_days": null,
+      "notes": "IV steroid for acute severe asthma exacerbation when oral prednisolone is not feasible. Not first-line — give PO prednisolone whenever possible (less invasive, similar efficacy). GINA 2024: PO prednisolone is as effective as IV hydrocortisone in most cases.",
+      "safety_warning": "Short courses (≤7 days) do not require taper. Monitor blood glucose in diabetic patients. May cause fluid retention, hyperglycemia, hypokalemia with prolonged use.",
+      "source_name": "GINA 2024 / BTS/SIGN 2023 — acute severe asthma",
+      "source_detail": "100-200mg IV stat then q6h. For acute severe asthma when PO route unavailable. Switch to PO prednisolone ASAP.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
       "id": "adult_hctz_htn",
       "illness_id": "hypertension",
       "drug_name_en": "Hydrochlorothiazide (HCTZ)",
@@ -557,17 +668,17 @@
       "is_recommended": true,
       "combination_drug": false,
       "dosing_shape": "fixed",
-      "dose_display_en": "Amlodipine 5mg PO once daily\n\nStart: 5mg daily\nTitrate: 10mg daily if needed after 2-4 weeks\n\nMax: 10mg daily",
+      "dose_display_en": "Amlodipine 5 mg PO once daily\n\nStart: 5 mg once daily\nMax: 10 mg once daily\n\nTitrate: increase from 5mg to 10mg after 2-4 weeks if BP not at target.\n\nFirst-line CCB for hypertension — especially effective in African patients.\nNo lab monitoring required.\nMay be combined with HCTZ, ACE inhibitors, or ARBs.",
       "frequency_en": "once daily",
       "duration_days": null,
-      "notes": "Calcium channel blocker. Well tolerated. No lab monitoring needed. Effective in African patients.",
+      "notes": "Calcium channel blocker. Well tolerated. No lab monitoring needed. Effective in African patients per ALLHAT trial.",
       "concentrations": [
         { "label_en": "5mg tablet", "strength_mg": 5, "volume_ml": null, "round_to_tablet": 0.5 },
         { "label_en": "10mg tablet", "strength_mg": 10, "volume_ml": null, "round_to_tablet": 0.5 }
       ],
       "safety_warning": "Common: ankle edema, headache, flushing. Caution in heart failure with reduced EF. Avoid grapefruit juice.",
-      "source_name": "WHO PEN protocol / Ethiopian HTN guideline / JNC 8",
-      "source_detail": "5-10mg daily. First-line for African patients per ALLHAT trial evidence.",
+      "source_name": "WHO PEN protocol / Ethiopian HTN guideline / JNC 8 / ESC 2024",
+      "source_detail": "First-line: 5-10mg daily. Amlodipine 5mg is starting dose; titrate to 10mg. First-line CCB for African patients per ALLHAT trial evidence.",
       "last_verified": null,
       "verified_by": "PENDING — Dr. Basliel review required"
     },
@@ -613,6 +724,29 @@
       "safety_warning": "Sedation, dizziness, dry mouth, depression, orthostatic hypotension. May cause hemolytic anemia (rare). Monitor LFTs.",
       "source_name": "Ethiopian HTN guideline / WHO PEN",
       "source_detail": "250-500mg PO BID. Preferred agent in pregnancy. Max 2g/day.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
+      "id": "adult_nifedipine_htn",
+      "illness_id": "hypertension",
+      "drug_name_en": "Nifedipine (Extended Release)",
+      "drug_name_am": "",
+      "drug_synonyms": ["Adalat", "Nifecard"],
+      "is_recommended": true,
+      "combination_drug": false,
+      "dosing_shape": "fixed",
+      "dose_display_en": "Nifedipine ER (extended-release) 20-30mg PO once daily\n\nStart: 20mg ER once daily\nTitrate: increase by 10mg every 2-4 weeks\n\nTarget: 30-60mg ER once daily\nMax: 90mg ER once daily\n\nTake at same time each day, do NOT crush or chew ER tablets.\n\nDihydropyridine CCB — alternative to amlodipine.\nParticularly useful in patients with peripheral edema on amlodipine.",
+      "frequency_en": "once daily",
+      "duration_days": null,
+      "notes": "Calcium channel blocker. Alternative to amlodipine for African patients. ER formulation is preferred — avoids rapid vasodilation/side effects of immediate-release.",
+      "concentrations": [
+        { "label_en": "30mg ER tablet", "strength_mg": 30, "volume_ml": null, "round_to_tablet": 0.5 },
+        { "label_en": "20mg ER tablet", "strength_mg": 20, "volume_ml": null, "round_to_tablet": 0.5 }
+      ],
+      "safety_warning": "Common: ankle edema, headache, dizziness, flushing. Only use ER (extended-release) formulations for routine HTN — immediate-release may cause reflex tachycardia. Caution in heart failure with reduced EF.",
+      "source_name": "WHO PEN / Ethiopian HTN guideline / JNC 8",
+      "source_detail": "20-30mg ER PO once daily. Max 90mg/day. Alternative CCB for hypertension.",
       "last_verified": null,
       "verified_by": "PENDING — Dr. Basliel review required"
     },
@@ -663,9 +797,31 @@
       "verified_by": "PENDING — Dr. Basliel review required"
     },
     {
+      "id": "adult_insulin_reg_dm",
+      "illness_id": "diabetes",
+      "drug_name_en": "Regular Insulin (Short-acting)",
+      "drug_name_am": "",
+      "drug_synonyms": ["Actrapid", "Humulin R", "Novolin R"],
+      "is_recommended": false,
+      "combination_drug": false,
+      "dosing_shape": "fixed",
+      "dose_display_en": "REGULAR INSULIN (SHORT-ACTING)\n\nUsed for: acute hyperglycemia, DKA (with IV fluids), pre-meal bolus coverage, pregnancy.\n\nSC dosing:\n  Starting dose: 0.1-0.2 units/kg before meals\n  If on NPH + Regular regimen: 2/3 NPH + 1/3 Regular per dose\n\nIV dosing (acute settings):\n  Initial bolus: 0.1 units/kg IV\n  Infusion: 0.05-0.1 units/kg/hr in NS\n  Rate: 50 units Regular in 50mL NS = 1 unit/mL\n\nOnset: 30 min (SC), Peak: 2-3 hours, Duration: 5-8 hours\n\nMonitor glucose hourly when IV insulin running.\n\nMust be given 30 min before meals when used for prandial coverage.",
+      "frequency_en": "as prescribed (IV or SC)",
+      "duration_days": null,
+      "notes": "Short-acting insulin. Clear solution (vs NPH which is cloudy). Used for DKA, pre-meal coverage, and acute glucose control. Can be given IV (only Regular insulin — never NPH).",
+      "concentrations": [
+        { "label_en": "100 IU/mL — 10mL vial", "strength_mg": 100, "volume_ml": 1, "round_to_ml": 0.01 }
+      ],
+      "safety_warning": "HIGH-ALERT MEDICATION. Hypoglycemia risk. Only Regular insulin can be given IV. Verify insulin type before administration. Use insulin syringe (NOT TB syringe). Discard opened vial after 28 days.",
+      "source_name": "WHO PEN / Ethiopian DM guideline / ADA 2025",
+      "source_detail": "Short-acting regular insulin. Requires correct type identification. IV protocol: 0.1 units/kg bolus + 0.1 units/kg/hr infusion for DKA.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
       "id": "adult_insulin_dm",
       "illness_id": "diabetes",
-      "drug_name_en": "Insulin (Intermediate-acting)",
+      "drug_name_en": "Insulin NPH (Intermediate-acting)",
       "drug_name_am": "",
       "drug_synonyms": ["NPH", "Isophane", "Humulin N"],
       "is_recommended": false,
@@ -703,6 +859,28 @@
       "safety_warning": "Long-term use (>1 year) associated with B12 deficiency, osteoporosis risk, GI infections (C. diff), hypomagnesemia. Use lowest effective dose for shortest duration.",
       "source_name": "Ethiopia STG / WHO EML / ACG guidelines",
       "source_detail": "20mg daily for dyspepsia. 40mg for severe esophagitis or H. pylori therapy component.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
+      "id": "adult_pantoprazole_dyspepsia",
+      "illness_id": "dyspepsia",
+      "drug_name_en": "Pantoprazole",
+      "drug_name_am": "",
+      "drug_synonyms": ["Pantoloc", "Protonix", "Pantozol"],
+      "is_recommended": true,
+      "combination_drug": false,
+      "dosing_shape": "fixed",
+      "dose_display_en": "Pantoprazole 40mg PO once daily\n\nFor dyspepsia/GERD:\n  40mg once daily before breakfast × 4-8 weeks\n\nFor severe GERD/esophagitis:\n  40mg BID × 8 weeks, then 40mg daily maintenance\n\nIV option (when patient NPO):\n  40mg IV once daily over 2-15 min\n\nAlternative PPI to omeprazole. May have fewer drug interactions than omeprazole.",
+      "frequency_en": "once daily (before breakfast)",
+      "duration_days": null,
+      "notes": "Proton Pump Inhibitor (PPI). Alternative to omeprazole. Fewer CYP450 interactions than omeprazole — preferred when patient is on multiple meds (clopidogrel, warfarin, etc.).",
+      "concentrations": [
+        { "label_en": "40mg tablet", "strength_mg": 40, "volume_ml": null, "round_to_tablet": 0.5 }
+      ],
+      "safety_warning": "Long-term use (>1 year) associated with B12 deficiency, osteoporosis risk, GI infections, hypomagnesemia. Use lowest effective dose for shortest duration.",
+      "source_name": "Ethiopia STG / WHO EML / ACG guidelines",
+      "source_detail": "40mg PO once daily for dyspepsia/GERD. Alternative PPI with fewer drug interactions.",
       "last_verified": null,
       "verified_by": "PENDING — Dr. Basliel review required"
     },
@@ -1191,6 +1369,26 @@
       "safety_warning": "Caution in: glaucoma, tachycardia, myasthenia gravis, GI obstruction, prostatic hypertrophy. Causes dry mouth, blurred vision, urinary retention.",
       "source_name": "Standard adult reference / BNF",
       "source_detail": "20mg IM/IV or 10-20mg PO TID. Adjunctive therapy for renal colic. Less effective than NSAIDs as monotherapy.",
+      "last_verified": null,
+      "verified_by": "PENDING — Dr. Basliel review required"
+    },
+    {
+      "id": "adult_dka_protocol",
+      "illness_id": "dka",
+      "drug_name_en": "DKA Management Protocol",
+      "drug_name_am": "",
+      "drug_synonyms": ["DKA protocol", "Diabetic ketoacidosis"],
+      "is_recommended": true,
+      "combination_drug": false,
+      "dosing_shape": "fixed",
+      "dose_display_en": "DIABETIC KETOACIDOSIS — MANAGEMENT PROTOCOL\n\n1. IV FLUIDS (CORRECT DEFICIT FIRST)\n   • NS 1L over 1 hour (first hour)\n   • NS 1L over 2 hours (second hour)\n   • NS 1L over 4 hours (hours 3-6)\n   • NS 1L over 6 hours (hours 7-12)\n   Total: ~4-6L deficit in first 24h\n\n   When glucose <250 mg/dL (14 mmol/L): switch to D5 0.45% NaCl\n\n2. INSULIN (REGULAR IV ONLY — never NPH)\n   • Bolus: 0.1 units/kg Regular IV (optional; many protocols skip bolus)\n   • Infusion: 0.1 units/kg/hr Regular IV (50 units in 50mL NS = 1 unit/mL)\n   • Target: decrease glucose by 50-75 mg/dL/hr\n   • When glucose <250 mg/dL: decrease insulin to 0.05 units/kg/hr\n     and add dextrose to fluids\n\n3. POTASSIUM\n   • If K+ <3.3 mEq/L: hold insulin, give 20-30 mEq K+/hr\n   • If K+ 3.3-5.3 mEq/L: give 20-30 mEq K+/L in IV fluids\n   • If K+ >5.3 mEq/L: hold K+, recheck in 2h\n\n4. BICARBONATE\n   • NOT routinely recommended\n   • Consider only if pH <6.9 (give 50-100 mEq NaHCO₃ in 200mL D5W over 1h)\n\n5. MONITORING (hourly until stable)\n   • Glucose (at bedside)\n   • Electrolytes (K+, Na+) every 2-4 hours\n   • Venous pH / bicarbonate every 4 hours\n   • I/O chart — target urine output >0.5 mL/kg/hr\n\n6. TRANSITION TO SC INSULIN\n   • When: glucose <200 mg/dL, pH ≥7.3, bicarbonate ≥15, patient tolerating oral\n   • Overlap: start SC insulin 1-2 hours BEFORE stopping IV insulin\n   • SC regimen: calculate total daily dose (0.5-0.6 units/kg), give 2/3 in AM, 1/3 in PM\n\nCALL FOR HELP IF:\n  • Glucose not decreasing after 4 hours\n  • K+ <3.0 or >6.0 mEq/L\n  • pH remains <7.0 after 6 hours\n  • Altered consciousness or hypotension",
+      "frequency_en": "IV protocol (see protocol for details)",
+      "duration_days": null,
+      "notes": "DKA is a MEDICAL EMERGENCY. This protocol assumes adult DKA. For children, use pediatric-specific DKA protocol. CBC, BMP, VBG, and urine ketones should be sent stat upon presentation.",
+      "valid_weight_range": { "min_kg": 30, "max_kg": null },
+      "safety_warning": "Do NOT use NPH insulin IV. Only Regular insulin can be given IV. Monitor glucose hourly — risk of hypoglycemia if IV fluids changed without adjusting insulin rate. Cerebral edema (rare in adults, more common in children). Watch for hypokalemia when insulin is started.",
+      "source_name": "ADA / Joint British Diabetes Societies (JBDS) / Ethiopian DM guideline",
+      "source_detail": "Comprehensive DKA protocol: Fluids → Insulin → K+ → Bicarb. Regular insulin IV only. Transition protocol included.",
       "last_verified": null,
       "verified_by": "PENDING — Dr. Basliel review required"
     }
