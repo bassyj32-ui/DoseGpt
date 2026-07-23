@@ -6,6 +6,7 @@ import '../models/illness.dart';
 import '../services/data_loader.dart';
 import 'patient_details_screen.dart';
 import 'weight_band_screen.dart';
+import 'fixed_dose_screen.dart';
 
 /// Screen 3 of the dosing flow.
 /// Shows available formulations (syrup/tablet strengths) for the selected drug.
@@ -62,6 +63,19 @@ class _FormulationScreenState extends State<FormulationScreen> {
       );
       return;
     }
+    // For fixed-dose drugs, skip straight to dose display (no weight/age needed)
+    if (widget.drug.dosingShape == 'fixed') {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => FixedDoseScreen(
+            drug: widget.drug,
+            illness: widget.illness,
+          ),
+        ),
+      );
+      return;
+    }
+    // For calculated/mg_per_kg/age_band/fluids — need PatientDetailsScreen
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => PatientDetailsScreen(

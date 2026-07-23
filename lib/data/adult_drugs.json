@@ -1,4 +1,4 @@
-﻿{
+{
   "_status": "DRAFT â€” CLINICALLY UNVERIFIED. Every entry requires sign-off by a licensed clinician before use in a shipped app. Do not treat any value here as final.",
   "drugs": [
     {
@@ -57,23 +57,14 @@
       "drug_synonyms": [],
       "is_recommended": false,
       "combination_drug": true,
-      "dosing_shape": "mg_per_kg",
-      "notes": "Used for P. vivax malaria (with Primaquine). Adult dose capped at 600mg base total.",
-      "dose_schedule": [
-        { "day": 1, "dose_per_kg_mg": 10, "max_dose_mg": 600 },
-        { "day": 2, "dose_per_kg_mg": 10, "max_dose_mg": 600 },
-        { "day": 3, "dose_per_kg_mg": 5, "max_dose_mg": 300 }
-      ],
+      "dosing_shape": "fixed",
+      "notes": "For P. vivax malaria (with Primaquine below). Fixed adult dosing regardless of weight.\n\nTotal: 10 tablets of 150mg base (25mg/kg base total).\n\nChloroquine resistance uncommon in Ethiopia — 98-100% efficacy (Arba Minch 2023, Hamusit 2024).",
+      "dose_display_en": "Chloroquine 150mg base tablets:\n\nDosing schedule (3 days, 10 tablets total):\n\nDay 1:\n  • Initial: 4 tablets (600mg base) STAT\n  • After 6 hours: 2 tablets (300mg base)\n\nDay 2: 2 tablets (300mg base) once daily\n\nDay 3: 2 tablets (300mg base) once daily\n\nTotal course: 10 tablets = 1,500mg base (25mg/kg)\n\nMust be given WITH Primaquine 14-day radical cure.",
       "frequency_en": "once daily",
       "duration_days": 3,
-      "max_daily_dose_mg": 600,
-      "concentrations": [
-        { "label_en": "150mg base tablet", "strength_mg": 150, "volume_ml": null, "round_to_tablet": 0.5, "min_safe_ml": null, "max_safe_ml": null }
-      ],
-      "valid_weight_range": { "min_kg": null, "max_kg": null },
-      "safety_warning": null,
+      "safety_warning": "Chloroquine can prolong QTc interval. Use caution with cardiac disease or QT-prolonging drugs. Contraindicated in known hypersensitivity.",
       "source_name": "Ethiopian National Malaria Guideline",
-      "source_detail": "25mg base/kg total over 3 days (10/10/5mg/kg). Adult max 600mg base per dose on days 1-2."
+      "source_detail": "Adult dose: 1500mg base total over 3 days (600+300mg Day 1, 300mg Day 2, 300mg Day 3). Using 150mg base tablets."
     },
     {
       "id": "adult_primaquine_malaria",

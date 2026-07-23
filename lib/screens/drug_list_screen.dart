@@ -9,7 +9,7 @@ import 'formulation_screen.dart';
 /// Screen 2 of the dosing flow.
 /// Shows a list of drugs available for the selected illness.
 /// If only 1 drug exists, auto-navigates to FormulationScreen.
-class DrugListScreen extends StatelessWidget {
+class DrugListScreen extends StatefulWidget {
   final ClinicalData data;
   final String illnessId;
 
@@ -19,11 +19,18 @@ class DrugListScreen extends StatelessWidget {
     required this.illnessId,
   });
 
-  void _handleDrugTap(BuildContext context, Drug drug, Illness illness) {
+  @override
+  State<DrugListScreen> createState() => _DrugListScreenState();
+}
+
+class _DrugListScreenState extends State<DrugListScreen> {
+  bool _autoSkipped = false;
+
+  void _handleDrugTap(Drug drug, Illness illness) {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (_) => FormulationScreen(
-          data: data,
+          data: widget.data,
           drug: drug,
           illness: illness,
         ),
@@ -33,16 +40,16 @@ class DrugListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final illness = data.getIllness(illnessId);
-    final drugs = data.getDrugsForIllness(illnessId);
+    final illness = widget.data.getIllness(widget.illnessId);
+    final drugs = widget.data.getDrugsForIllness(widget.illnessId);
     final illnessName = illness?.nameEn ?? 'Select Drug';
 
-    // If only 1 drug, skip this screen entirely
-    if (drugs.length == 1) {
-      // Navigate immediately via post-frame callback
+    // If only 1 drug, skip this screen entirely (only once)
+    if (drugs.length == 1 && !_autoSkipped) {
+      _autoSkipped = true;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        if (context.mounted) {
-          _handleDrugTap(context, drugs.first, illness!);
+        if (mounted) {
+          _handleDrugTap(drugs.first, illness!);
         }
       });
       // Return a loading/empty shell for this frame
@@ -50,7 +57,7 @@ class DrugListScreen extends StatelessWidget {
         data: AppTheme.lightTheme,
         child: Scaffold(
           backgroundColor: AppTheme.lightSurface,
-          appBar: _buildAppBar(context, illnessName),
+          appBar: _buildAppBar(illnessName),
           body: const SizedBox.shrink(),
         ),
       );
@@ -60,7 +67,7 @@ class DrugListScreen extends StatelessWidget {
       data: AppTheme.lightTheme,
       child: Scaffold(
         backgroundColor: AppTheme.lightSurface,
-        appBar: _buildAppBar(context, illnessName),
+        appBar: _buildAppBar(illnessName),
         body: ListView.separated(
           physics: const BouncingScrollPhysics(),
           padding: const EdgeInsets.fromLTRB(24, 16, 24, 32),
@@ -70,7 +77,7 @@ class DrugListScreen extends StatelessWidget {
             final drug = drugs[index];
             return _DrugCard(
               drug: drug,
-              onTap: () => _handleDrugTap(context, drug, illness!),
+              onTap: () => _handleDrugTap(drug, illness!),
             );
           },
         ),
@@ -78,7 +85,7 @@ class DrugListScreen extends StatelessWidget {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context, String title) {
+  PreferredSizeWidget _buildAppBar(String title) {
     return PreferredSize(
       preferredSize: const Size.fromHeight(56),
       child: AppBar(

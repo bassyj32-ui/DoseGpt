@@ -58,23 +58,21 @@
       "drug_synonyms": [],
       "is_recommended": false,
       "combination_drug": true,
-      "dosing_shape": "mg_per_kg",
-      "notes": "Used for P. vivax malaria (with Primaquine below). Ethiopia has significant vivax burden alongside falciparum.",
-      "dose_schedule": [
-        { "day": 1, "dose_per_kg_mg": 10 },
-        { "day": 2, "dose_per_kg_mg": 10 },
-        { "day": 3, "dose_per_kg_mg": 5 }
-      ],
+      "dosing_shape": "weight_band",
+      "notes": "For P. vivax malaria (with Primaquine below). Simplified tablet-based dosing using 150mg base tablets.\n\nEthiopia has significant vivax burden alongside falciparum.\n\nChloroquine resistance is uncommon in Ethiopia — 98-100% efficacy confirmed in recent studies (Arba Minch 2023, Hamusit 2024).",
       "frequency_en": "once daily",
       "duration_days": 3,
-      "max_daily_dose_mg": null,
-      "concentrations": [
-        { "label_en": "VERIFY local syrup/tablet strength", "strength_mg": null, "volume_ml": null, "round_to_ml": 0.5, "min_safe_ml": null, "max_safe_ml": null }
+      "bands": [
+        { "min_kg": 5, "max_kg": 9.9, "dose_display_en": "Day 1: ½ tablet (75mg base)\nDay 2: ½ tablet (75mg base)\nDay 3: ¼ tablet (37.5mg base)\nTotal: 1¼ tablets" },
+        { "min_kg": 10, "max_kg": 14.9, "dose_display_en": "Day 1: 1 tablet (150mg base)\nDay 2: 1 tablet (150mg base)\nDay 3: ½ tablet (75mg base)\nTotal: 2½ tablets" },
+        { "min_kg": 15, "max_kg": 19.9, "dose_display_en": "Day 1: 1½ tablets (225mg base)\nDay 2: 1½ tablets (225mg base)\nDay 3: ¾ tablet (112.5mg base)\nTotal: 3¾ tablets" },
+        { "min_kg": 20, "max_kg": 29.9, "dose_display_en": "Day 1: 2 tablets (300mg base)\nDay 2: 2 tablets (300mg base)\nDay 3: 1 tablet (150mg base)\nTotal: 5 tablets" },
+        { "min_kg": 30, "max_kg": 44.9, "dose_display_en": "Day 1: 3 tablets (450mg base)\nDay 2: 3 tablets (450mg base)\nDay 3: 1½ tablets (225mg base)\nTotal: 7½ tablets" },
+        { "min_kg": 45, "max_kg": null, "dose_display_en": "Use adult chloroquine dosing.\nDay 1: 4 tablets (600mg base) + 2 tablets (300mg base) after 6h\nDay 2: 2 tablets (300mg base)\nDay 3: 2 tablets (300mg base)\nTotal: 10 tablets" }
       ],
-      "valid_weight_range": { "min_kg": null, "max_kg": null },
-      "safety_warning": null,
-      "source_name": "Confirmed against Ethiopian National Malaria Guideline (Northwest Ethiopia therapeutic efficacy study)",
-      "source_detail": "25mg base/kg total over 3 days (10/10/5mg/kg)"
+      "safety_warning": "Chloroquine can prolong QTc interval. Use with caution in patients with cardiac disease or on other QT-prolonging drugs. Contraindicated in known hypersensitivity.",
+      "source_name": "Ethiopian National Malaria Guideline — confirmed by Northwest Ethiopia therapeutic efficacy studies (2023-2024)",
+      "source_detail": "25mg base/kg total over 3 days. Simplified tablet-based dosing using 150mg base tablets for field use."
     },
     {
       "id": "primaquine_malaria",
