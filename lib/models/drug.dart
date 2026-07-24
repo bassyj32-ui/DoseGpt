@@ -164,6 +164,7 @@ class Drug {
   final List<Concentration>? concentrations;
   final WeightRange? validWeightRange;
   final AgeRange? validAgeRange;
+  final String? foodRequirement;
   final String? referralTriggerText;
   final List<WeightBand>? bands;
   final String? doseDisplayEn;
@@ -196,6 +197,7 @@ class Drug {
     this.concentrations,
     this.validWeightRange,
     this.validAgeRange,
+    this.foodRequirement,
     this.referralTriggerText,
     this.bands,
     this.doseDisplayEn,
@@ -240,6 +242,7 @@ class Drug {
           ? AgeRange.fromJson(json['valid_age_range'] as Map<String, dynamic>)
           : null,
       referralTriggerText: json['referral_trigger_text'] as String?,
+      foodRequirement: json['food_requirement'] as String?,
       bands: (json['bands'] as List?)
           ?.map((b) => WeightBand.fromJson(b as Map<String, dynamic>))
           .toList(),
