@@ -11,16 +11,22 @@
 # channel rather than hard-failing every deploy.
 set -euo pipefail
 
-FLUTTER_VERSION="3.32.7"
+# Flutter resolves the project from the working directory, so every path here
+# is absolute and this script never changes directory. An earlier version did
+# `cd /tmp` to unpack the SDK and never returned, so `flutter pub get` ran in
+# /tmp and died with "Expected to find project root in current working
+# directory".
+PROJECT_DIR="$(pwd)"
 SDK_DIR="/tmp/flutter-sdk"
+TARBALL="/tmp/flutter-sdk.tar.xz"
+FLUTTER_VERSION="3.32.7"
 BASE="https://storage.googleapis.com/flutter_infra_release/releases"
 
-if [ ! -x "$SDK_DIR/bin/flutter" ]; then
-  cd /tmp
+if [ ! -x "${SDK_DIR}/bin/flutter" ]; then
+  echo "Installing Flutter ${FLUTTER_VERSION}..."
   PINNED="${BASE}/stable/linux/flutter_linux_${FLUTTER_VERSION}-stable.tar.xz"
 
-  echo "Installing Flutter ${FLUTTER_VERSION}..."
-  if ! curl -fsSL --retry 3 --retry-delay 2 "$PINNED" -o flutter.tar.xz; then
+  if ! curl -fsSL --retry 3 --retry-delay 2 "$PINNED" -o "$TARBALL"; then
     echo "Pinned ${FLUTTER_VERSION} archive unavailable, using current stable."
     ARCHIVE="$(
       curl -fsSL "${BASE}/releases_linux.json" |
@@ -28,18 +34,27 @@ if [ ! -x "$SDK_DIR/bin/flutter" ]; then
         head -1 |
         sed 's/.*"stable\/linux\///; s/"$//'
     )"
-    curl -fsSL --retry 3 --retry-delay 2 "${BASE}/stable/linux/${ARCHIVE}" -o flutter.tar.xz
+    curl -fsSL --retry 3 --retry-delay 2 "${BASE}/stable/linux/${ARCHIVE}" -o "$TARBALL"
   fi
 
-  tar -xJf flutter.tar.xz
-  mv flutter flutter-sdk
-  rm -f flutter.tar.xz
+  # -C unpacks without moving the shell's working directory.
+  tar -xJf "$TARBALL" -C /tmp
+  mv /tmp/flutter "$SDK_DIR"
+  rm -f "$TARBALL"
 fi
 
 export PATH="${SDK_DIR}/bin:${PATH}"
 # git refuses to run against an SDK owned by a different uid, which is the
 # normal situation inside a container.
 git config --global --add safe.directory "${SDK_DIR}"
+
+# Fail loudly and specifically if we are not in the project, rather than
+# letting the Flutter tool report it as a missing project root.
+if [ ! -f "${PROJECT_DIR}/pubspec.yaml" ]; then
+  echo "ERROR: no pubspec.yaml in ${PROJECT_DIR}" >&2
+  exit 1
+fi
+cd "${PROJECT_DIR}"
 
 flutter config --no-analytics >/dev/null 2>&1 || true
 flutter --version
