@@ -1,11 +1,14 @@
 name: Verify
 
-# Static analysis and the dose-calculation suite.
+# Static analysis and the dose-calculation suite for the Android and iOS
+# builds.
 #
-# These used to be absent. The analyze step was removed in 93c93da to unblock
-# an APK build, and it was never restored, so nothing in CI has checked the
-# calculation engine. The only test in the repository has been failing since
-# it was written.
+# The analyze step was removed in 93c93da to unblock an APK build, and it was
+# never restored, so nothing in CI checked the calculation engine. There was
+# no test step at all, which is why the single test in the repository could
+# stay red unnoticed.
+#
+# The web PWA has its own workflow, verify-web.yml.
 on:
   push:
     branches: [ "master", "main" ]
