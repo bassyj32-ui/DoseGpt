@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'widgets/app_theme.dart';
-import 'widgets/dose_wordmark.dart';
 import 'widgets/widgets.dart';
 import 'screens/disclaimer_screen.dart';
 import 'screens/main_shell.dart';

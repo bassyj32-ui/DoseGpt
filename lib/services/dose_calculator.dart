@@ -57,6 +57,11 @@ class DoseResult {
         ivReconstitution = null;
 
   /// Creates a neonatal referral result.
+  ///
+  /// Unused today: age is collected in whole months, so an age of 0 cannot
+  /// be distinguished from an empty field and is treated as missing input
+  /// rather than as a neonatal age. Retained because it is the correct
+  /// response if age granularity is ever extended to weeks or days.
   const DoseResult.neonatalReferral()
       : prescription = null,
         calculatedMl = null,
@@ -81,9 +86,20 @@ class DoseResult {
 /// Always returns a [DoseResult], never null. Out-of-range conditions
 /// and null critical fields produce a refer message, never a guessed number.
 class DoseCalculator {
-  /// Checks if a patient's age in months qualifies as a neonate.
-  /// Neonates (< ~1 month) are excluded from all calculations.
-  static bool isNeonate(int ageMonths) => ageMonths < 1;
+  /// Sentinel for "age was never entered".
+  ///
+  /// Age is collected as whole months, so a genuine neonate (age 0 months)
+  /// is indistinguishable from an untouched form field. Callers must treat
+  /// this value as MISSING rather than as a real age, which means asking
+  /// for input instead of calculating a dose. See `isAgeMissing`.
+  static const int ageUnknown = 0;
+
+  /// True when no age has been entered yet.
+  ///
+  /// This is deliberately distinct from `isNeonate`. An age of 0 months is
+  /// not a neonate — it is an absent answer. The two were previously
+  /// conflated behind a `totalMonths > 0` guard that could never fire.
+  static bool isAgeMissing(int ageMonths) => ageMonths <= ageUnknown;
 
   /// Checks if age is within a drug's valid age range.
   /// Returns true if the drug has no age restriction or if age is within range.
@@ -420,22 +436,19 @@ class DoseCalculator {
   }
 
   /// age_band: direct table lookup by age in months.
+  ///
+  /// Uses [Drug.ageBands], which parses `min_months` / `max_months`.
+  /// Age-band drugs must never be read through `bands` (the weight-band
+  /// list) — the two use different JSON keys and mixing them silently
+  /// compares months against kilograms.
   static DoseResult _calculateAgeBand(Drug drug, int ageMonths) {
-    if (drug.bands == null || drug.bands!.isEmpty) {
+    final ageBands = drug.ageBands;
+    if (ageBands == null || ageBands.isEmpty) {
       return const DoseResult.outOfRange();
     }
 
-    // Convert the Drug's WeightBand list into AgeBand-like matching
-    // The bands in the data use min_months/max_months for age_band drugs,
-    // but are stored as WeightBand in the model (min_kg/max_kg fields).
-    // We need to check the drugs.json: for age_band drugs, bands use
-    // min_months/max_months fields, which we parse as AgeBand.
-    // For simplicity, we look for the age range match.
-
-    // Check if bands use min_months/max_months semantics
-    // (Zinc uses months, Albendazole uses months)
-    for (final band in drug.bands!) {
-      if (ageMonths >= band.minKg && ageMonths <= band.maxKg) {
+    for (final band in ageBands) {
+      if (ageMonths >= band.minMonths && ageMonths <= band.maxMonths) {
         final durationPart = _durationPart(drug);
         final prescription =
             '${drug.drugNameEn} — ${band.doseDisplayEn}, '

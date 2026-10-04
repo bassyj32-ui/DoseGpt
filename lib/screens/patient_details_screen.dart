@@ -34,6 +34,34 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isCalculating = false;
 
+  /// Verification state read once from meta.json, forwarded to the result
+  /// screen so the "not yet clinically verified" flag reflects the dataset.
+  String? _datasetStatus;
+  bool _datasetVerified = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadVerificationState();
+  }
+
+  Future<void> _loadVerificationState() async {
+    try {
+      final metas = widget.data.meta.values.toList();
+      if (metas.isEmpty) return;
+      final meta = metas.first;
+      if (!mounted) return;
+      setState(() {
+        _datasetStatus = meta.datasetStatus;
+        _datasetVerified = meta.reviewedBy.isNotEmpty;
+      });
+    } catch (_) {
+      // Verification state is advisory. If it cannot be read, leave the
+      // flag on by default rather than implying the data is signed off.
+      _datasetVerified = false;
+    }
+  }
+
   // Quick age presets: label, years, months
   static const _quickAges = [
     ('0-6 mo', 0, 3),
@@ -107,12 +135,15 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
       }
     }
 
-    // Neonatal check
-    if (totalMonths > 0 && DoseCalculator.isNeonate(totalMonths)) {
-      _showResult(
-        DoseResult.outOfRange(
-          'This app is not designed for newborns (under 1 month). '
-          'Please refer to a physician immediately.',
+    // Age must be entered. Age is collected in whole months, so 0 is not a
+    // real age — it means the field is empty. Calculating from it would
+    // silently produce a dose for a patient of unknown age.
+    if (DoseCalculator.isAgeMissing(totalMonths)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Enter the patient's age — it cannot be left blank",
+          ),
         ),
       );
       return;
@@ -159,6 +190,8 @@ class _PatientDetailsScreenState extends State<PatientDetailsScreen> {
           weightKg: _weightKg ?? 0,
           ageMonths: _totalMonths,
           illnessName: widget.illness.nameEn,
+          datasetStatus: _datasetStatus,
+          datasetVerified: _datasetVerified,
         ),
       ),
     );

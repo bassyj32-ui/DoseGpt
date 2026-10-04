@@ -94,7 +94,19 @@ class WeightBand {
     required this.doseDisplayEn,
   });
 
+  /// Parses a weight band.
+  ///
+  /// Throws [FormatException] if given `min_months`/`max_months`. Weight and
+  /// age bands share a JSON shape, so an age_band drug whose data was written
+  /// with month keys must fail loudly here rather than being read as kilograms.
   factory WeightBand.fromJson(Map<String, dynamic> json) {
+    if (json.containsKey('min_months') || json.containsKey('max_months')) {
+      throw const FormatException(
+        'WeightBand received age keys (min_months/max_months). '
+        'This drug must use dosing_shape "age_band" so the entry is read '
+        'as an AgeBand, not a weight in kg.',
+      );
+    }
     return WeightBand(
       minKg: (json['min_kg'] as num?)?.toDouble() ?? 0,
       maxKg: (json['max_kg'] as num?)?.toDouble() ?? double.infinity,
@@ -167,6 +179,13 @@ class Drug {
   final String? foodRequirement;
   final String? referralTriggerText;
   final List<WeightBand>? bands;
+
+  /// Age bands for `age_band` drugs, parsed from `min_months`/`max_months`.
+  ///
+  /// Kept separate from [bands] so month values can never be compared
+  /// against a weight. See `DoseCalculator._calculateAgeBand`.
+  final List<AgeBand>? ageBands;
+
   final String? doseDisplayEn;
   final String? safetyWarning;
   final List<String>? penicillinAllergyAlternative;
@@ -200,6 +219,7 @@ class Drug {
     this.foodRequirement,
     this.referralTriggerText,
     this.bands,
+    this.ageBands,
     this.doseDisplayEn,
     this.safetyWarning,
     this.penicillinAllergyAlternative,
@@ -210,7 +230,30 @@ class Drug {
     this.ivInfo,
   });
 
+/// Parses `bands` as kilograms, but only for weight-banded drugs.
+  ///
+  /// Returns null for every other dosing shape so an age_band drug cannot
+  /// have month values silently read as a weight, and so a weight_band drug
+  /// with month keys fails loudly in [WeightBand.fromJson].
+  static List<WeightBand>? _parseBands(
+      Map<String, dynamic> json, String dosingShape) {
+    if (dosingShape != 'weight_band') return null;
+    return (json['bands'] as List?)
+        ?.map((b) => WeightBand.fromJson(b as Map<String, dynamic>))
+        .toList();
+  }
+
+  /// Parses `bands` as months, but only for age-banded drugs.
+  static List<AgeBand>? _parseAgeBands(
+      Map<String, dynamic> json, String dosingShape) {
+    if (dosingShape != 'age_band') return null;
+    return (json['bands'] as List?)
+        ?.map((b) => AgeBand.fromJson(b as Map<String, dynamic>))
+        .toList();
+  }
+
   factory Drug.fromJson(Map<String, dynamic> json) {
+    final dosingShape = json['dosing_shape'] as String? ?? '';
     return Drug(
       id: json['id'] as String? ?? '',
       illnessId: json['illness_id'] as String? ?? '',
@@ -219,7 +262,7 @@ class Drug {
       drugSynonyms: List<String>.from(json['drug_synonyms'] as List? ?? []),
       isRecommended: json['is_recommended'] as bool,
       combinationDrug: json['combination_drug'] as bool? ?? false,
-      dosingShape: json['dosing_shape'] as String? ?? '',
+      dosingShape: dosingShape,
       notes: json['notes'] as String?,
       dosePerKgMg: (json['dose_per_kg_mg'] as num?)?.toDouble(),
       doseSchedule: (json['dose_schedule'] as List?)
@@ -243,9 +286,8 @@ class Drug {
           : null,
       referralTriggerText: json['referral_trigger_text'] as String?,
       foodRequirement: json['food_requirement'] as String?,
-      bands: (json['bands'] as List?)
-          ?.map((b) => WeightBand.fromJson(b as Map<String, dynamic>))
-          .toList(),
+      bands: _parseBands(json, dosingShape),
+      ageBands: _parseAgeBands(json, dosingShape),
       doseDisplayEn: json['dose_display_en'] as String?,
       safetyWarning: json['safety_warning'] as String?,
       penicillinAllergyAlternative:
