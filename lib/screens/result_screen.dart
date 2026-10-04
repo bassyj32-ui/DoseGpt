@@ -6,13 +6,21 @@ import '../widgets/disclaimer_line.dart';
 import '../models/drug.dart';
 import '../services/dose_calculator.dart';
 
-/// Result screen — light theme.
+/// Result screen â€” light theme.
 class ResultScreen extends StatelessWidget {
   final Drug drug;
   final DoseResult result;
   final double weightKg;
   final int ageMonths;
   final String illnessName;
+
+  /// `dataset_status` from meta.json, surfaced so the unverified-data
+  /// warning reflects the dataset rather than being hardcoded copy.
+  final String? datasetStatus;
+
+  /// Whether a named clinician has signed off the dataset
+  /// (meta.json `reviewed_by` is non-empty).
+  final bool datasetVerified;
 
   const ResultScreen({
     super.key,
@@ -21,6 +29,8 @@ class ResultScreen extends StatelessWidget {
     required this.weightKg,
     required this.ageMonths,
     this.illnessName = '',
+    this.datasetStatus,
+    this.datasetVerified = false,
   });
 
   static ResultScreen? fromArguments(Map<String, dynamic> args) {
@@ -38,6 +48,8 @@ class ResultScreen extends StatelessWidget {
       weightKg: weightKg,
       ageMonths: ageMonths,
       illnessName: illnessName,
+      datasetStatus: args['datasetStatus'] as String?,
+      datasetVerified: args['datasetVerified'] as bool? ?? false,
     );
   }
 
@@ -148,7 +160,7 @@ class ResultScreen extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                '${weightKg.toStringAsFixed(1)} kg · ${ageMonths ~/ 12}y ${ageMonths % 12}m',
+                '${weightKg.toStringAsFixed(1)} kg Â· ${ageMonths ~/ 12}y ${ageMonths % 12}m',
                 style: const TextStyle(
                   fontSize: 14,
                   color: AppTheme.lightInkSubtle,
@@ -160,7 +172,7 @@ class ResultScreen extends StatelessWidget {
 
         const SizedBox(height: 16),
 
-        // Hero dose result card — prescription-ready
+        // Hero dose result card â€” prescription-ready
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(24),
@@ -171,7 +183,7 @@ class ResultScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // Main prescription — large, copy-paste ready
+              // Main prescription â€” large, copy-paste ready
               SelectableText(
                 result.prescription ?? '',
                 style: const TextStyle(
@@ -265,22 +277,48 @@ class ResultScreen extends StatelessWidget {
 
         const SizedBox(height: 16),
 
-        // Source
+        // Source, with the detailed citation and any outstanding
+        // verification flag. `sourceDetail` was previously never rendered,
+        // which hid the 'VERIFY' markers on 9 unverified drug entries.
         _LightCard(
-          child: Row(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Icon(Icons.article_outlined,
-                  size: 16, color: AppTheme.lightInkSubtle),
-              const SizedBox(width: 8),
-              Expanded(
-                child: Text(
-                  'Source: ${drug.sourceName}',
+              Row(
+                children: [
+                  Icon(Icons.article_outlined,
+                      size: 16, color: AppTheme.lightInkSubtle),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: Text(
+                      'Source: ${drug.sourceName}',
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppTheme.lightInkMuted,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              if (drug.sourceDetail != null &&
+                  drug.sourceDetail!.trim().isNotEmpty) ...[
+                const SizedBox(height: 8),
+                Text(
+                  drug.sourceDetail!,
                   style: const TextStyle(
-                    fontSize: 13,
-                    color: AppTheme.lightInkMuted,
+                    fontSize: 12,
+                    height: 1.5,
+                    color: AppTheme.lightInkSubtle,
                   ),
                 ),
-              ),
+              ],
+              if (_needsVerification(drug)) ...[
+                const SizedBox(height: 10),
+                _UnverifiedFlag(
+                  lastVerified: drug.lastVerified,
+                  datasetStatus: datasetStatus,
+                ),
+              ],
             ],
           ),
         ),
@@ -299,6 +337,19 @@ class ResultScreen extends StatelessWidget {
         const DisclaimerLine(),
       ],
     );
+  }
+
+  /// True when this entry still carries an unresolved verification marker.
+  ///
+  /// Checks the free-text citation for 'VERIFY' because that is where the
+  /// dataset records outstanding review. The whole pediatric + adult
+  /// dataset is also unsigned off (`reviewed_by` is empty), so a flag is
+  /// shown regardless until a named clinician signs off.
+  bool _needsVerification(Drug drug) {
+    final text = '${drug.sourceName} ${drug.sourceDetail ?? ''} '
+        '${drug.notes ?? ''}';
+    if (text.contains('VERIFY')) return true;
+    return !datasetVerified;
   }
 
   /// Builds IV reconstitution text with bold ml numbers
@@ -320,7 +371,7 @@ class ResultScreen extends StatelessWidget {
           ),
         ));
       }
-      // The number + unit — bold
+      // The number + unit â€” bold
       spans.add(TextSpan(
         text: match.group(0),
         style: const TextStyle(
@@ -356,7 +407,67 @@ class ResultScreen extends StatelessWidget {
   }
 }
 
-// ── Light card ─────────────────────────────────────────────────
+// â”€â”€ Light card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+
+/// Amber callout marking an entry as not yet clinically verified.
+///
+/// Deliberately distinct from [_WarningBanner]: that one carries per-drug
+/// clinical advice from the dataset, this one reports the state of the
+/// dataset itself.
+class _UnverifiedFlag extends StatelessWidget {
+  const _UnverifiedFlag({this.lastVerified, this.datasetStatus});
+
+  final String? lastVerified;
+  final String? datasetStatus;
+
+  @override
+  Widget build(BuildContext context) {
+    final signedOff = lastVerified != null && lastVerified!.trim().isNotEmpty;
+    final reasons = <String>[
+      if (!signedOff) 'No clinician has signed off on this entry.',
+      if (datasetStatus != null && datasetStatus!.isNotEmpty) datasetStatus!,
+    ];
+    return Container(
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: AppTheme.accentGold.withValues(alpha: 0.10),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: AppTheme.accentGold.withValues(alpha: 0.45)),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(Icons.gpp_maybe_outlined, size: 16, color: AppTheme.accentGold),
+          const SizedBox(width: 8),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Not yet clinically verified',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: AppTheme.lightInk,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  reasons.join(' '),
+                  style: const TextStyle(
+                    fontSize: 12,
+                    height: 1.45,
+                    color: AppTheme.lightInkSubtle,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class _LightCard extends StatelessWidget {
   final Widget child;
@@ -376,7 +487,7 @@ class _LightCard extends StatelessWidget {
   }
 }
 
-// ── Dose volume bar ────────────────────────────────────────────
+// â”€â”€ Dose volume bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _DoseVisual extends StatelessWidget {
   final double calculatedMl;
@@ -430,7 +541,7 @@ class _DoseVisual extends StatelessWidget {
   }
 }
 
-// ── Calculation toggle ─────────────────────────────────────────
+// â”€â”€ Calculation toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _CalculationToggle extends StatefulWidget {
   final DoseResult result;
@@ -502,7 +613,7 @@ class _CalculationToggleState extends State<_CalculationToggle> {
   }
 }
 
-// ── Warning banner ─────────────────────────────────────────────
+// â”€â”€ Warning banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 class _WarningBanner extends StatelessWidget {
   final IconData icon;
