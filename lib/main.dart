@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'widgets/widgets.dart';
 import 'screens/disclaimer_screen.dart';
 import 'screens/main_shell.dart';
@@ -8,6 +9,14 @@ import 'services/preferences_service.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Never fetch fonts from the network. Both families are bundled in
+  // pubspec.yaml, so this makes an offline install render text identically
+  // to an online one. Without it, the web build calls fonts.googleapis.com
+  // on first paint and falls back to a system font when that fails — which
+  // would break Amharic, since Inter has no Ethiopic glyphs.
+  GoogleFonts.config.allowRuntimeFetching = false;
+
   runApp(const DoseGptApp());
 }
 

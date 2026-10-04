@@ -51,11 +51,27 @@ renal function, or the local formulary.
 | Illnesses | 17 paediatric, 20 adult |
 | Drug entries | 48 paediatric, 62 adult |
 | Languages | Amharic illness names, English drug names |
-| Platform | Android, iOS, Web |
+| Platform | Android, iOS, Web (installable PWA) |
 
 IV fluid support covers the four formulas a low-resource setting actually
 needs — **Holliday-Segar 4-2-1** maintenance, **20 ml/kg** shock bolus,
 deficit replacement by percent dehydration, and **Parkland** for burns.
+
+## Install it
+
+**Web (PWA)** — <https://dosegpt.vercel.app>
+
+Installable from the browser: on Android, Chrome → *Add to Home screen*; on
+iOS, Safari → *Share → Add to Home Screen*. Once installed it runs full-screen
+and **works with no network at all** — the clinical data, both fonts, and the
+app shell are all precached by the service worker.
+
+Long-press the home screen icon for shortcuts straight to paediatric or adult
+dosing.
+
+**Android** — download the APK from the
+[Actions run](https://github.com/bassyj32-ui/DoseGpt/actions/workflows/build-apk.yml)
+(14-day retention).
 
 ## Running it
 
