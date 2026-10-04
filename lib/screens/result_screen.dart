@@ -6,7 +6,7 @@ import '../widgets/disclaimer_line.dart';
 import '../models/drug.dart';
 import '../services/dose_calculator.dart';
 
-/// Result screen â€” light theme.
+/// Result screen — light theme.
 class ResultScreen extends StatelessWidget {
   final Drug drug;
   final DoseResult result;
@@ -160,7 +160,7 @@ class ResultScreen extends StatelessWidget {
               ),
               const SizedBox(height: 4),
               Text(
-                '${weightKg.toStringAsFixed(1)} kg Â· ${ageMonths ~/ 12}y ${ageMonths % 12}m',
+                '${weightKg.toStringAsFixed(1)} kg · ${ageMonths ~/ 12}y ${ageMonths % 12}m',
                 style: const TextStyle(
                   fontSize: 14,
                   color: AppTheme.lightInkSubtle,
@@ -172,7 +172,7 @@ class ResultScreen extends StatelessWidget {
 
         const SizedBox(height: 16),
 
-        // Hero dose result card â€” prescription-ready
+        // Hero dose result card — prescription-ready
         Container(
           width: double.infinity,
           padding: const EdgeInsets.all(24),
@@ -183,7 +183,7 @@ class ResultScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              // Main prescription â€” large, copy-paste ready
+              // Main prescription — large, copy-paste ready
               SelectableText(
                 result.prescription ?? '',
                 style: const TextStyle(
@@ -371,7 +371,7 @@ class ResultScreen extends StatelessWidget {
           ),
         ));
       }
-      // The number + unit â€” bold
+      // The number + unit — bold
       spans.add(TextSpan(
         text: match.group(0),
         style: const TextStyle(
@@ -407,7 +407,7 @@ class ResultScreen extends StatelessWidget {
   }
 }
 
-// â”€â”€ Light card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Light card ─────────────────────────────────────────────────
 
 /// Amber callout marking an entry as not yet clinically verified.
 ///
@@ -487,7 +487,7 @@ class _LightCard extends StatelessWidget {
   }
 }
 
-// â”€â”€ Dose volume bar â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Dose volume bar ────────────────────────────────────────────
 
 class _DoseVisual extends StatelessWidget {
   final double calculatedMl;
@@ -541,7 +541,7 @@ class _DoseVisual extends StatelessWidget {
   }
 }
 
-// â”€â”€ Calculation toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Calculation toggle ─────────────────────────────────────────
 
 class _CalculationToggle extends StatefulWidget {
   final DoseResult result;
@@ -613,7 +613,7 @@ class _CalculationToggleState extends State<_CalculationToggle> {
   }
 }
 
-// â”€â”€ Warning banner â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ── Warning banner ─────────────────────────────────────────────
 
 class _WarningBanner extends StatelessWidget {
   final IconData icon;
