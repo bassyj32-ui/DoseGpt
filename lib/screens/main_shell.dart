@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -38,6 +39,16 @@ class _MainShellState extends State<MainShell> {
     super.initState();
     _searchController = TextEditingController();
     _searchFocus = FocusNode();
+    _applyLaunchTab();
+  }
+
+  /// Honours the PWA manifest shortcuts, which open the app directly on the
+  /// paediatric or adult tab. Requires the URL to carry `?tab=pediatric`
+  /// or `?tab=adult`. Safe to call on mobile, where there is no query.
+  void _applyLaunchTab() {
+    if (!kIsWeb) return;
+    final tab = Uri.base.queryParameters['tab']?.toLowerCase();
+    if (tab == 'adult') _currentIndex = 1;
   }
 
   @override
