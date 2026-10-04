@@ -16,9 +16,9 @@
       "valid_weight_range": { "min_kg": 5, "max_kg": null },
       "referral_trigger_text": "Below 5kg or under 2 months old: do not dose, refer immediately.",
       "bands": [
-        { "min_kg": 5, "max_kg": 14, "dose_display_en": "1 tablet per dose" },
-        { "min_kg": 15, "max_kg": 24, "dose_display_en": "2 tablets per dose" },
-        { "min_kg": 25, "max_kg": 34, "dose_display_en": "3 tablets per dose" },
+        { "min_kg": 5, "max_kg": 14.999, "dose_display_en": "1 tablet per dose" },
+        { "min_kg": 15, "max_kg": 24.999, "dose_display_en": "2 tablets per dose" },
+        { "min_kg": 25, "max_kg": 34.999, "dose_display_en": "3 tablets per dose" },
         { "min_kg": 35, "max_kg": null, "dose_display_en": "4 tablets per dose" }
       ],
       "safety_warning": null,
@@ -63,13 +63,15 @@
       "frequency_en": "once daily",
       "duration_days": 3,
       "bands": [
-        { "min_kg": 5, "max_kg": 9.9, "dose_display_en": "Day 1: ½ tablet (75mg base)\nDay 2: ½ tablet (75mg base)\nDay 3: ¼ tablet (37.5mg base)\nTotal: 1¼ tablets" },
-        { "min_kg": 10, "max_kg": 14.9, "dose_display_en": "Day 1: 1 tablet (150mg base)\nDay 2: 1 tablet (150mg base)\nDay 3: ½ tablet (75mg base)\nTotal: 2½ tablets" },
-        { "min_kg": 15, "max_kg": 19.9, "dose_display_en": "Day 1: 1½ tablets (225mg base)\nDay 2: 1½ tablets (225mg base)\nDay 3: ¾ tablet (112.5mg base)\nTotal: 3¾ tablets" },
-        { "min_kg": 20, "max_kg": 29.9, "dose_display_en": "Day 1: 2 tablets (300mg base)\nDay 2: 2 tablets (300mg base)\nDay 3: 1 tablet (150mg base)\nTotal: 5 tablets" },
-        { "min_kg": 30, "max_kg": 44.9, "dose_display_en": "Day 1: 3 tablets (450mg base)\nDay 2: 3 tablets (450mg base)\nDay 3: 1½ tablets (225mg base)\nTotal: 7½ tablets" },
+{ "min_kg": 5, "max_kg": 9.999, "dose_display_en": "Day 1: ½ tablet (75mg base)\nDay 2: ½ tablet (75mg base)\nDay 3: ¼ tablet (37.5mg base)\nTotal: 1¼ tablets" },
+        { "min_kg": 10, "max_kg": 14.999, "dose_display_en": "Day 1: 1 tablet (150mg base)\nDay 2: 1 tablet (150mg base)\nDay 3: ½ tablet (75mg base)\nTotal: 2½ tablets" },
+        { "min_kg": 15, "max_kg": 19.999, "dose_display_en": "Day 1: 1 tablet (150mg base)\nDay 2: 1 tablet (150mg base)\nDay 3: 1 tablet (150mg base)\nTotal: 3 tablets" },
+        { "min_kg": 20, "max_kg": 29.999, "dose_display_en": "Day 1: 2 tablets (300mg base)\nDay 2: 2 tablets (300mg base)\nDay 3: 1 tablet (150mg base)\nTotal: 5 tablets" },
+        { "min_kg": 30, "max_kg": 44.999, "dose_display_en": "Day 1: 3 tablets (450mg base)\nDay 2: 3 tablets (450mg base)\nDay 3: 1½ tablets (225mg base)\nTotal: 7½ tablets" },
         { "min_kg": 45, "max_kg": null, "dose_display_en": "Use adult chloroquine dosing.\nDay 1: 4 tablets (600mg base) + 2 tablets (300mg base) after 6h\nDay 2: 2 tablets (300mg base)\nDay 3: 2 tablets (300mg base)\nTotal: 10 tablets" }
       ],
+      "valid_age_range": { "min_months": 0, "max_months": null },
+      "valid_weight_range": { "min_kg": 5, "max_kg": null },
       "safety_warning": "Chloroquine can prolong QTc interval. Use with caution in patients with cardiac disease or on other QT-prolonging drugs. Contraindicated in known hypersensitivity.",
       "source_name": "Ethiopian National Malaria Guideline — confirmed by Northwest Ethiopia therapeutic efficacy studies (2023-2024)",
       "source_detail": "25mg base/kg total over 3 days. Simplified tablet-based dosing using 150mg base tablets for field use."
@@ -92,10 +94,10 @@
         { "label_en": "15mg tablet", "strength_mg": 15, "round_to_tablet": 0.25, "volume_ml": null }
       ],
       "bands": [
-        { "min_kg": 5, "max_kg": 10, "dose_display_en": "1/4 of a 7.5mg tablet (~1.9mg) daily" },
-        { "min_kg": 11, "max_kg": 20, "dose_display_en": "1/2 of a 7.5mg tablet (~3.75mg) daily" },
-        { "min_kg": 21, "max_kg": 40, "dose_display_en": "1 whole 7.5mg tablet daily" },
-        { "min_kg": 41, "max_kg": 60, "dose_display_en": "1 whole 15mg tablet daily" },
+        { "min_kg": 5, "max_kg": 10.999, "dose_display_en": "1/4 of a 7.5mg tablet (~1.9mg) daily" },
+        { "min_kg": 11, "max_kg": 20.999, "dose_display_en": "1/2 of a 7.5mg tablet (~3.75mg) daily" },
+        { "min_kg": 21, "max_kg": 40.999, "dose_display_en": "1 whole 7.5mg tablet daily" },
+        { "min_kg": 41, "max_kg": 60.999, "dose_display_en": "1 whole 15mg tablet daily" },
         { "min_kg": 61, "max_kg": null, "dose_display_en": "1 + 1/2 of a 15mg tablet (~22.5mg) daily" }
       ],
       "valid_weight_range": { "min_kg": 5, "max_kg": null },
@@ -566,10 +568,11 @@
       "frequency_en": "q20min × 3 (initial), then q4h PRN",
       "duration_days": null,
       "bands": [
-        { "min_kg": 0, "max_kg": 10, "dose_display_en": "Inhaler (via spacer + mask): 2-4 puffs q20min × 1hr\nNebulized: 2.5mg (0.5ml of 5mg/ml solution) q20min × 1hr\nSyrup: 0.1-0.15mg/kg/dose TID-QID" },
-        { "min_kg": 11, "max_kg": 18, "dose_display_en": "Inhaler (via spacer): 4-6 puffs q20min × 1hr, then 4 puffs q4h PRN\nNebulized: 2.5mg (0.5ml) q20min × 1hr, then q4h\nSyrup: 1-2mg TID-QID" },
-        { "min_kg": 19, "max_kg": null, "dose_display_en": "Inhaler (via spacer): 6-8 puffs q20min × 1hr, then 6-8 puffs q4h PRN\nNebulized: 5mg (1ml) q20min × 1hr, then q4h\nSyrup: 2-4mg TID-QID" }
+        { "min_months": 0, "max_months": 10, "dose_display_en": "Inhaler (via spacer + mask): 2-4 puffs q20min × 1hr\nNebulized: 2.5mg (0.5ml of 5mg/ml solution) q20min × 1hr\nSyrup: 0.1-0.15mg/kg/dose TID-QID" },
+        { "min_months": 11, "max_months": 18, "dose_display_en": "Inhaler (via spacer): 4-6 puffs q20min × 1hr, then 4 puffs q4h PRN\nNebulized: 2.5mg (0.5ml) q20min × 1hr, then q4h\nSyrup: 1-2mg TID-QID" },
+        { "min_months": 19, "max_months": null, "dose_display_en": "Inhaler (via spacer): 6-8 puffs q20min × 1hr, then 6-8 puffs q4h PRN\nNebulized: 5mg (1ml) q20min × 1hr, then q4h\nSyrup: 2-4mg TID-QID" }
       ],
+      "valid_age_range": { "min_months": 0, "max_months": null },
       "referral_trigger_text": "ACUTE SEVERE ASTHMA: unable to speak, severe chest indrawing, cyanosis, silent chest, exhaustion. Give first dose (inhaled salbutamol + prednisolone) and REFER URGENTLY. This is a medical emergency.",
       "safety_warning": "Inhaled via spacer is preferred over nebulized (equally effective, less side effects). Salbutamol may cause tachycardia, tremor, hypokalemia with high doses. Monitor for signs of severe exacerbation — silent chest is a life-threatening sign.",
       "source_name": "GINA 2024 / BTS/SIGN 2023 / WHO IMCI acute asthma",
@@ -676,9 +679,10 @@
       "frequency_en": "single dose",
       "duration_days": 1,
       "bands": [
-        { "min_kg": 0, "max_kg": 11, "dose_display_en": "200mg (half tablet) single dose" },
-        { "min_kg": 12, "max_kg": null, "dose_display_en": "400mg (full tablet) single dose" }
+        { "min_months": 0, "max_months": 11, "dose_display_en": "200mg (half tablet) single dose" },
+        { "min_months": 12, "max_months": null, "dose_display_en": "400mg (full tablet) single dose" }
       ],
+      "valid_age_range": { "min_months": 0, "max_months": null },
       "safety_warning": null,
       "source_name": "VERIFY against Ethiopia's specific national deworming program schedule",
       "source_detail": "Do not assume generic WHO bands match the Ethiopian program exactly — check directly."
@@ -695,8 +699,9 @@
       "frequency_en": "single dose (or twice daily for 3 days depending on regimen — VERIFY)",
       "duration_days": 1,
       "bands": [
-        { "min_kg": 12, "max_kg": null, "dose_display_en": "VERIFY exact dose — commonly 500mg single dose" }
+        { "min_months": 12, "max_months": null, "dose_display_en": "VERIFY exact dose — commonly 500mg single dose" }
       ],
+      "valid_age_range": { "min_months": 12, "max_months": null },
       "safety_warning": null,
       "source_name": "VERIFY against Ethiopia's specific national deworming program schedule",
       "source_detail": null
@@ -780,10 +785,11 @@
       "duration_days": 2,
       "notes": "Give immediately on diagnosis. Repeat next day. Third dose at 4-6 weeks if eye signs of vitamin A deficiency present.",
       "bands": [
-        { "min_kg": 0, "max_kg": 3, "dose_display_en": "50,000 IU PO once daily for 2 doses (infants <6 months)" },
-        { "min_kg": 6, "max_kg": 10, "dose_display_en": "100,000 IU PO once daily for 2 doses (infants 6-11 months)" }
+        { "min_months": 0, "max_months": 5, "dose_display_en": "50,000 IU PO once daily for 2 doses (infants <6 months)" },
+        { "min_months": 6, "max_months": 11, "dose_display_en": "100,000 IU PO once daily for 2 doses (infants 6-11 months)" },
+        { "min_months": 12, "max_months": 59, "dose_display_en": "200,000 IU PO once daily for 2 doses (children ≥12 months)" }
       ],
-      "valid_age_range": { "min_months": 0, "max_months": 60 },
+      "valid_age_range": { "min_months": 0, "max_months": 59 },
       "safety_warning": "Do NOT exceed age-specific doses — hypervitaminosis A risk. Does NOT cure measles; reduces complications and mortality by ~50%.",
       "source_name": "WHO / CDC — Measles & Vitamin A guidelines (2025)",
       "source_detail": "WHO: all children with acute measles get Vitamin A regardless of residence. <6mo: 50,000 IU × 2 days. 6-11mo: 100,000 IU × 2 days. ≥12mo: 200,000 IU × 2 days."
