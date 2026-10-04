@@ -257,7 +257,7 @@ class ResultScreen extends StatelessWidget {
           _WarningBanner(
             icon: hasCriticalWarning ? Icons.warning : Icons.info_outline,
             message: result.safetyWarning!,
-            color: hasCriticalWarning ? AppTheme.lightAccent : AppTheme.accentGold,
+            color: hasCriticalWarning ? AppTheme.lightAccent : AppTheme.accentGoldInk,
           ),
 
         if (result.safetyWarning != null) const SizedBox(height: 8),
@@ -267,7 +267,7 @@ class ResultScreen extends StatelessWidget {
           _WarningBanner(
             icon: Icons.access_time,
             message: result.durationWarning!,
-            color: AppTheme.accentGold,
+            color: AppTheme.accentGoldInk,
           ),
           const SizedBox(height: 8),
         ],
@@ -287,14 +287,15 @@ class ResultScreen extends StatelessWidget {
               Row(
                 children: [
                   Icon(Icons.article_outlined,
-                      size: 16, color: AppTheme.lightInkSubtle),
+                      size: 16, color: AppTheme.lightInkWarning),
                   const SizedBox(width: 8),
                   Expanded(
                     child: Text(
                       'Source: ${drug.sourceName}',
                       style: const TextStyle(
                         fontSize: 13,
-                        color: AppTheme.lightInkMuted,
+                        fontWeight: FontWeight.w600,
+                        color: AppTheme.lightInkWarning,
                       ),
                     ),
                   ),
@@ -308,7 +309,7 @@ class ResultScreen extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 12,
                     height: 1.5,
-                    color: AppTheme.lightInkSubtle,
+                    color: AppTheme.lightInkWarning,
                   ),
                 ),
               ],
@@ -437,7 +438,7 @@ class _UnverifiedFlag extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(Icons.gpp_maybe_outlined, size: 16, color: AppTheme.accentGold),
+          Icon(Icons.gpp_maybe_outlined, size: 16, color: AppTheme.accentGoldInk),
           const SizedBox(width: 8),
           Expanded(
             child: Column(
@@ -457,7 +458,7 @@ class _UnverifiedFlag extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 12,
                     height: 1.45,
-                    color: AppTheme.lightInkSubtle,
+                    color: AppTheme.lightInkWarning,
                   ),
                 ),
               ],

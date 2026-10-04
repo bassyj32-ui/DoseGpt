@@ -1,38 +1,85 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="A new Flutter project.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 
-  <!-- iOS meta tags & icons -->
+  <title>DoseGPT — Paediatric &amp; Adult Dosing Reference</title>
+  <meta name="description" content="Offline dosing reference for Ethiopian health workers. Covers the 4-2-1 rule, shock bolus, deficit replacement and Parkland burns. Clinical data is NOT verified — check every dose against a current national protocol.">
+
+  <!-- Clinical status is stated in the metadata, not buried in the app.
+       This app is not a source of truth and must not be presented as one. -->
+  <meta name="theme-color" content="#004D36">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DoseGPT">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="dose_gpt">
+  <meta name="color-scheme" content="light">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
-
-  <!-- Favicon -->
   <link rel="icon" type="image/png" href="favicon.png"/>
-
-  <title>dose_gpt</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Fonts are bundled, not fetched from fonts.googleapis.com. An offline
+       install must not depend on a network call to render text. -->
+  <link rel="preload" href="assets/FontManifest.json" as="fetch" crossorigin>
+  <link rel="preload" href="assets/assets/fonts/Inter-Variable.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="preload" href="assets/assets/fonts/NotoSansEthiopic-Variable.ttf" as="font" type="font/ttf" crossorigin>
+
+  <!-- Open Graph / WhatsApp link previews. Without these a shared link
+       renders as a blank card, which for a clinical tool looks broken. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="DoseGPT">
+  <meta property="og:title" content="DoseGPT — Paediatric &amp; Adult Dosing Reference">
+  <meta property="og:description" content="Offline dosing reference for Ethiopian health workers. Clinical data is NOT clinically verified.">
+  <meta property="og:image" content="icons/Icon-512.png">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="DoseGPT — Dosing Reference">
+  <meta name="twitter:description" content="Offline dosing reference. Clinical data is NOT clinically verified.">
+  <meta name="twitter:image" content="icons/Icon-512.png">
+
+  <style>
+    /* Shown before Flutter boots, so a slow connection shows the app name
+       and its status rather than a blank white page. */
+    html, body { margin: 0; padding: 0; height: 100%; background: #FFFFFF; }
+    #boot {
+      position: fixed; inset: 0; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 14px;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      transition: opacity .3s ease; background: #FFFFFF;
+    }
+    #boot .mark {
+      width: 64px; height: 64px; border-radius: 16px; background: #004D36;
+      color: #FFFFFF; display: flex; align-items: center; justify-content: center;
+      font-size: 15px; font-weight: 700; letter-spacing: .5px;
+    }
+    #boot .name { font-size: 17px; font-weight: 700; color: #16211C; }
+    #boot .warn {
+      font-size: 11.5px; color: #8A5F14; background: #FDF6E7;
+      border: 1px solid #E8D9AE; border-radius: 8px; padding: 7px 12px;
+      max-width: 300px; text-align: center; line-height: 1.45;
+    }
+    #boot.hidden { opacity: 0; pointer-events: none; }
+  </style>
 </head>
 <body>
+  <div id="boot">
+    <div class="mark">DOSE</div>
+    <div class="name">DoseGPT</div>
+    <div class="warn">Clinical dosing data is not yet verified by a clinician. Confirm every dose against a current national protocol.</div>
+  </div>
+
+  <script>
+    // Remove the boot placeholder once Flutter has painted.
+    window.addEventListener('flutter-first-frame', function () {
+      var b = document.getElementById('boot');
+      if (!b) return;
+      b.classList.add('hidden');
+      setTimeout(function () { b.remove(); }, 350);
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

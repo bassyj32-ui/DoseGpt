@@ -1,0 +1,50 @@
+name: Verify
+
+# Static analysis and the dose-calculation suite for the Android and iOS
+# builds.
+#
+# The analyze step was removed in 93c93da to unblock an APK build, and it was
+# never restored, so nothing in CI checked the calculation engine. There was
+# no test step at all, which is why the single test in the repository could
+# stay red unnoticed.
+#
+# The web PWA has its own workflow, verify-web.yml.
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.32.7"
+          channel: "stable"
+          cache: true
+
+      - run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze --fatal-infos
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.32.7"
+          channel: "stable"
+          cache: true
+
+      - run: flutter pub get
+
+      - name: Test
+        run: flutter test --reporter expanded

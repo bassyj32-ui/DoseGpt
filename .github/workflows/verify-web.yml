@@ -1,0 +1,75 @@
+name: Verify Web
+
+# Builds the PWA on every push and pull request so a broken web build is
+# caught in review rather than after it reaches production.
+#
+# Deployment is handled by Vercel's Git integration, which builds from source
+# on push to master. There is deliberately no deploy job here: two deploy
+# paths to the same site means they will eventually disagree about what is
+# live, and Vercel's own Git integration is the one already configured on the
+# project.
+on:
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+  workflow_dispatch:
+
+concurrency:
+  group: verify-web-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.32.7"
+          channel: "stable"
+          cache: true
+
+      - run: flutter pub get
+
+      - name: Verify the dose engine before building
+        # The web build ships the same calculation code as the APK. If the
+        # dose suite or analysis has regressed, do not produce an artifact
+        # for it to be deployed from.
+        run: |
+          flutter analyze --fatal-infos
+          flutter test
+
+      - name: Build web
+        run: flutter build web --release
+
+      - name: Confirm the PWA is intact
+        # A PWA that silently lost its manifest or service worker still
+        # "builds", so assert the pieces that make it installable and
+        # offline-capable rather than trusting a zero exit code.
+        run: |
+          set -euo pipefail
+          test -f build/web/index.html
+          test -f build/web/manifest.json
+          test -f build/web/flutter_service_worker.js
+
+          grep -q "DoseGPT" build/web/manifest.json
+          grep -q "flutter-first-frame" build/web/index.html
+
+          # Both fonts must be bundled, or an offline install falls back to a
+          # system font and the Amharic illness names lose their glyphs.
+          grep -q "Inter-Variable.ttf" build/web/assets/FontManifest.json
+          grep -q "NotoSansEthiopic-Variable.ttf" build/web/assets/FontManifest.json
+
+          # The service worker must precache the clinical data, or offline use
+          # silently degrades to an empty app.
+          for asset in drugs.json adult_drugs.json illnesses.json meta.json; do
+            grep -q "$asset" build/web/flutter_service_worker.js
+          done
+
+          # Backgrounds and icons must not be the flutter create defaults.
+          grep -q "#004D36" build/web/manifest.json
+
+          echo "manifest, service worker, bundled fonts and precached data all verified"

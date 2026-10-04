@@ -1,10 +1,19 @@
-name: Build & Deploy
+name: Build APK
 
+# Android debug build.
+#
+# The artifact is signed with the throwaway debug keystore, which is why it
+# installs on any handset. A `flutter build apk --release` with no signing
+# config produces an APK Android refuses to install, so switching to
+# --release is not a free change — it needs a real keystore first.
+#
+# This app is not clinically verified. Do not hand the APK to a health worker
+# on the strength of it being installable. See README.
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "master", "main" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "master", "main" ]
   workflow_dispatch:
 
 jobs:
@@ -24,6 +33,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: "3.32.7"
           channel: "stable"
           cache: true
 
@@ -36,32 +46,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: dosegpt-debug-apk
+          name: dosegpt-debug-apk-UNVERIFIED
           path: build/app/outputs/flutter-apk/*.apk
-
-  deploy-web:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: "stable"
-          cache: true
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      - name: Build Web
-        run: flutter build web
-
-      - name: Deploy to Netlify
-        run: |
-          npm install -g netlify-cli
-          netlify deploy --dir=build/web --prod --message="Deploy from GitHub Actions"
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+          retention-days: 14

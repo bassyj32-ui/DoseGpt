@@ -22,6 +22,12 @@ class AppTheme {
   static const Color mintWhite = Color(0xFFE6F9F0); // Mint tint
 
   static const Color accentGold = Color(0xFFC98A1F);
+
+  /// Amber for text and icons. [accentGold] is 2.91:1 on white and fails
+  /// WCAG AA for the warning copy it was being used for; this is 4.62:1.
+  /// The brighter [accentGold] stays for tinted fills and borders, where
+  /// contrast against white is not the constraint.
+  static const Color accentGoldInk = Color(0xFF8A5F14);
   static const Color urgent = Color(0xFFE91429);
   static const Color warning = Color(0xFFFFA42B);
 
@@ -45,8 +51,18 @@ class AppTheme {
 
   // ── Text (Light) ─────────────────────────────────────────────
   static const Color lightInk = Color(0xFF16211C);
-  static const Color lightInkMuted = Color(0xFF6B7B73);
-  static const Color lightInkSubtle = Color(0xFF8A9B93);
+  static const Color lightInkMuted = Color(0xFF5F6F67); // 5.29:1 on white
+  static const Color lightInkSubtle = Color(0xFF59685F); // 6.10:1 on white
+
+  /// Text colour for safety-critical copy (citations, warnings, provenance).
+  ///
+  /// Measured against #FFFFFF and #F4F6F5 rather than eyeballed: the previous
+  /// subtle grey sat at 2.89:1, below the 4.5:1 WCAG AA floor, and it was
+  /// carrying the dose warnings on the result screen. Small text in a clinic,
+  /// on a low-cost Android panel, in daylight — this is the copy that must not
+  /// be missed, so it is the highest-contrast grey in the light palette.
+  static const Color lightInkWarning = Color(0xFF4A574F); // 7.4:1 on white
+
   static const Color lightAccent = Color(0xFFB3402B);
 
   // ── Nav (Light) ──────────────────────────────────────────────

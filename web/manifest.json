@@ -1,12 +1,16 @@
 {
-    "name": "dose_gpt",
-    "short_name": "dose_gpt",
+    "name": "DoseGPT — Paediatric & Adult Dosing Reference",
+    "short_name": "DoseGPT",
     "start_url": ".",
+    "scope": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#FFFFFF",
+    "theme_color": "#004D36",
+    "description": "Offline dosing reference for Ethiopian health workers. NOT clinically verified — check every dose against a current national protocol.",
+    "lang": "en",
+    "dir": "ltr",
     "orientation": "portrait-primary",
+    "categories": ["medical", "health", "utilities"],
     "prefer_related_applications": false,
     "icons": [
         {
@@ -30,6 +34,20 @@
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "maskable"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Paediatric dosing",
+            "short_name": "Paediatric",
+            "url": "./?tab=pediatric",
+            "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Adult dosing",
+            "short_name": "Adult",
+            "url": "./?tab=adult",
+            "icons": [{ "src": "icons/Icon-192.png", "sizes": "192x192" }]
         }
     ]
 }

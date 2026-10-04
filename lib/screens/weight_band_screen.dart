@@ -128,7 +128,7 @@ class WeightBandScreen extends StatelessWidget {
                     children: [
                       const Icon(
                         Icons.info_outline,
-                        color: AppTheme.accentGold,
+                        color: AppTheme.accentGoldInk,
                         size: 18,
                       ),
                       const SizedBox(width: 8),
@@ -137,7 +137,7 @@ class WeightBandScreen extends StatelessWidget {
                           drug.safetyWarning!,
                           style: const TextStyle(
                             fontSize: 13,
-                            color: AppTheme.accentGold,
+                            color: AppTheme.accentGoldInk,
                             height: 1.4,
                           ),
                         ),

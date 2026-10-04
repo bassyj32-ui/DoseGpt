@@ -23,6 +23,19 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
+  # Fonts are bundled rather than fetched from fonts.googleapis.com at
+  # runtime. google_fonts is configured with allowRuntimeFetching = false,
+  # so an offline install renders text identically to an online one. Both
+  # files are variable fonts, so one file per family covers w300-w800.
+  # Amharic requires a font with Ethiopic glyphs; Inter has none.
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Variable.ttf
+    - family: NotoSansEthiopic
+      fonts:
+        - asset: assets/fonts/NotoSansEthiopic-Variable.ttf
+
   assets:
     - lib/data/illnesses.json
     - lib/data/drugs.json
