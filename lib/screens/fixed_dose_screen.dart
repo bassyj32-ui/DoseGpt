@@ -184,7 +184,7 @@ class FixedDoseScreen extends StatelessWidget {
                 _WarningBanner(
                   icon: Icons.restaurant,
                   message: drug.foodRequirement!,
-                  color: AppTheme.accentGold,
+                  color: AppTheme.accentGoldInk,
                 ),
                 const SizedBox(height: 8),
               ],

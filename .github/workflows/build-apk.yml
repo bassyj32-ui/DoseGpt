@@ -2,9 +2,9 @@ name: Build & Deploy
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "master", "main" ]
   pull_request:
-    branches: [ "main", "master" ]
+    branches: [ "master", "main" ]
   workflow_dispatch:
 
 jobs:
@@ -24,19 +24,29 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: "3.32.7"
           channel: "stable"
           cache: true
 
       - name: Install dependencies
         run: flutter pub get
 
+      # DEBUG BUILD — NOT FOR DISTRIBUTION.
+      #
+      # The artifact is signed with the throwaway debug keystore, which is
+      # why it installs on any handset. A `flutter build apk --release` with
+      # no signing config produces an APK that Android refuses to install, so
+      # the debug build is deliberate until a real keystore is provisioned.
+      #
+      # This app is not clinically verified. Do not distribute the APK to
+      # health workers on the strength of it being installable. See README.
       - name: Build APK
         run: flutter build apk --debug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: dosegpt-debug-apk
+          name: dosegpt-debug-apk-UNVERIFIED
           path: build/app/outputs/flutter-apk/*.apk
 
   deploy-web:
@@ -49,6 +59,7 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: "3.32.7"
           channel: "stable"
           cache: true
 

@@ -43,3 +43,15 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Gradle build output. The root /build/ rule above does not cover the
+# per-module android/app/build/ tree, which is how a 128KB
+# problems-report.html ended up committed.
+/android/**/build/
+
+# Signing material. The debug keystore must never be committed; a release
+# keystore absolutely must not be.
+/android/*.jks
+/android/*.keystore
+/android/key.properties
+**/key.properties
