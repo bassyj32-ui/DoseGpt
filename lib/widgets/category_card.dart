@@ -58,10 +58,13 @@ class _CategoryCardState extends State<CategoryCard>
 
   @override
   Widget build(BuildContext context) {
-    const double horizontalPadding = 24;
-    const double maxCardWidth = 600;
-    final cardWidth = (widget.screenWidth - horizontalPadding * 2)
-        .clamp(0.0, maxCardWidth);
+    // Fills whatever width the parent gives it.
+    //
+    // This used to derive its own width from screenWidth minus a 24px
+    // gutter, capped at 600. That double-applied the gutter on mobile
+    // inside the section container, and fought the desktop grid, where the
+    // parent has already divided the available space between columns.
+    const double cardWidth = double.infinity;
 
     final iconData = ConditionIcons.categoryIconFor(widget.category.id);
     final dotColor = _dotColorFor(widget.category.id);
@@ -69,8 +72,7 @@ class _CategoryCardState extends State<CategoryCard>
     return FadeTransition(
       opacity: _fadeAnim,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: horizontalPadding)
-            .copyWith(bottom: 12),
+        padding: const EdgeInsets.only(bottom: 2),
         child: Center(
           child: SizedBox(
             width: cardWidth,

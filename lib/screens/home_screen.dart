@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../widgets/app_theme.dart';
+import '../widgets/breakpoints.dart';
 import '../widgets/condition_icons.dart';
 import '../widgets/category_card.dart';
 import '../widgets/vitals_reference_card.dart';
@@ -92,6 +94,14 @@ class _HomeScreenState extends State<HomeScreen>
     final pinned = illnesses.where((i) => i.displayOrder <= _maxPinnedCards).toList();
     final categories = widget.data.categories;
 
+    // On a wide window a single centred column of pills reads as a phone
+    // layout stretched to fill a monitor. Lay the same cards out in a grid
+    // so more conditions are visible at once, which is the point of using
+    // this on a desktop.
+    if (Breakpoints.isMultiColumn(context)) {
+      return _buildGridLayout(context, pinned, categories);
+    }
+
     return ListView(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
@@ -149,8 +159,118 @@ class _HomeScreenState extends State<HomeScreen>
     );
   }
 
+  /// Wide-window layout: the same cards in a responsive grid.
+  ///
+  /// Wrapped in a scroll view rather than a [GridView] because the pinned
+  /// section, the vitals card and the systems section are different lengths;
+  /// one grid with a computed child aspect ratio would need each cell to be
+  /// the same height, and the vitals card does not fit that.
+  Widget _buildGridLayout(
+    BuildContext context,
+    List<Illness> pinned,
+    List<Category> categories,
+  ) {
+    final columns = Breakpoints.columnsFor(context);
+    final screenWidth = Breakpoints.widthOf(context);
+    final gutter = Breakpoints.gutter(context);
+
+    Widget cardFor(Illness illness, int index, {bool isPinned = false}) =>
+        _ConditionCard(
+          index: index,
+          illness: illness,
+          iconData: ConditionIcons.iconFor(illness.id),
+          emoji: ConditionIcons.emojiFor(illness.id),
+          isUrgent: illness.urgentAccent,
+          screenWidth: screenWidth,
+          isPinned: isPinned,
+          glowAnim: _glowAnim,
+          onTap: () => _onConditionTap(context, illness.id),
+        );
+
+    return Center(
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxWidth: Breakpoints.contentMaxWidth(context),
+        ),
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.fromLTRB(gutter, 8, gutter, 32),
+          children: [
+            _GridSection(
+              label: 'Common conditions',
+              columns: columns,
+              children: [
+                for (var i = 0; i < pinned.length; i++)
+                  cardFor(pinned[i], i, isPinned: true),
+              ],
+            ),
+            const SizedBox(height: 24),
+            // The vitals reference is a fixed-width reference card. Centred
+            // in the content column rather than stretched.
+            Center(child: const VitalsReferenceCard()),
+            if (categories.isNotEmpty) ...[
+              const SizedBox(height: 24),
+              _GridSection(
+                label: 'Body systems',
+                columns: columns,
+                children: [
+                  for (var i = 0; i < categories.length; i++)
+                    CategoryCard(
+                      category: categories[i],
+                      screenWidth: screenWidth,
+                      onTap: () => _onCategoryTap(context, categories[i]),
+                    ),
+                ],
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildSearchView(BuildContext context, List<Illness> filtered) {
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = Breakpoints.widthOf(context);
+
+    // Search results grid the same way the browse view does, otherwise
+    // searching on a desktop drops you back into a phone-width column.
+    if (Breakpoints.isMultiColumn(context)) {
+      final columns = Breakpoints.columnsFor(context);
+      final gutter = Breakpoints.gutter(context);
+      return Center(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: Breakpoints.contentMaxWidth(context),
+          ),
+          child: ListView(
+            physics: const BouncingScrollPhysics(),
+            padding: EdgeInsets.fromLTRB(gutter, 16, gutter, 32),
+            children: [
+              _GridSection(
+                label: filtered.length == 1
+                    ? '1 result'
+                    : '${filtered.length} results',
+                columns: columns,
+                children: [
+                  for (var i = 0; i < filtered.length; i++)
+                    _ConditionCard(
+                      index: i,
+                      illness: filtered[i],
+                      iconData: ConditionIcons.iconFor(filtered[i].id),
+                      emoji: ConditionIcons.emojiFor(filtered[i].id),
+                      isUrgent: filtered[i].urgentAccent,
+                      screenWidth: screenWidth,
+                      glowAnim: _glowAnim,
+                      onTap: () => _onConditionTap(context, filtered[i].id),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       padding: EdgeInsets.zero,
@@ -204,7 +324,64 @@ class _HomeScreenState extends State<HomeScreen>
   }
 }
 
+// ════════════════════════════════════════════════════════════════[....
+// Grid section — wide-window card grid
 // ════════════════════════════════════════════════════════════════[...]
+/// Lays cards out in [columns] equal columns.
+///
+/// Uses Wrap rather than GridView so the children keep their natural
+/// heights. The condition pill and the category card are different heights,
+/// and a grid would force one ratio onto both.
+class _GridSection extends StatelessWidget {
+  final String label;
+  final int columns;
+  final List<Widget> children;
+
+  const _GridSection({
+    required this.label,
+    required this.columns,
+    required this.children,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 4, bottom: 10),
+          child: Text(
+            label.toUpperCase(),
+            style: GoogleFonts.inter(
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+              color: AppTheme.lightInkSubtle,
+              letterSpacing: 1.0,
+            ),
+          ),
+        ),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: [
+            for (final child in children)
+              SizedBox(
+                // Fractional sizing keeps every card in a row the same width
+                // without needing a layout pass to measure the parent.
+                width: (MediaQuery.sizeOf(context).width -
+                        Breakpoints.gutter(context) * 2 -
+                        10 * (columns - 1)) /
+                    columns,
+                child: child,
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+// ════════════════════════════════════════════════════════════════[....
 // Section Container
 // ════════════════════════════════════════════════════════════════[...]
 /// A subtle rounded container with a section header label.
